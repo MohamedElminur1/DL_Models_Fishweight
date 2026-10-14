@@ -28,3 +28,4 @@ results/dev/
 results/**/*.lock
 results/**/*.parts/
 reporting/**/codex_run.log
+posthoc/codex_run.log
