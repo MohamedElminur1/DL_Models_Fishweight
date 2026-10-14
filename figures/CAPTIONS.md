@@ -106,3 +106,240 @@ columns are days, hatched columns are padding and the outlined column is the las
 Replaces Figure 8 of the original submission. Script `reporting/figs/fig_tft.py`. Drawn from
 `src/models/tft.py` (read, not imported); the counts, day 0 and target gaps are read from
 `configs/phase4.yaml`. Writes `figures/main/fig_tft.png`, `.pdf` and `.svg`.
+
+
+## fig_pond_scores
+
+Per-pond mean absolute log error S for every prespecified model on the eligible
+leave-one-pond-out samples. Panels show T1 and T2 at 14 and 28 days ahead. Models follow
+the configured order within the labelled groups; sensitivity variants and post hoc results
+are excluded. Coloured circles are ponds; black diamonds are the saved model S, the mean
+over scored ponds. Neural S values are the saved means over five seeds. The primary pair
+is labelled from inner-validation selection. T1 uses a symmetric-logarithmic horizontal
+axis, linear from 0 to 0.5 and logarithmic above, to retain the large ridge errors. A light
+vertical line at 0.5 and a note below the axis mark this change; T2 axes are linear. T2 Ridge
+(past weights + WQ) stopped because a learned-model run produced a non-finite prediction
+under plan 9.0; its row has no score or pond dots. An infinite S would be shown by an arrow
+at the right edge, annotated with the saved count of predictions at or below 0 g; no such
+prediction occurs among the models plotted here. Lower S means smaller error.
+
+Script `reporting/figs/fig_pond_scores.py`. Saved data sources:
+`results/metrics/completeness.csv`,
+`results/metrics/per_pond.csv`,
+`results/metrics/scores.csv`,
+`results/selection/primary_T1.json`,
+`results/selection/primary_T2.json`.
+Configuration `configs/phase4.yaml`; style `reporting/figstyle.py`; display labels `reporting/names.py`.
+Writes `figures/main/fig_pond_scores.png` and `figures/main/fig_pond_scores.pdf`.
+Rebuild from the repository root with `env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs .venv/bin/python -I reporting/figs/fig_pond_scores.py`.
+
+
+## fig_confirmatory
+
+Differences in S between the primary deep model and primary baseline,
+with descriptive pond-bootstrap 95% percentile intervals. Panels show T1, LSTM minus Cohort
+mean; T2 at 14 days ahead, CNN-LSTM minus Ridge (past weights); and T2 at 28 days ahead,
+the same pair. Black diamonds and horizontal bars are the saved mean difference and interval
+from pairwise.csv. Each coloured dot is a pond's saved seed-averaged S for the primary deep
+model minus its saved S for the primary baseline, read from per_pond.csv for LOPO, eligible
+samples and the panel's task-horizon. Small vertical offsets separate the seven pond dots;
+pond colours are fixed across figures. Negative values favour the deep model. One-sided exact Wilcoxon p-values
+come from confirmatory.csv for T1 and T2 at 14 days, and pairwise.csv for the descriptive
+28-day comparison. The T2 14-day step was not tested in the fixed sequence because T1 did
+not reject; its saved nominal p-value is displayed with that status. P-values are displayed
+to three decimals. The intervals
+are descriptive and are not the fixed-sequence rejection rule.
+
+Script `reporting/figs/fig_confirmatory.py`. Saved data sources:
+`results/metrics/per_pond.csv`,
+`results/selection/primary_T1.json`,
+`results/selection/primary_T2.json`,
+`results/stats/confirmatory.csv`,
+`results/stats/pairwise.csv`.
+Configuration `configs/phase4.yaml`; style `reporting/figstyle.py`; display labels `reporting/names.py`.
+Writes `figures/main/fig_confirmatory.png` and `figures/main/fig_confirmatory.pdf`.
+Rebuild from the repository root with `env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs .venv/bin/python -I reporting/figs/fig_confirmatory.py`.
+
+
+## fig_permutation
+
+Saved permutation distributions of S under leave-one-pond-out validation, with
+the observed S as a black vertical line. Columns follow the configured water-quality tabular
+models, then the selected primary deep model; rows show T1 and T2 at 14 days ahead.
+Each histogram counts the saved permutation runs, using 25 equal-width bins. The p-values
+are read from the saved permutation statistics and displayed to three decimals, with the
+lower-tail rule of plan 8.2.
+Tabular models use 999 permutations and deep models 199. The observed and permuted deep
+runs use seed 0, rather than the five-seed mean used in the score figures. Water-quality
+values and masks are reassigned jointly between stream units within a date, with model
+settings fixed. T2 Ridge (past weights + WQ) has no saved permutation distribution because
+its original LOPO run stopped under plan 9.0; panel (d) states that no permutation test was run.
+These distributions concern pond-specific sensor information and do not establish a causal
+effect of water quality on growth.
+
+Script `reporting/figs/fig_permutation.py`. Saved data sources:
+`results/metrics/completeness.csv`,
+`results/permutation/T1/gbm_time_wq.csv`,
+`results/permutation/T1/lstm.csv`,
+`results/permutation/T1/ridge_time_wq.csv`,
+`results/permutation/T2/cnn_lstm.csv`,
+`results/permutation/T2/gbm_pw_wq.csv`,
+`results/selection/primary_T1.json`,
+`results/selection/primary_T2.json`,
+`results/stats/permutation.csv`.
+Configuration `configs/phase4.yaml`; style `reporting/figstyle.py`; display labels `reporting/names.py`.
+Writes `figures/main/fig_permutation.png` and `figures/main/fig_permutation.pdf`.
+Rebuild from the repository root with `env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs .venv/bin/python -I reporting/figs/fig_permutation.py`.
+
+
+## fig_trajectories
+
+T1 weight estimation under leave-one-pond-out validation, one panel per pond
+with eligible scored events. The eighth position of the 2 by 4 grid is unused because pond 8
+has no eligible event. Filled circles are real weighings, including unscored weighings for
+context. Hollow markers and line styles distinguish the fixed shown models: the primary
+baseline and deep model, the configured permutation-test tabular models, and Static MLP.
+Predictions occur only at eligible event dates; connecting segments are visual guides and
+do not add observations or daily predictions. LSTM and Static MLP predictions are arithmetic
+means of predicted grams across the five seeds. Light bands span the seed minimum and
+maximum; vertical ranges make the spread visible at individual dates. Every panel uses a
+logarithmic gram axis with one shared range that includes every real weighing shown. A
+prediction outside that range is an open triangle at the panel edge pointing outward, with
+its value labelled in grams. The calendar axis ends on 31 October 2021; later weighings,
+which were not scored, are not shown. Pond colours are fixed across figures. LOPO transfers between ponds over an
+overlapping calendar period and does not test forecasting into an unseen future.
+
+Script `reporting/figs/fig_trajectories.py`. Saved data sources:
+`data/processed/events.csv`,
+`results/predictions/T1/lopo/cohort_mean.csv`,
+`results/predictions/T1/lopo/gbm_time_wq.csv`,
+`results/predictions/T1/lopo/lstm.csv`,
+`results/predictions/T1/lopo/mlp_static.csv`,
+`results/predictions/T1/lopo/ridge_time_wq.csv`,
+`results/selection/primary_T1.json`.
+Configuration `configs/phase4.yaml`; style `reporting/figstyle.py`; display labels `reporting/names.py`.
+Writes `figures/main/fig_trajectories.png` and `figures/main/fig_trajectories.pdf`.
+Rebuild from the repository root with `env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs .venv/bin/python -I reporting/figs/fig_trajectories.py`.
+
+
+## fig_t2_scatter
+
+T2 target-weight predictions against observed weight under leave-one-pond-out
+validation, at 14 and 28 days ahead. Both axes show grams on a logarithmic scale with equal
+limits; the dashed diagonal is equality. Pond colours and model-specific marker shapes
+identify the eligible origin-target samples of the fixed shown-model set. Separate legend
+blocks show models by marker and ponds by colour. CNN-LSTM and
+Static MLP points are arithmetic means of predicted grams across the five seeds; the other
+models are deterministic. The selected baseline is Ridge (past weights), whose inputs also
+include time. Ridge (past weights + WQ) has no points because its LOPO run stopped under
+plan 9.0, and its legend entry records that absence. T2 evaluates transfer of growth over
+14 or 28 days between ponds during an overlapping calendar period. The 28-day comparison
+is descriptive; neither panel is a test of forecasting into an unseen future.
+
+Script `reporting/figs/fig_t2_scatter.py`. Saved data sources:
+`results/metrics/completeness.csv`,
+`results/predictions/T2/lopo/cnn_lstm.csv`,
+`results/predictions/T2/lopo/gbm_pw_wq.csv`,
+`results/predictions/T2/lopo/mlp_static.csv`,
+`results/predictions/T2/lopo/persistence.csv`,
+`results/predictions/T2/lopo/ridge_pw.csv`,
+`results/selection/primary_T2.json`.
+Configuration `configs/phase4.yaml`; style `reporting/figstyle.py`; display labels `reporting/names.py`.
+Writes `figures/main/fig_t2_scatter.png` and `figures/main/fig_t2_scatter.pdf`.
+Rebuild from the repository root with `env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs .venv/bin/python -I reporting/figs/fig_t2_scatter.py`.
+
+
+## fig_calendar
+
+Descriptive T1 calendar hold-out, one panel per pond with a test event.
+The dashed line marks the cut-off, 28 August 2021. Filled circles are real weighings from
+the displayed period, including unscored events for context. Hollow markers show saved
+predictions only on eligible test dates on or after the cut-off; no later weighing enters
+training. Line styles distinguish the primary pair, the configured permutation-test tabular
+models and Static MLP. Neural predictions are arithmetic means in grams over the five seeds,
+with light bands and vertical ranges spanning the minimum to maximum seed prediction.
+Panels share one logarithmic gram range that includes every real weighing shown. A
+prediction outside the range is an open triangle at the panel edge pointing outward, with
+its value labelled in grams. The common calendar axis ends on 31 October 2021; later
+weighings, which were not scored, are not shown. Connecting
+segments only join saved test predictions; they are not daily estimates. A pond with one
+test event has markers and ranges but no prediction line segment. The empty eighth grid
+position corresponds to no additional test pond. This hold-out is descriptive, with no
+p-value or confidence interval; seed ranges describe fitted-seed variation only.
+
+Script `reporting/figs/fig_calendar.py`. Saved data sources:
+`data/processed/events.csv`,
+`results/predictions/T1/chrono/cohort_mean.csv`,
+`results/predictions/T1/chrono/gbm_time_wq.csv`,
+`results/predictions/T1/chrono/lstm.csv`,
+`results/predictions/T1/chrono/mlp_static.csv`,
+`results/predictions/T1/chrono/ridge_time_wq.csv`,
+`results/selection/primary_T1.json`.
+Configuration `configs/phase4.yaml`; style `reporting/figstyle.py`; display labels `reporting/names.py`.
+Writes `figures/supp/fig_calendar.png` and `figures/supp/fig_calendar.pdf`.
+Rebuild from the repository root with `env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs .venv/bin/python -I reporting/figs/fig_calendar.py`.
+
+
+## fig_learning_curves
+
+Saved learning curves for all four deep models and Static MLP under
+leave-one-pond-out validation. Columns show T1 and T2; rows follow the configured neural
+model order. Dashed lines are validation MSE from the chosen trial only, one line for each
+outer-fold and inner-fold combination, using tuning seed 0. Thin solid lines are training
+MSE for each final outer-fold and seed fit, using seeds 0 to 4. Colour identifies the pond
+held out in the outer fold. Open squares mark the final training epoch for every final-fit
+seed; short marks along the top show the configured final epoch count read from chosen.csv
+for each outer fold. MSE is on the fold-standardized target, log weight for T1 and log target
+to origin weight ratio for T2. No final-fit validation or outer-test loss is drawn. Axes
+retain every saved epoch of these selected curves; loss and epoch limits vary by panel.
+These are training diagnostics, not an additional model comparison or hypothesis test.
+
+Script `reporting/figs/fig_learning_curves.py`. Saved data sources:
+`results/tuning/T1/lopo/cnn_lstm/chosen.csv`,
+`results/tuning/T1/lopo/cnn_lstm/curves.csv.gz`,
+`results/tuning/T1/lopo/gru/chosen.csv`,
+`results/tuning/T1/lopo/gru/curves.csv.gz`,
+`results/tuning/T1/lopo/lstm/chosen.csv`,
+`results/tuning/T1/lopo/lstm/curves.csv.gz`,
+`results/tuning/T1/lopo/mlp_static/chosen.csv`,
+`results/tuning/T1/lopo/mlp_static/curves.csv.gz`,
+`results/tuning/T1/lopo/tft/chosen.csv`,
+`results/tuning/T1/lopo/tft/curves.csv.gz`,
+`results/tuning/T2/lopo/cnn_lstm/chosen.csv`,
+`results/tuning/T2/lopo/cnn_lstm/curves.csv.gz`,
+`results/tuning/T2/lopo/gru/chosen.csv`,
+`results/tuning/T2/lopo/gru/curves.csv.gz`,
+`results/tuning/T2/lopo/lstm/chosen.csv`,
+`results/tuning/T2/lopo/lstm/curves.csv.gz`,
+`results/tuning/T2/lopo/mlp_static/chosen.csv`,
+`results/tuning/T2/lopo/mlp_static/curves.csv.gz`,
+`results/tuning/T2/lopo/tft/chosen.csv`,
+`results/tuning/T2/lopo/tft/curves.csv.gz`.
+Configuration `configs/phase4.yaml`; style `reporting/figstyle.py`; display labels `reporting/names.py`.
+Writes `figures/supp/fig_learning_curves.png` and `figures/supp/fig_learning_curves.pdf`.
+Rebuild from the repository root with `env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs .venv/bin/python -I reporting/figs/fig_learning_curves.py`.
+
+
+## fig_ablation
+
+Descriptive ablation scores on the eligible leave-one-pond-out samples, shown
+for T1 and T2 at 14 and 28 days ahead. T1 includes time, water quality, time plus water
+quality, and time plus water quality plus length, for ridge and gradient boosting. T2
+includes past weights plus time, with and without water quality. Names follow the shared
+model labels; T2's past-weight models also include time. Coloured dots are the saved
+per-pond S and black diamonds the saved mean S over ponds. Model order follows the feature
+sets of plan 8.1 within each estimator. T1's symmetric-logarithmic axis is linear from 0 to
+0.5 and logarithmic above, with the change marked by a light vertical line at 0.5 and a note
+below the axis; T2 axes are linear. The T2 ridge model with water quality stopped under plan 9.0 and
+has no dots. These comparisons are descriptive; length is available only in the T1 ablation
+and reference analyses, not as an input to the primary T1 models.
+
+Script `reporting/figs/fig_ablation.py`. Saved data sources:
+`results/metrics/completeness.csv`,
+`results/metrics/per_pond.csv`,
+`results/metrics/scores.csv`,
+`results/selection/primary_T1.json`,
+`results/selection/primary_T2.json`.
+Configuration `configs/phase4.yaml`; style `reporting/figstyle.py`; display labels `reporting/names.py`.
+Writes `figures/supp/fig_ablation.png` and `figures/supp/fig_ablation.pdf`.
+Rebuild from the repository root with `env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs .venv/bin/python -I reporting/figs/fig_ablation.py`.
