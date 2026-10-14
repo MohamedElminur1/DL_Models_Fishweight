@@ -792,6 +792,75 @@ def _cross_pond(slim: dict[int, pd.DataFrame]) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+# Pond_b clock-time shifts, in hours, applied before matching in `_cross_pond_clock`.
+CLOCK_SHIFTS_H = (-2, -1, 0, 1, 2)
+
+
+def _cross_pond_clock(slim: dict[int, pd.DataFrame]) -> pd.DataFrame:
+    """Overlap on naive clock time for every pond pair at every shift in CLOCK_SHIFTS_H.
+
+    Pond_b's clock times are moved by the shift before matching on `ts` to the second.
+    Rows without a clock time (date-only, missing, unparsed) take no part. A sensor is
+    identical on a matched row when both values are present and equal; NaN against NaN
+    is not identical. `n_matched_pairs` counts row pairs, as in `_cross_pond`.
+    """
+    rows = []
+    for a, b in itertools.combinations(POND_IDS, 2):
+        left = slim[a].loc[slim[a]["ts"].notna(), ["ts", *SENSOR_VARS]]
+        base = slim[b].loc[slim[b]["ts"].notna(), ["ts", *SENSOR_VARS]]
+        for shift in CLOCK_SHIFTS_H:
+            right = base.assign(ts=base["ts"] + pd.Timedelta(hours=shift))
+            matched = left.merge(right, on="ts", suffixes=("_a", "_b"))
+            identical = {}
+            for var in SENSOR_VARS:
+                va = matched[f"{var}_a"]
+                vb = matched[f"{var}_b"]
+                identical[var] = (va.notna() & vb.notna() & (va == vb)).to_numpy()
+            all_six = np.logical_and.reduce([identical[var] for var in SENSOR_VARS])
+            row = {"pond_a": a, "pond_b": b, "shift_hours": shift, "n_matched_pairs": len(matched)}
+            for var in SENSOR_VARS:
+                row[f"frac_identical_{var}"] = float(identical[var].mean()) if len(matched) else float("nan")
+            row["n_all_six_identical"] = int(all_six.sum())
+            rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def _shift_text(shift: int) -> str:
+    """Shift in hours as written in AUDIT_REPORT.md: 0 h, +1 h, -2 h."""
+    return "0 h" if shift == 0 else f"{shift:+d} h"
+
+
+def _clock_paragraph(clock: pd.DataFrame) -> str:
+    """Paragraph for AUDIT_REPORT.md section 9: the pond pairs and shifts with all-six-identical rows."""
+    pairs = len(clock[["pond_a", "pond_b"]].drop_duplicates())
+    hits = clock.loc[clock["n_all_six_identical"] > 0]
+    text = (
+        f"Clock-time comparison (cross_pond_duplicates_clock.csv). Each of the {pairs} pond pairs was matched "
+        f"on naive clock time to the second at {len(CLOCK_SHIFTS_H)} shifts of pond_b "
+        f"({', '.join(_shift_text(s) for s in CLOCK_SHIFTS_H)}), {len(clock)} combinations in total. "
+        "A positive shift moves pond_b's clock times later before matching. "
+        "Rows without a clock time take no part. "
+        "A row pair is all-six-identical when all six sensor values are present on both rows and equal. "
+    )
+    if hits.empty:
+        return text + "No pair has an all-six-identical matched row at any shift."
+    details = "; ".join(
+        f"at shift {_shift_text(int(r.shift_hours))} ({int(r.n_all_six_identical)} rows)"
+        for r in hits.itertuples(index=False)
+    )
+    if bool(((hits["pond_a"] == 1) & (hits["pond_b"] == 2)).all()):
+        return text + (
+            f"Only pond 01 and pond 02 have all-six-identical rows, {details}. "
+            "No other pair has one at any shift."
+        )
+    named = "; ".join(
+        f"pond {int(r.pond_a):02d} and pond {int(r.pond_b):02d} at shift {_shift_text(int(r.shift_hours))} "
+        f"({int(r.n_all_six_identical)} rows)"
+        for r in hits.itertuples(index=False)
+    )
+    return text + f"All-six-identical rows occur for: {named}."
+
+
 # ---------------------------------------------------------------- notebook test series
 
 
@@ -1114,6 +1183,7 @@ def write_report(
     nonnum = tables["nonnumeric_cells"]
     runs = tables["ts_runs"]
     schema = tables["schema"]
+    clock = tables["cross_pond_clock"]
 
     per_pond = []
     for pond in POND_IDS:
@@ -1352,6 +1422,8 @@ def write_report(
         "",
         _md_table(cross_nonzero) if len(cross_nonzero) else "None.",
         "",
+        _clock_paragraph(clock),
+        "",
         "## 10. Original test series, pond 2 (step_row12000.md)",
         "",
         f"N = {series.n_retained} rows after `dropna()`, train_size = {series.train_size}, "
@@ -1404,6 +1476,7 @@ def main() -> None:
 
     summary = pd.DataFrame([a.summary for a in audits])
     cross = _cross_pond({a.pond: a.slim for a in audits})
+    cross_clock = _cross_pond_clock({a.pond: a.slim for a in audits})
     tables = {
         "schema": stack("schema"),
         "summary": summary,
@@ -1420,6 +1493,7 @@ def main() -> None:
         "nonnumeric_cells": stack("nonnumeric"),
         "order_and_duplicate_faults": stack("faults"),
         "ts_runs": stack("ts_runs"),
+        "cross_pond_clock": cross_clock,
     }
     output_names = {
         "schema": "schema.csv",
@@ -1440,6 +1514,7 @@ def main() -> None:
     for key, filename in output_names.items():
         tables[key].to_csv(RESULTS / filename, index=False)
     cross.to_csv(RESULTS / "cross_pond_duplicates.csv", index=False)
+    cross_clock.to_csv(RESULTS / "cross_pond_duplicates_clock.csv", index=False)
 
     series = original_series()
     pond2_segments = next(a.label_segments for a in audits if a.pond == 2)

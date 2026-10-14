@@ -5,7 +5,7 @@ of that script; the file in brackets holds the full table. Row numbers are 0-bas
 rows (header excluded), so the file line is row + 2. No row is dropped in any table
 except where the text says so (`dropna()` in the notebook replication).
 
-Run: 2026-10-14 10:18:13 UTC; runtime 76.2 s; python 3.12.3;
+Run: 2026-10-14 10:53:08 UTC; runtime 82.8 s; python 3.12.3;
 pandas 3.0.6; Linux-7.0.0-1011-gcp-x86_64-with-glibc2.39; 4 CPU cores.
 
 ## 0. Inputs
@@ -335,6 +335,8 @@ Pairs with at least one matched row on the raw timestamp string:
 | 9 | 11 | 9 | 9 | 0 | 1109 | 9 | 0 | 0 | 0 | 2021-07-07 18:29:46 CET | 2021-07-08 10:49:32 CET |
 | 9 | 12 | 1 | 1 | 0 | 1310 | 1 | 0 | 0 | 0 | 2021-06-25 15:28:43 CET | 2021-06-25 15:28:43 CET |
 | 10 | 11 | 4 | 4 | 5 | 620 | 4 | 0 | 0 | 0 | 2021-06-25 17:28:46 CET | 2021-06-25 17:31:19 CET |
+
+Clock-time comparison (cross_pond_duplicates_clock.csv). Each of the 55 pond pairs was matched on naive clock time to the second at 5 shifts of pond_b (-2 h, -1 h, 0 h, +1 h, +2 h), 275 combinations in total. A positive shift moves pond_b's clock times later before matching. Rows without a clock time take no part. A row pair is all-six-identical when all six sensor values are present on both rows and equal. Only pond 01 and pond 02 have all-six-identical rows, at shift 0 h (58309 rows). No other pair has one at any shift.
 
 ## 10. Original test series, pond 2 (step_row12000.md)
 

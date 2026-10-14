@@ -1,0 +1,99 @@
+# Phase 4 data pipeline: every threshold and constant of src/events.py, src/qc.py and
+# src/features.py. Specification: ANALYSIS_PLAN.md sections 2 to 5 and
+# tasks/phase4_experiments.md steps 1 to 3 (Gate 1 values in DECISIONS.md).
+# Run from the repo root, in this order:
+#   .venv/bin/python -I src/events.py
+#   .venv/bin/python -I src/qc.py
+#   .venv/bin/python -I src/features.py
+# Changing a value here changes the data the models see; do it only through the lead.
+
+paths:
+  grid_check: results/audit/grid_check.csv             # read-only reference for the events check
+  events: data/processed/events.csv
+  grid_precision: results/events/grid_precision.csv
+  qc_counts: results/qc/qc_counts.csv
+  qc_rows: "data/interim/qc_rows_pond{pond:02d}.csv.gz"  # pyarrow is not installed: gzip CSV
+  daily_wq: data/processed/daily_wq.csv
+  wq_by_date: data/processed/wq_by_date.csv
+  coverage: results/qc/coverage.csv
+  interpolation_counts: results/qc/interpolation_counts.csv
+  t1_table: data/processed/t1_table.csv
+  t2_table: data/processed/t2_table.csv
+  eligibility: results/qc/eligibility.csv
+  run_log: results/logs/data_pipeline.csv
+
+cohort:
+  ponds: [1, 2, 3, 4, 6, 7, 8, 9]
+  day0: "2021-06-19"                 # t = days since this date, for every cohort pond
+  grid:                              # sampling dates day0 + period_days * k
+    period_days: 14
+    k_first: 0
+    k_last: 16
+  # Gate 1 table in DECISIONS.md: real events per cohort pond. events.py stops on any difference.
+  expected_events: {1: 6, 2: 9, 3: 6, 4: 14, 6: 15, 7: 9, 8: 3, 9: 8}
+
+# Sensor stream of each cohort pond (Gate 1: ponds 1 and 2 are one stream). The name is
+# written to events, T1, T2 and wq_by_date as the `stream` column.
+streams: {1: S12, 2: S12, 3: S03, 4: S04, 6: S06, 7: S07, 8: S08, 9: S09}
+
+# grid_precision.csv: a weight has "2 decimals" when it differs from its rounding to `decimals`
+# places by at most `tolerance` (grams).
+grid_precision:
+  decimals: 2
+  tolerance: 1.0e-9
+
+# Sensors in output order. `name` is used in every output file; `raw` is the column of
+# load_pond. Bounds are applied to the raw value; `log10: true` transforms the value that
+# passed QC before any daily statistic. A null bound means no bound on that side.
+sensors:
+  - {name: temperature,   raw: temperature, lo: 10, lo_inclusive: true,  hi: 40,   hi_inclusive: true, log10: false}
+  - {name: turbidity,     raw: turbidity,   lo: 0,  lo_inclusive: true,  hi: 100,  hi_inclusive: true, log10: false}
+  - {name: do,            raw: do,          lo: 0,  lo_inclusive: false, hi: 20,   hi_inclusive: true, log10: false}
+  - {name: ph,            raw: ph,          lo: 0,  lo_inclusive: true,  hi: 14,   hi_inclusive: true, log10: false}
+  - {name: ammonia_log10, raw: ammonia,     lo: 0,  lo_inclusive: false, hi: 500,  hi_inclusive: true, log10: true}
+  - {name: nitrate,       raw: nitrate,     lo: 0,  lo_inclusive: false, hi: null, hi_inclusive: true, log10: false}
+
+qc:
+  ts_kinds: [datetime_label, iso_offset]   # only rows with a clock time enter the sensor pipeline
+  # Before QC, a timestamped row that repeats an earlier row (lower file row) in every one of
+  # these columns is dropped. Missing values compare equal to each other.
+  duplicate_key_columns: [ts_raw, entry_id, temperature, turbidity, do, ph, ammonia, nitrate,
+                          population, length, weight]
+  # Flat-line test, per sensor, on raw values in timestamp order (ties by file row). A run is a
+  # maximal sequence of consecutive rows with the identical finite value. It ends at a missing
+  # or non-finite value, and where two consecutive timestamped rows are more than
+  # flatline_max_gap_hours apart. A run whose last ts minus first ts is at least flatline_hours
+  # is invalid as a whole.
+  flatline_hours: 24
+  flatline_max_gap_hours: 1
+
+# The daily table of every cohort pond runs from first_date to the last grid date
+# (cohort.grid), so each grid date has its windows whether or not the pond has an event there.
+daily:
+  first_date: "2021-05-22"   # 28 days before day 0
+  min_hours: 12              # distinct clock hours with a valid value for an observed sensor-day
+  max_gap_days: 2            # longest run of missing sensor-days that is interpolated
+  min_sensors_covered: 3     # sensors with a value for a covered day
+  sd_ddof: 0                 # daily SD is the population SD; the statistics are mean, sd, min, max
+
+# A window for a reference date d (event or origin) is the days before d; d itself is never in
+# it. An interpolated sensor-day whose right anchor is d or later counts as missing for d.
+windows:
+  t1_days: 14                # T1: the dates d_e - 14 to d_e - 1
+  t2_days: 28                # T2: the dates d_k - 28 to d_k - 1
+  min_sensor_days: 3         # a sensor's window (or cumulative) features need a value on this many days
+  horizon_days: 14           # T2 sample for horizon h needs an event dated origin_date + horizon_days * h
+  horizons: [1, 2]
+
+# data/processed/wq_by_date.csv: the window features of every cohort pond at every grid date
+# k_first .. cohort.grid.k_last, with or without an event there. T1 and T2 tables are joined
+# from it. Columns carry the prefix t1_ (14-day T1 window and cumulative means) or t2_
+# (28-day T2 window); the supplementary window-length sensitivity windows are listed here as
+# column prefix -> length in days (window features and n_covered_window only).
+wq_by_date:
+  k_first: 1
+  sensitivity_windows: {t1w07: 7, t1w28: 28, t2w14: 14, t2w42: 42}
+
+eligibility:
+  t1_min_covered_days: 7
+  t2_min_covered_days: 14
