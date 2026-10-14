@@ -27,3 +27,4 @@ results/**/*.db
 results/dev/
 results/**/*.lock
 results/**/*.parts/
+reporting/**/codex_run.log
