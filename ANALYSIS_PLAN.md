@@ -1,14 +1,16 @@
-# ANALYSIS PLAN (draft v0.5, not frozen)
+# ANALYSIS PLAN (v1.0, frozen)
 
-Status: draft by the lead, 2026-10-14. v0.2 filled in the Gate 1 items (`DECISIONS.md`).
+Status: frozen by the lead on 2026-10-14 with the annotated git tag `analysis-plan-frozen`.
+v1.0 is v0.5 with the training and test counts of §7.4 written out and the frozen paths
+listed below. v0.2 filled in the Gate 1 items (`DECISIONS.md`).
 v0.3 answers the pre-freeze statistical review (`results/plan_review.md`, items 1 to 17).
 v0.4 fills in the counts and the cut-off date from the data pipeline (`src/events.py`,
 `src/qc.py`, `src/features.py`; `results/qc/eligibility.csv`), computed before any model of
 the new design was run. v0.5 adopts the re-review (`results/plan_review_v03.md`, N1 to N7).
 Eight cohort ponds enter the analysis; seven have scored samples. The annotated git tag
-`analysis-plan-frozen` freezes this file together with `src/` and `configs/` (§12). Before
-the tag, no model of the new design is evaluated on any test sample and no inner-validation
-error is looked at.
+`analysis-plan-frozen` freezes this file together with `src/`, `configs/`, `data/processed/`
+and `uv.lock` (§12). Before the tag, no model of the new design is evaluated on any test
+sample and no inner-validation error is looked at.
 
 ## 1. Question
 
@@ -206,12 +208,12 @@ fold (tuning uses seed 0). Gradient boosting and ridge are deterministic.
 
 7.4 Calendar hold-out, descriptive only (no p-values, no intervals). Cut-off date
 c = 2021-08-28 (t = 70), the latest grid date such that at least 10 eligible T1 events in at
-least 5 ponds are dated on or after c: 11 T1 events in 7 ponds; T2 test samples: 10 (h = 1)
-and 12 (h = 2). T1: train on eligible events dated before c, test on those dated c
-or later. T2: train on eligible samples whose target is dated before c; test on those whose target is
-dated c or later and whose origin is dated c - 14 days or later (10 samples at h = 1, 5 at
-h = 2); samples with a target on or after c and an earlier origin are used for neither and
-are counted. Nothing dated c or later enters training, same-date baselines included (they
+least 5 ponds are dated on or after c: 11 T1 events in 7 ponds. T1: train on the 24 eligible
+events dated before c, test on the 11 dated c or later. T2: train on eligible samples whose
+target is dated before c (19 at h = 1, 12 at h = 2); test on those whose target is dated c or
+later and whose origin is dated c - 14 days or later (10 samples in 7 ponds at h = 1, 5 in 4
+ponds at h = 2); the 7 samples at h = 2 with a target on or after c and an earlier origin are
+used for neither and are counted. Nothing dated c or later enters training, same-date baselines included (they
 fall back as in §6.1). Tuning: one inner split whose validation set is the training samples
 at the latest training date. Same budgets and seeds as §7.2-7.3. T1 test dates (t >= 70) lie
 beyond all training dates (t <= 56), so tree models predict a constant in t there; this is

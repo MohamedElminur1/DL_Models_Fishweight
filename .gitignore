@@ -25,3 +25,5 @@ tmp/
 # Optuna SQLite studies (trials are exported to CSV next to them)
 results/**/*.db
 results/dev/
+results/**/*.lock
+results/**/*.parts/

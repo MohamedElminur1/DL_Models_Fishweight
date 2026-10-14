@@ -1,0 +1,233 @@
+# Phase 4 modelling configuration: validation design, search spaces, budgets and seeds.
+# Specification: ANALYSIS_PLAN.md sections 5 to 9, 12 and 13, and tasks/phase4_experiments.md
+# steps 4 to 8. No script carries its own copy of these values. The data pipeline has its
+# own file, configs/phase4_data.yaml.
+# Run from the repo root:
+#   .venv/bin/python -I src/train.py --task T1 --scheme lopo --model ridge_time --dev
+#   .venv/bin/python -I src/train.py --task T1 --scheme lopo --model ridge_time      (after the freeze)
+#   .venv/bin/python -I src/select_primary.py --task T1                              (after the LOPO runs)
+#   .venv/bin/python -I src/permute.py --task T1 --model ridge_time_wq               (after the freeze)
+#   .venv/bin/python -I src/evaluate.py                                              (after the freeze)
+# This file is frozen with the analysis plan (plan 12). Changing a value afterwards changes
+# the analysis; do it only through the lead and an analysis-fix tag.
+
+paths:
+  t1_table: data/processed/t1_table.csv
+  t2_table: data/processed/t2_table.csv
+  daily_wq: data/processed/daily_wq.csv
+  wq_by_date: data/processed/wq_by_date.csv
+  results: results
+  dev_results: results/dev             # --dev writes here and nowhere else
+
+# The freeze tag, the plan file and the paths the tag covers are fixed in src/guard.py, not
+# here, so that the guard cannot be pointed at another tag through a config edit.
+
+design:
+  cohort: [1, 2, 3, 4, 6, 7, 8, 9]
+  shared_streams: [[1, 2]]             # ponds that share one sensor stream (Gate 1)
+  n_inner_folds: 3
+  day0: "2021-06-19"                   # t = days since this date
+  sensors: [temperature, turbidity, do, ph, ammonia_log10, nitrate]
+  stats: [mean, sd, min, max]
+  t2_window_days: 28                   # T2 sequence: the 28 days before the origin date
+  horizons: [1, 2]
+  horizon_days: 14                     # horizon h: target dated exactly 14 h days after the origin
+
+seeds:
+  sampler: 0                           # Optuna TPE sampler seed
+  tuning: 0                            # training seed of every tuning trial
+  final: [0, 1, 2, 3, 4]               # final-fit seeds of the deep models (plan 7.3)
+  gbm: 0                               # HistGradientBoostingRegressor random_state
+  bootstrap: 20261014                  # plan 9.3
+
+budget:
+  n_trials: 20                         # per model per outer fold (gradient boosting and deep)
+  max_epochs: 300
+  patience: 30
+
+# --dev: inner folds of the first outer fold only, no final fit, no outer test prediction, and
+# no error or objective value is printed, logged or written (plan 12).
+dev:
+  n_trials: 3
+
+# Calendar hold-out (plan 7.4), descriptive. `cutoff` is the date c: the latest grid date such
+# that at least `min_events` eligible T1 events in at least `min_ponds` ponds are dated on or
+# after c. The lead set 2021-08-28 from the eligibility counts; `.venv/bin/python -I
+# src/folds.py` prints the date the rule gives so the two can be compared. A chrono run
+# refuses to start when the value is null or differs from the rule's date.
+# T2 test samples have target on or after c and origin on or after c minus
+# `test_origin_margin_days`; samples with a late target and an earlier origin are used for
+# neither training nor test and are counted in the run log.
+chrono:
+  cutoff: "2021-08-28"
+  min_events: 10
+  min_ponds: 5
+  test_origin_margin_days: 14
+
+# Which models belong to which group. `time_only` is the pool for the primary baseline and
+# `deep` the pool for the primary deep model (plan 9.4, src/select_primary.py).
+# `all_sample_set` models may also run with --sample-set all, on all events with t > 0
+# (plan 4.1, secondary table). `sensitivity` models are descriptive (plan 8.3).
+models:
+  T1:
+    time_only: [gc, cohort_mean, ridge_time, gbm_time]
+    water_quality: [ridge_wq, gbm_wq, ridge_time_wq, gbm_time_wq, ridge_time_wq_len, gbm_time_wq_len]
+    reference: [allometric]
+    deep: [lstm, gru, cnn_lstm, tft]
+    static_only: [mlp_static]
+    sensitivity: [ridge_time_wq_noind, ridge_time_wq_w07, gbm_time_wq_w07, ridge_time_wq_w28, gbm_time_wq_w28]
+    all_sample_set: [gc, cohort_mean, ridge_time, gbm_time]
+  T2:
+    time_only: [persistence, linear, sgr, anchored_gc, cohort_growth, ridge_pw, gbm_pw]
+    water_quality: [ridge_pw_wq, gbm_pw_wq]
+    reference: []
+    deep: [lstm, gru, cnn_lstm, tft]
+    static_only: [mlp_static]
+    sensitivity: [ridge_pw_wq_noind, ridge_pw_wq_w14, gbm_pw_wq_w14, ridge_pw_wq_w42, gbm_pw_wq_w42]
+    all_sample_set: []
+
+# Feature groups of the tabular models (plan 5.1). `wq` expands to the 24 window features
+# {sensor}_{stat}_w and, in T1, the 6 cumulative features {sensor}_mean_cum.
+feature_groups:
+  T1:
+    time: [t, t2]
+    length: [log_l]
+  T2:
+    time: [t_k, dt_prev, dt_target]
+    past_weights: [log_w_k, log_w_prev]
+
+# One entry per tabular model. `groups`: the feature groups in order. `wq_prefix`: take the 24
+# window features from the window columns of data/processed/wq_by_date.csv with this prefix
+# ({prefix}_{sensor}_{stat}_w, the supplementary window lengths of plan 8.3); the T1
+# cumulative features stay those of the T1 table. `indicators: false`: ridge without the
+# missing-sensor indicators (plan 8.3). Ridge and gbm models are told apart by their prefix.
+model_features:
+  T1:
+    ridge_time:           {groups: [time]}
+    gbm_time:             {groups: [time]}
+    ridge_wq:             {groups: [wq]}
+    gbm_wq:               {groups: [wq]}
+    ridge_time_wq:        {groups: [time, wq]}
+    gbm_time_wq:          {groups: [time, wq]}
+    ridge_time_wq_len:    {groups: [time, wq, length]}
+    gbm_time_wq_len:      {groups: [time, wq, length]}
+    ridge_time_wq_noind:  {groups: [time, wq], indicators: false}
+    ridge_time_wq_w07:    {groups: [time, wq], wq_prefix: t1w07}
+    gbm_time_wq_w07:      {groups: [time, wq], wq_prefix: t1w07}
+    ridge_time_wq_w28:    {groups: [time, wq], wq_prefix: t1w28}
+    gbm_time_wq_w28:      {groups: [time, wq], wq_prefix: t1w28}
+  T2:
+    ridge_pw:             {groups: [past_weights, time]}
+    gbm_pw:               {groups: [past_weights, time]}
+    ridge_pw_wq:          {groups: [past_weights, time, wq]}
+    gbm_pw_wq:            {groups: [past_weights, time, wq]}
+    ridge_pw_wq_noind:    {groups: [past_weights, time, wq], indicators: false}
+    ridge_pw_wq_w14:      {groups: [past_weights, time, wq], wq_prefix: t2w14}
+    gbm_pw_wq_w14:        {groups: [past_weights, time, wq], wq_prefix: t2w14}
+    ridge_pw_wq_w42:      {groups: [past_weights, time, wq], wq_prefix: t2w42}
+    gbm_pw_wq_w42:        {groups: [past_weights, time, wq], wq_prefix: t2w42}
+
+# Static inputs of the sequence models and of mlp_static (standardized on the training fold).
+statics:
+  T1: [t]
+  T2: [log_w_k, log_w_prev, t_k, dt_prev, dt_target]
+
+ridge:
+  alpha_log10: {start: -3.0, stop: 3.0, num: 13}   # 10^-3, 10^-2.5, ..., 10^3; ties go to the larger alpha
+
+# Parameter spec types: categorical (choices), float (low, high, log), int (low, high). The
+# order of the entries is the order in which Optuna is asked for them (it changes the TPE
+# draws), so it is part of the design.
+gbm:
+  space:
+    learning_rate:     {type: float, low: 0.01, high: 0.3, log: true}
+    max_iter:          {type: int, low: 50, high: 500}
+    max_depth:         {type: categorical, choices: [2, 3, 4]}
+    min_samples_leaf:  {type: categorical, choices: [3, 5, 10, 20]}
+    l2_regularization: {type: float, low: 1.0e-4, high: 10.0, log: true}
+
+deep:
+  arch_space:                          # asked first, then common_space
+    lstm:
+      hidden: {type: categorical, choices: [8, 16, 32, 64]}
+      layers: {type: categorical, choices: [1, 2]}
+    gru:
+      hidden: {type: categorical, choices: [8, 16, 32, 64]}
+      layers: {type: categorical, choices: [1, 2]}
+    cnn_lstm:
+      hidden:  {type: categorical, choices: [8, 16, 32, 64]}   # units of the LSTM part
+      layers:  {type: categorical, choices: [1, 2]}
+      filters: {type: categorical, choices: [8, 16, 32]}
+      kernel:  {type: categorical, choices: [3, 5, 7]}
+      pool:    {type: categorical, choices: [1, 2]}            # 1 means no pooling
+    tft:
+      hidden: {type: categorical, choices: [8, 16, 32]}
+      heads:  {type: categorical, choices: [1, 2, 4]}          # one LSTM encoder layer
+    mlp_static:
+      hidden: {type: categorical, choices: [8, 16, 32, 64]}    # two layers: statics -> hidden -> 1
+  common_space:                        # plan 13, the same for all five architectures
+    dropout:       {type: float, low: 0.0, high: 0.5}
+    lr:            {type: float, low: 1.0e-4, high: 1.0e-2, log: true}
+    weight_decay:  {type: float, low: 1.0e-6, high: 1.0e-2, log: true}
+    batch_size:    {type: categorical, choices: [8, 16, 32]}
+
+# Growth curves fitted to log W (W in grams) on t in days with scipy.optimize.curve_fit
+# (plan 13). Cohort weights run from 2.9 g to 1,011 g (results/audit/grid_check.csv), so
+# log W lies between 1.1 and 6.9; the asymptote bounds [2.3, 11.5] span 10 g to 100 kg.
+# The starts are fixed here and tried in this order; the fit with the lowest residual sum of
+# squares is kept. A curve that no start fits is skipped, nothing is tried after that
+# (plan 6.1). von Bertalanffy t0 is bounded above by -0.001 days (t0 < 0).
+growth_curves:
+  max_nfev: 20000
+  curves:
+    gompertz:                          # log W = log_a - b exp(-c t)
+      params: [log_a, b, c]
+      lower: [2.3, 0.01, 1.0e-4]
+      upper: [11.5, 30.0, 1.0]
+      starts:
+        - [7.0, 6.0, 0.02]
+        - [6.0, 5.0, 0.04]
+        - [9.0, 8.0, 0.01]
+    von_bertalanffy:                   # log W = log_winf + 3 log(1 - exp(-k (t - t0))), t0 < 0
+      params: [log_winf, k, t0]
+      lower: [2.3, 1.0e-4, -300.0]
+      upper: [11.5, 1.0, -0.001]
+      starts:
+        - [7.0, 0.02, -10.0]
+        - [6.5, 0.01, -30.0]
+        - [8.0, 0.005, -50.0]
+    logistic:                          # log W = log_a - log(1 + exp(-k (t - tm)))
+      params: [log_a, k, tm]
+      lower: [2.3, 1.0e-4, -100.0]
+      upper: [11.5, 1.0, 600.0]
+      starts:
+        - [7.0, 0.03, 100.0]
+        - [6.0, 0.05, 60.0]
+        - [8.0, 0.02, 150.0]
+  min_ponds_same_date: 3               # cohort_mean and cohort_growth need this many training ponds
+
+# Within-date permutation test (plan 8.2). The permutation r uses the random generator
+# numpy.random.default_rng(seed + r). `donor_pond` names the pond whose sensor file stands
+# for a shared stream unit; every other pond is its own donor. `r_tabular` applies to ridge and
+# gradient boosting with water quality, `r_deep` to the primary deep model of each task, which
+# is fitted with `deep_seed` in the observed and the permuted runs.
+permutation:
+  seed: 20261014
+  r_tabular: 999
+  r_deep: 199
+  deep_seed: 0
+  donor_pond: {1: 2, 2: 2}
+  tabular_models:
+    T1: [ridge_time_wq, gbm_time_wq]
+    T2: [ridge_pw_wq, gbm_pw_wq]
+
+# Statistics (plan 9). Metrics and tests are computed per (task, scheme, sample set, horizon);
+# T1 has no horizon (written as 0). The confirmatory family is the LOPO scheme on the eligible
+# sample set, tested in this fixed order: each entry is [task, horizon], and an entry is tested
+# only if every earlier entry rejected. Everything else is descriptive.
+evaluate:
+  bootstrap: {B: 2000, ci: 0.95}       # seed in seeds.bootstrap
+  alpha: 0.05
+  min_ponds: 6                         # fewer scored ponds: descriptive only
+  confirmatory_sequence: [[T1, 0], [T2, 1]]
+  merged_units: [[1, 2]]               # ponds averaged into one unit in the sensitivity test
