@@ -1,0 +1,126 @@
+pond,file,column_index,original_name,canonical_name,unit_as_labelled,n_nonempty,n_missing,n_nonnumeric
+1,data/raw/pond01.csv,0,created_at,ts,,83126,0,
+1,data/raw/pond01.csv,1,entry_id,entry_id,,83126,0,0.0
+1,data/raw/pond01.csv,2,Temperature (C),temperature,C,83126,0,0.0
+1,data/raw/pond01.csv,3,Turbidity(NTU),turbidity,NTU,83126,0,0.0
+1,data/raw/pond01.csv,4,Dissolved Oxygen(g/ml),do,g/ml,83126,0,0.0
+1,data/raw/pond01.csv,5,PH,ph,,83126,0,0.0
+1,data/raw/pond01.csv,6,Ammonia(g/ml),ammonia,g/ml,83074,52,0.0
+1,data/raw/pond01.csv,7,Nitrate(g/ml),nitrate,g/ml,83126,0,0.0
+1,data/raw/pond01.csv,8,Population,population,,83126,0,0.0
+1,data/raw/pond01.csv,9,Fish_Length(cm),length,cm,83124,2,0.0
+1,data/raw/pond01.csv,10,Fish_Weight(g),weight,g,83124,2,0.0
+2,data/raw/pond02.csv,0,created_at,ts,,172249,0,
+2,data/raw/pond02.csv,1,entry_id,entry_id,,172249,0,0.0
+2,data/raw/pond02.csv,2,Temperature (C),temperature,C,172249,0,0.0
+2,data/raw/pond02.csv,3,Turbidity (NTU),turbidity,NTU,172249,0,0.0
+2,data/raw/pond02.csv,4,Dissolved Oxygen(g/ml),do,g/ml,172249,0,0.0
+2,data/raw/pond02.csv,5,PH,ph,,172249,0,0.0
+2,data/raw/pond02.csv,6,Ammonia(g/ml),ammonia,g/ml,172159,90,0.0
+2,data/raw/pond02.csv,7,Nitrate(g/ml),nitrate,g/ml,172249,0,0.0
+2,data/raw/pond02.csv,8,Population,population,,172249,0,0.0
+2,data/raw/pond02.csv,9,Fish_Length (cm),length,cm,172249,0,0.0
+2,data/raw/pond02.csv,10,Fish_Weight (g),weight,g,172249,0,0.0
+3,data/raw/pond03.csv,0,created_at,ts,,169185,0,
+3,data/raw/pond03.csv,1,entry_id,entry_id,,169185,0,0.0
+3,data/raw/pond03.csv,2,Temperature(C),temperature,C,169185,0,0.0
+3,data/raw/pond03.csv,3,Turbidity(NTU),turbidity,NTU,169185,0,0.0
+3,data/raw/pond03.csv,4,Dissolved Oxygen(g/ml),do,g/ml,169185,0,0.0
+3,data/raw/pond03.csv,5,PH,ph,,169185,0,0.0
+3,data/raw/pond03.csv,6,Ammonia(g/ml),ammonia,g/ml,169078,107,0.0
+3,data/raw/pond03.csv,7,Nitrate(g/ml),nitrate,g/ml,169185,0,0.0
+3,data/raw/pond03.csv,8,Population,population,,169185,0,0.0
+3,data/raw/pond03.csv,9,Fish_Length(cm),length,cm,169185,0,0.0
+3,data/raw/pond03.csv,10,Fish_Weight(g),weight,g,169185,0,0.0
+4,data/raw/pond04.csv,0,created_at,ts,,89844,0,
+4,data/raw/pond04.csv,1,entry_id,entry_id,,89797,47,0.0
+4,data/raw/pond04.csv,2,Temperature(C),temperature,C,89797,47,0.0
+4,data/raw/pond04.csv,3,Turbidity(NTU),turbidity,NTU,89797,47,0.0
+4,data/raw/pond04.csv,4,Dissolved Oxygen(g/ml),do,g/ml,89797,47,0.0
+4,data/raw/pond04.csv,5,PH,ph,,89797,47,0.0
+4,data/raw/pond04.csv,6,Ammonia(g/ml),ammonia,g/ml,89742,102,0.0
+4,data/raw/pond04.csv,7,Nitrate(g/ml),nitrate,g/ml,89797,47,0.0
+4,data/raw/pond04.csv,8,Population,population,,89844,0,0.0
+4,data/raw/pond04.csv,9,Fish_Length(cm),length,cm,89844,0,1.0
+4,data/raw/pond04.csv,10,Fish_Weight(g),weight,g,89844,0,0.0
+6,data/raw/pond06.csv,0,created_at,ts,,91049,1,
+6,data/raw/pond06.csv,1,entry_id,entry_id,,91015,35,0.0
+6,data/raw/pond06.csv,2,Temperature(C),temperature,C,91015,35,0.0
+6,data/raw/pond06.csv,3,Turbidity(NTU),turbidity,NTU,91015,35,0.0
+6,data/raw/pond06.csv,4,Dissolved Oxygen(g/ml),do,g/ml,91015,35,0.0
+6,data/raw/pond06.csv,5,PH,ph,,91015,35,0.0
+6,data/raw/pond06.csv,6,Ammonia(g/ml),ammonia,g/ml,91015,35,0.0
+6,data/raw/pond06.csv,7,Nitrate(g/ml),nitrate,g/ml,91015,35,0.0
+6,data/raw/pond06.csv,8,Population,population,,91050,0,0.0
+6,data/raw/pond06.csv,9,Fish_Length(cm),length,cm,91050,0,0.0
+6,data/raw/pond06.csv,10,Fish_Weight(g),weight,g,91050,0,0.0
+7,data/raw/pond07.csv,0,created_at,ts,,279612,0,
+7,data/raw/pond07.csv,1,Date,date_col,,279612,0,
+7,data/raw/pond07.csv,2,entry_id,entry_id,,279612,0,0.0
+7,data/raw/pond07.csv,3,temperature(C),temperature,C,279612,0,0.0
+7,data/raw/pond07.csv,4,turbidity (NTU),turbidity,NTU,279612,0,0.0
+7,data/raw/pond07.csv,5,Dissolved Oxygen (g/ml),do,g/ml,279612,0,0.0
+7,data/raw/pond07.csv,6,PH,ph,,279612,0,0.0
+7,data/raw/pond07.csv,7,ammonia(g/ml),ammonia,g/ml,185224,94388,0.0
+7,data/raw/pond07.csv,8,nitrate(g/ml),nitrate,g/ml,279612,0,0.0
+7,data/raw/pond07.csv,9,Fish_length(cm),length,cm,279612,0,0.0
+7,data/raw/pond07.csv,10,Fish_weight(g),weight,g,279612,0,0.0
+7,data/raw/pond07.csv,11,,dropped_trailing,,0,279612,
+7,data/raw/pond07.csv,12,,dropped_trailing,,6,279606,
+7,data/raw/pond07.csv,13,,dropped_trailing,,7,279605,
+8,data/raw/pond08.csv,0,,ts,,70744,0,
+8,data/raw/pond08.csv,1,Date,date_col,,70744,0,
+8,data/raw/pond08.csv,2,entry_id,entry_id,,70744,0,0.0
+8,data/raw/pond08.csv,3,Temperature (C),temperature,C,70744,0,0.0
+8,data/raw/pond08.csv,4,Turbidity(NTU),turbidity,NTU,70744,0,0.0
+8,data/raw/pond08.csv,5,Dissolved Oxygen (mg/L),do,mg/L,70744,0,0.0
+8,data/raw/pond08.csv,6,PH,ph,,70744,0,0.0
+8,data/raw/pond08.csv,7,Ammonia (mg/L),ammonia,mg/L,70744,0,0.0
+8,data/raw/pond08.csv,8,Nitrate (mg/L),nitrate,mg/L,70744,0,0.0
+8,data/raw/pond08.csv,9,Total_length (cm),length,cm,70744,0,0.0
+8,data/raw/pond08.csv,10,Weight (g),weight,g,70744,0,0.0
+8,data/raw/pond08.csv,11,,dropped_trailing,,1,70743,
+9,data/raw/pond09.csv,0,created_at,ts,,151785,0,
+9,data/raw/pond09.csv,1,DATE,date_col,,151785,0,
+9,data/raw/pond09.csv,2,entry_id,entry_id,,151785,0,0.0
+9,data/raw/pond09.csv,3,Temperature(C),temperature,C,151785,0,0.0
+9,data/raw/pond09.csv,4,Turbidity(NTU),turbidity,NTU,151785,0,0.0
+9,data/raw/pond09.csv,5,Dissolved Oxygen(g/ml),do,g/ml,151785,0,0.0
+9,data/raw/pond09.csv,6,PH,ph,,151785,0,0.0
+9,data/raw/pond09.csv,7,Ammonia(g/ml),ammonia,g/ml,151785,0,0.0
+9,data/raw/pond09.csv,8,Nitrate(g/ml),nitrate,g/ml,151785,0,0.0
+9,data/raw/pond09.csv,9,Fish_length(cm),length,cm,151785,0,0.0
+9,data/raw/pond09.csv,10,Fish_weight(g),weight,g,151785,0,0.0
+10,data/raw/pond10.csv,0,created_at,ts,,620,0,
+10,data/raw/pond10.csv,1,entry_id,entry_id,,620,0,0.0
+10,data/raw/pond10.csv,2,TEMPERATURE,temperature,,620,0,0.0
+10,data/raw/pond10.csv,3,TURBIDITY,turbidity,,620,0,0.0
+10,data/raw/pond10.csv,4,DISOLVED OXYGEN,do,,620,0,0.0
+10,data/raw/pond10.csv,5,pH,ph,,620,0,0.0
+10,data/raw/pond10.csv,6,AMMONIA,ammonia,,620,0,0.0
+10,data/raw/pond10.csv,7,NITRATE,nitrate,,620,0,0.0
+10,data/raw/pond10.csv,8,Population,population,,620,0,0.0
+10,data/raw/pond10.csv,9,Length,length,,620,0,0.0
+10,data/raw/pond10.csv,10,Weight,weight,,620,0,0.0
+11,data/raw/pond11.csv,0,created_at,ts,,3165,0,
+11,data/raw/pond11.csv,1,entry_id,entry_id,,3165,0,0.0
+11,data/raw/pond11.csv,2,TEMPERATURE,temperature,,3165,0,0.0
+11,data/raw/pond11.csv,3,TURBIDITY,turbidity,,3165,0,0.0
+11,data/raw/pond11.csv,4,DISOLVED OXYGEN,do,,3165,0,0.0
+11,data/raw/pond11.csv,5,pH,ph,,3165,0,0.0
+11,data/raw/pond11.csv,6,AMMONIA,ammonia,,3164,1,0.0
+11,data/raw/pond11.csv,7,NITRATE,nitrate,,3165,0,0.0
+11,data/raw/pond11.csv,8,Population,population,,3165,0,0.0
+11,data/raw/pond11.csv,9,Lenght,length,,3165,0,0.0
+11,data/raw/pond11.csv,10,Weight,weight,,3165,0,0.0
+12,data/raw/pond12.csv,0,created_at,ts,,3590,0,
+12,data/raw/pond12.csv,1,entry_id,entry_id,,3590,0,0.0
+12,data/raw/pond12.csv,2,TEMPERATURE,temperature,,3590,0,0.0
+12,data/raw/pond12.csv,3,TURBIDITY,turbidity,,3590,0,0.0
+12,data/raw/pond12.csv,4,DISOLVED OXYGEN,do,,3590,0,0.0
+12,data/raw/pond12.csv,5,pH,ph,,3590,0,0.0
+12,data/raw/pond12.csv,6,AMMONIA,ammonia,,3590,0,0.0
+12,data/raw/pond12.csv,7,NITRATE,nitrate,,3590,0,0.0
+12,data/raw/pond12.csv,8,Population,population,,3590,0,0.0
+12,data/raw/pond12.csv,9,Length,length,,3590,0,0.0
+12,data/raw/pond12.csv,10,Weight,weight,,3590,0,0.0

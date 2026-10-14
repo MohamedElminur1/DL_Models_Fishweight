@@ -1,0 +1,12 @@
+pond,rows,weight_change_rows,missing_timestamp_rows,missing_weight_rows,nonnumeric_length_rows,observed_dates,multiweight_dates
+pond01,83126,79,0,2,0,81,0
+pond02,172249,110,0,0,0,111,1
+pond03,169185,75,0,0,0,76,0
+pond04,89844,113,0,0,1,115,2
+pond06,91050,122,1,0,0,123,3
+pond07,279612,125,0,0,0,127,0
+pond08,70744,56,0,0,0,56,1
+pond09,151785,98,0,0,0,101,0
+pond10,620,18,0,0,0,18,1
+pond11,3165,8,0,0,0,124,4
+pond12,3590,9,0,0,0,9,1

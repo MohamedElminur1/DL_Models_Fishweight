@@ -1,0 +1,3 @@
+PASS: all 55 pond-pair shared timestamps and identical sensor counts independently checked.
+PASS: all four persistence rows checked using scalar arithmetic, including target counts and boundaries.
+PASS: all 187 grid-date presence flags and modes checked against the daily output.

@@ -21,3 +21,6 @@ data/interim/
 lightning_logs/
 results/**/checkpoints/
 tmp/
+
+# Optuna SQLite studies (trials are exported to CSV next to them)
+results/**/*.db

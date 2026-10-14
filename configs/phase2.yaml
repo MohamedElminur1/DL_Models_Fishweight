@@ -1,0 +1,88 @@
+# Phase 2 configuration: reproduce and diagnose the original pond-2 analysis.
+# Protocol: tasks/phase2_diagnostics.md (fixed by the lead on 2026-10-14, before any run).
+# Every configuration below is run once per listed seed and reported, whatever the result.
+# Run from the repo root: .venv/bin/python -I src/phase2_original.py --config configs/phase2.yaml
+
+paths:
+  raw_csv: data/raw/pond02.csv
+  results_dir: results/phase2
+
+data:
+  expected_raw_rows: 172249
+  expected_rows: 172159          # after dropna(): 172,249 minus 90 rows with missing ammonia
+  expected_missing_ammonia: 90
+  # Header of data/raw/pond02.csv, checked before anything is renamed.
+  raw_columns: [created_at, entry_id, "Temperature (C)", "Turbidity (NTU)", "Dissolved Oxygen(g/ml)",
+                PH, "Ammonia(g/ml)", "Nitrate(g/ml)", Population, "Fish_Length (cm)", "Fish_Weight (g)"]
+  # Columns after dropping entry_id, in file order.
+  columns: [created_at, temperature, turbidity, do, ph, ammonia, nitrate, population, length, weight]
+  # Columns the original notebook also dropped before its dropna() (cell 2); used only to check
+  # that dropna() keeps the same rows with and without them.
+  notebook_dropped: [Population, "Fish_Length (cm)"]
+  # Test-series check against the notebook's printed output (cell 9): first and last "Actuals".
+  notebook_cell9_first_actual: 305.80
+  notebook_cell9_last_actual: 394.66
+  # Sample counts printed by notebook cell 4: (train, val, test).
+  notebook_cell4_counts: [137593, 8607, 34298]
+
+input_sets:
+  notebook:   [temperature, turbidity, do, ph, ammonia, nitrate, weight]
+  manuscript: [temperature, turbidity, do, ph, ammonia, nitrate, population, length]
+  wq_only:    [temperature, turbidity, do, ph, ammonia, nitrate]
+
+# Sample i has inputs rows [i - lookback, i) and target weight[i].
+splits:
+  S0_notebook:
+    kind: notebook          # train [L, T), val [T, T + int(0.05 N)), test [T, N - L); T = int(0.8 N)
+    lookback: 134
+    train_frac: 0.8
+    val_frac: 0.05
+    scaler_fit: all
+    input_sets: [notebook]
+  S1_chrono:
+    kind: chrono            # rows split at a = int(0.7 N), b = int(0.8 N) before windowing
+    lookback: 36
+    train_end_frac: 0.7
+    val_end_frac: 0.8
+    scaler_fit: train       # rows [0, a) only
+    input_sets: [notebook, manuscript, wq_only]
+  S2_random:
+    kind: random            # all targets [L, N) shuffled with numpy default_rng(seed), then 70/10/20
+    lookback: 36
+    train_frac: 0.7
+    val_frac: 0.1
+    scaler_fit: all
+    input_sets: [notebook, manuscript, wq_only]
+
+seeds: [0, 1, 2]
+# Persistence first, then the CNN-LSTM grid in this split order.
+run_order: [S1_chrono, S2_random, S0_notebook]
+
+model:
+  conv_filters: 64
+  conv_kernel: 3
+  pool_size: 2
+  lstm_units: [64, 32]
+  learning_rate: 0.001
+  batch_size: 512
+  max_epochs: 15
+  patience: 3
+  jit_compile: false        # plain graph mode: measured about 60 % faster than XLA on this CPU
+
+# Calendar dates on the 14-day grid anchor + 14 k (clock date from created_at).
+grid_dates:
+  anchor: "2021-06-19"
+  period_days: 14
+
+forecast18:
+  horizon: 18
+  splits: [S0_notebook, S1_chrono]
+
+# If the projected grid time exceeds this, stop after the persistence results and report.
+max_projected_hours: 8
+
+# Values reported in the manuscript, copied from the task file for comparison only. Not computed here.
+manuscript_reported:
+  single_step_cnn_lstm: {mae_g: 0.55, rmse_g: 1.95, mape_pct: 0.20}
+  forecast18_tft:       {mae_g: 1.78, rmse_g: 2.25, mape_pct: 3.70}
+  forecast18_cnn_lstm:  {mae_g: 12.75, rmse_g: 18.41, mape_pct: 26.60}
