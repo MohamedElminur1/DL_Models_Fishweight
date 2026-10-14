@@ -1,10 +1,11 @@
-# ANALYSIS PLAN (draft v0.4, not frozen)
+# ANALYSIS PLAN (draft v0.5, not frozen)
 
 Status: draft by the lead, 2026-10-14. v0.2 filled in the Gate 1 items (`DECISIONS.md`).
 v0.3 answers the pre-freeze statistical review (`results/plan_review.md`, items 1 to 17).
 v0.4 fills in the counts and the cut-off date from the data pipeline (`src/events.py`,
 `src/qc.py`, `src/features.py`; `results/qc/eligibility.csv`), computed before any model of
-the new design was run. The annotated git tag
+the new design was run. v0.5 adopts the re-review (`results/plan_review_v03.md`, N1 to N7).
+Eight cohort ponds enter the analysis; seven have scored samples. The annotated git tag
 `analysis-plan-frozen` freezes this file together with `src/` and `configs/` (§12). Before
 the tag, no model of the new design is evaluated on any test sample and no inner-validation
 error is looked at.
@@ -57,7 +58,9 @@ otherwise (Gate 1):
 - nitrate (MQ135 gas sensor above the water): above 0;
 - every sensor: non-finite values are invalid; flat-line test: a run of identical consecutive
   values spanning at least 24 h of clock time is invalid (a missing value or a logging gap of
-  more than 1 h ends a run). Exact duplicate lines are dropped before QC.
+  more than 1 h ends a run). Exact duplicate lines are dropped before QC. A flat run that
+  crosses an event date is judged on the whole run, so later readings can remove earlier
+  ones; this can only blank values, never add information, and is accepted.
 Units as labelled in the source; values are raw sensor readings. Rows without a clock time
 (date-only fish rows) carry no sensor values and do not enter the sensor pipeline. The number
 of values removed per pond, sensor and rule is reported.
@@ -205,10 +208,14 @@ fold (tuning uses seed 0). Gradient boosting and ridge are deterministic.
 c = 2021-08-28 (t = 70), the latest grid date such that at least 10 eligible T1 events in at
 least 5 ponds are dated on or after c: 11 T1 events in 7 ponds; T2 test samples: 10 (h = 1)
 and 12 (h = 2). T1: train on eligible events dated before c, test on those dated c
-or later. T2: train on eligible samples whose target is dated before c, test on those whose
-target is dated c or later. Nothing dated c or later enters training, same-date baselines
-included (they fall back as in §6.1). Tuning: one inner split whose validation set is the
-training samples at the latest training date. Same budgets and seeds as §7.2-7.3.
+or later. T2: train on eligible samples whose target is dated before c; test on those whose target is
+dated c or later and whose origin is dated c - 14 days or later (10 samples at h = 1, 5 at
+h = 2); samples with a target on or after c and an earlier origin are used for neither and
+are counted. Nothing dated c or later enters training, same-date baselines included (they
+fall back as in §6.1). Tuning: one inner split whose validation set is the training samples
+at the latest training date. Same budgets and seeds as §7.2-7.3. T1 test dates (t >= 70) lie
+beyond all training dates (t <= 56), so tree models predict a constant in t there; this is
+part of what the hold-out shows.
 
 7.5 Calendar overlap. In LOPO the training ponds cover the same calendar period as the test
 pond. This is reported as a limitation; §7.4 tests prediction of later dates.
@@ -227,7 +234,9 @@ water-quality inputs for date d (tabular features and sequences, under §2.7) ar
 among those units by a uniformly random derangement (rng seed 20261014 + r); a date with one
 unit stays unchanged and is counted. Training and test data alike; targets, eligibility and
 the fold-wise tuned hyperparameters stay fixed; LOPO final fits are re-run without
-re-tuning. Statistic: S. p = (1 + number of permutations with S_perm <= S_obs) / (R + 1).
+re-tuning. Statistic: S (T2: S at h = 1). p = (1 + number of permutations with S_perm <= S_obs) /
+(R + 1). Masks move with the values, so the test concerns pond-specific sensor information,
+readings and availability together.
 R = 999 for ridge and gradient boosting with time (or past weights) and water quality;
 R = 199 for the primary deep model of each task (§9.4), with seed 0 in the observed and the
 permuted runs.
@@ -243,7 +252,11 @@ with each pond removed).
 9.0 Primary statistic S: for each pond, the mean absolute error of log W over its scored
 samples (T1: |log W_hat - log W|; T2: |y_hat - y|, which is the same quantity at the target);
 then the mean over the ponds with a scored sample. For deep models and `mlp_static`, the
-per-pond values are averaged over the five seeds. All other metrics are descriptive.
+per-pond values are averaged over the five seeds. A predicted weight of 0 g or less has log
+error +infinity, so that pond's S is +infinity and the model cannot be primary; gram metrics
+use the prediction as it is, and the count of such predictions is reported. A non-finite
+prediction from a learned model (ridge, gradient boosting, deep models, `mlp_static`) stops
+that model's run and is logged. All other metrics are descriptive.
 
 9.1 Descriptive metrics, pooled over all test samples of all folds: MAE (g), RMSE (g),
 MAPE (%), R^2; per pond: MAE (g), MAPE and S.
@@ -257,9 +270,14 @@ for the model and its comparator.
 
 9.4 Primary models. The primary baseline of a task is the time-only model of §6.1 with the
 lowest mean inner-validation S over the outer folds of the LOPO scheme; the primary deep
-model is chosen among LSTM, GRU, CNN-LSTM and TFT the same way (T2: S over both horizons).
-`src/select_primary.py` makes the choice from inner-validation scores only, and its output is
-committed before any outer prediction is scored.
+model is chosen among LSTM, GRU, CNN-LSTM and TFT the same way. In T2 the inner S of a model
+is the mean of its h = 1 and h = 2 values (this is also the T2 tuning objective of §7.2). A
+tuned model enters with the mean inner S of its best trial, which favours tuned models
+slightly. Ties go to the model listed first in §6.1 or §6.3. `src/select_primary.py` makes
+the choice from inner-validation scores only, and its output is committed before any outer
+prediction is scored. Because the inner folds validate on ponds that are test ponds of other
+outer folds, the level of §9.5 is approximate (a null simulation in the re-review gave 3 to
+7 % rejections at a nominal 3.9 %).
 
 9.5 Confirmatory test. Exact one-sided Wilcoxon signed-rank test on the per-pond differences
 in S (primary deep model minus primary baseline; alternative: the deep model's S is lower);
@@ -275,9 +293,12 @@ to at most 3 (5 of 128 sign patterns); with 6 ponds, at most 2.
 
 Positive framing for a task if its confirmatory test (§9.5) rejects. Saying that water quality
 contributes to that result additionally requires a permutation p < 0.05 for the primary deep
-model (§8.2) and a lower S than `mlp_static`. If neither task rejects, the paper takes the
-leakage-aware benchmark framing. A non-significant result is not evidence of no effect, and
-the paper says so.
+model (§8.2) and a lower S than `mlp_static`, with the per-pond comparison reported (lower in
+n of 7 ponds). `mlp_static` twins LSTM, GRU and CNN-LSTM; in T1 its only input is t, so it is
+a neural time-only model. If another §6.1 baseline has a lower outer S than the primary deep
+model, the paper says so next to the confirmatory result. If neither task rejects, the paper
+takes the leakage-aware benchmark framing. A non-significant result is not evidence of no
+effect, and the paper says so.
 
 Claims the paper may make: model X had a lower S than the baseline in n of N ponds;
 pond-specific water-quality information was or was not used (permutation test). Descriptive
@@ -297,15 +318,18 @@ model, seed and fold.
 
 ## 12. Freeze
 
-The annotated tag `analysis-plan-frozen` freezes this file, `src/` and `configs/`. Before the
-tag, code runs end to end only in `--dev` mode (inner folds of the first outer fold), which
-prints, logs and reports no error value. The runner refuses outer test predictions unless
-(a) the tag exists and its commit SHA is recorded in `decisions.tsv`, and (b) `ANALYSIS_PLAN.md`,
-`src/` and `configs/` in the working tree are identical to the tag (no differences, no
-untracked files there), or identical to a tag `analysis-fix-N` whose `ANALYSIS_PLAN.md` equals
-the frozen one. Every fix tag is explained in `LOG.md` and `DECISIONS.md` before the run and
-reported with the results. (c) The first complete outer run is the reported run; a model is
-re-run only after a crash, and the re-run is logged.
+The annotated tag `analysis-plan-frozen` freezes this file, `src/`, `configs/`,
+`data/processed/` and `uv.lock`. Before the tag, code runs end to end only in `--dev` mode
+(inner folds of the first outer fold), which prints, logs and reports no error value. The
+runner refuses outer test predictions unless (a) the tag exists and its commit SHA is recorded
+in `decisions.tsv`, and (b) these paths in the working tree are identical to the tag (no
+differences, no untracked files there), or identical to a tag `analysis-fix-N` whose
+`ANALYSIS_PLAN.md` equals the frozen one. A fix tag is allowed only while no outer prediction
+file exists; after that, a change to `src/` or `configs/` makes the results of the changed
+models descriptive. Every fix tag is explained in `LOG.md` and `DECISIONS.md` before the run
+and reported with the results. (c) The first complete outer run is the reported run; a model
+is re-run only after a crash, and the re-run is logged. (d) The scorer (`src/evaluate.py`)
+refuses to run unless the selection files of §9.4 are committed and unmodified.
 
 ## 13. Search spaces and training settings
 
