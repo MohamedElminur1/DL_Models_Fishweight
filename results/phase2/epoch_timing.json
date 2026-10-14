@@ -1,0 +1,67 @@
+{
+  "measured_utc": "2026-10-14T10:02:27Z",
+  "hardware": {
+    "cpu_model": "AMD EPYC 7B12",
+    "n_cores": 4,
+    "tensorflow_version": "2.21.0",
+    "keras_version": "3.15.1"
+  },
+  "loadavg_at_end": [
+    5.68310546875,
+    4.0087890625,
+    2.31640625
+  ],
+  "epochs_assumed_per_run": 15,
+  "shapes": {
+    "S0_notebook": {
+      "lookback": 134,
+      "n_features": 7,
+      "n_train": 137593,
+      "batches_per_epoch": 269,
+      "first_epoch_seconds": 81.9374897480011,
+      "steady_epoch_seconds": 73.55810117721558,
+      "n_val_timed": 8607,
+      "val_pass_seconds": 2.2027695178985596,
+      "n_test_timed": 34298,
+      "predict_pass_seconds": 7.92133903503418,
+      "rss_max_mb": 1215.296875
+    },
+    "S1_chrono": {
+      "lookback": 36,
+      "n_features": 7,
+      "n_train": 120475,
+      "batches_per_epoch": 236,
+      "first_epoch_seconds": 21.08562731742859,
+      "steady_epoch_seconds": 17.442402362823486,
+      "n_val_timed": 17180,
+      "val_pass_seconds": 1.7999582290649414,
+      "n_test_timed": 34396,
+      "predict_pass_seconds": 3.0259861946105957,
+      "rss_max_mb": 1215.296875
+    }
+  },
+  "projection": {
+    "basis": "every run trains max_epochs epochs (upper bound); S2 timed with the S1 shape (same lookback, train size within 0.01 %)",
+    "per_split": {
+      "S1_chrono": {
+        "n_runs": 9,
+        "seconds_per_run_at_epoch_cap": 295.3046200275421,
+        "seconds_total": 2657.741580247879
+      },
+      "S2_random": {
+        "n_runs": 9,
+        "seconds_per_run_at_epoch_cap": 295.38134991360516,
+        "seconds_total": 2658.4321492224462
+      },
+      "S0_notebook": {
+        "n_runs": 3,
+        "seconds_per_run_at_epoch_cap": 1152.7137880325317,
+        "seconds_total": 3458.141364097595
+      }
+    },
+    "total_seconds": 8774.31509356792,
+    "total_hours": 2.4373097482133113,
+    "limit_hours": 8,
+    "exceeds_limit": false
+  }
+}

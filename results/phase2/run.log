@@ -1,0 +1,271 @@
+[2026-10-14 10:02:53] hardware: {'cpu_model': 'AMD EPYC 7B12', 'n_cores': 4, 'tensorflow_version': '2.21.0', 'keras_version': '3.15.1'}
+[2026-10-14 10:02:53] python 3.12.3, numpy 2.5.4, pandas 3.0.6, keras backend tensorflow, load1=4.17
+[2026-10-14 10:02:53] data: N=172159 rows after dropna (90 dropped), dropna identical with and without Population/Fish_Length: True
+[2026-10-14 10:02:53] split checks passed; split_checks.json written
+[2026-10-14 10:02:54] persistence S0_notebook seed=None: n=34298 MAE=0.0025908 g RMSE=0.17935 g MAPE=0.00073053 %
+[2026-10-14 10:02:54] persistence S1_chrono seed=None: n=34396 MAE=0.0025834 g RMSE=0.1791 g MAPE=0.00072845 %
+[2026-10-14 10:02:54] persistence S2_random seed=0: n=34425 MAE=0.0018344 g RMSE=0.10167 g MAPE=0.0024069 %
+[2026-10-14 10:02:54] persistence S2_random seed=1: n=34425 MAE=0.0043402 g RMSE=0.35608 g MAPE=0.0037147 %
+[2026-10-14 10:02:54] persistence S2_random seed=2: n=34425 MAE=0.0015097 g RMSE=0.087001 g MAPE=0.0024868 %
+[2026-10-14 10:02:55] forecast18 persistence S0_notebook: origins=34298 MAE=0.024613 g RMSE=0.70713 g MAPE=0.0068633 %
+[2026-10-14 10:02:55] forecast18 persistence S1_chrono: origins=34379 MAE=0.024555 g RMSE=0.7063 g MAPE=0.0068471 %
+[2026-10-14 10:02:55] projected grid time 2.44 h (limit 8 h)
+[2026-10-14 10:02:55] run S1_chrono notebook seed=0: L=36 F=7 train=120475 val=17180 test=34396 load1=4.17
+[2026-10-14 10:03:19]     epoch  1  loss=0.016867  val_loss=0.034947  23.8s  rss_max=827MB
+[2026-10-14 10:03:40]     epoch  2  loss=0.000354  val_loss=0.003464  20.3s  rss_max=846MB
+[2026-10-14 10:04:00]     epoch  3  loss=0.000152  val_loss=0.002650  20.5s  rss_max=858MB
+[2026-10-14 10:04:21]     epoch  4  loss=0.000127  val_loss=0.002646  21.1s  rss_max=879MB
+[2026-10-14 10:04:42]     epoch  5  loss=0.000097  val_loss=0.001795  21.0s  rss_max=885MB
+[2026-10-14 10:05:04]     epoch  6  loss=0.000104  val_loss=0.001812  21.9s  rss_max=885MB
+[2026-10-14 10:05:28]     epoch  7  loss=0.000091  val_loss=0.002201  24.1s  rss_max=890MB
+[2026-10-14 10:05:56]     epoch  8  loss=0.000099  val_loss=0.002385  27.6s  rss_max=900MB
+[2026-10-14 10:06:12] done S1_chrono notebook seed=0: epochs=8 best_epoch=5 best_val_loss=0.001795 train=194s predict=2.6s | test all: MAE=48.019 g RMSE=59.026 g MAPE=12.884 % nonfinite_pred=0
+[2026-10-14 10:06:13] run S1_chrono manuscript seed=0: L=36 F=8 train=120475 val=17180 test=34396 load1=5.08
+[2026-10-14 10:06:36]     epoch  1  loss=0.016939  val_loss=0.049287  23.1s  rss_max=948MB
+[2026-10-14 10:06:58]     epoch  2  loss=0.000940  val_loss=0.035720  21.7s  rss_max=948MB
+[2026-10-14 10:07:22]     epoch  3  loss=0.000325  val_loss=0.003404  24.3s  rss_max=963MB
+[2026-10-14 10:07:58]     epoch  4  loss=0.000203  val_loss=0.002955  35.5s  rss_max=965MB
+[2026-10-14 10:08:17]     epoch  5  loss=0.000149  val_loss=0.001762  18.8s  rss_max=980MB
+[2026-10-14 10:08:47]     epoch  6  loss=0.000150  val_loss=0.002290  29.8s  rss_max=980MB
+[2026-10-14 10:09:06]     epoch  7  loss=0.000128  val_loss=0.001776  19.0s  rss_max=980MB
+[2026-10-14 10:09:27]     epoch  8  loss=0.000137  val_loss=0.002537  21.2s  rss_max=980MB
+[2026-10-14 10:09:30] done S1_chrono manuscript seed=0: epochs=8 best_epoch=5 best_val_loss=0.001762 train=193s predict=2.7s | test all: MAE=46.479 g RMSE=55.991 g MAPE=12.617 % nonfinite_pred=0
+[2026-10-14 10:09:30] run S1_chrono wq_only seed=0: L=36 F=6 train=120475 val=17180 test=34396 load1=6.82
+[2026-10-14 10:09:58]     epoch  1  loss=0.024563  val_loss=0.087266  27.2s  rss_max=980MB
+[2026-10-14 10:10:24]     epoch  2  loss=0.003031  val_loss=0.107468  26.1s  rss_max=980MB
+[2026-10-14 10:11:00]     epoch  3  loss=0.002073  val_loss=0.070694  35.9s  rss_max=980MB
+[2026-10-14 10:11:38]     epoch  4  loss=0.001351  val_loss=0.038986  37.7s  rss_max=980MB
+[2026-10-14 10:11:56]     epoch  5  loss=0.000981  val_loss=0.048607  18.3s  rss_max=980MB
+[2026-10-14 10:12:14]     epoch  6  loss=0.000739  val_loss=0.043513  18.2s  rss_max=980MB
+[2026-10-14 10:12:32]     epoch  7  loss=0.000735  val_loss=0.071219  18.0s  rss_max=980MB
+[2026-10-14 10:12:35] done S1_chrono wq_only seed=0: epochs=7 best_epoch=4 best_val_loss=0.038986 train=181s predict=2.3s | test all: MAE=99.99 g RMSE=111.24 g MAPE=27.375 % nonfinite_pred=0
+[2026-10-14 10:12:36] run S1_chrono notebook seed=1: L=36 F=7 train=120475 val=17180 test=34396 load1=5.50
+[2026-10-14 10:12:57]     epoch  1  loss=0.028053  val_loss=0.038475  20.6s  rss_max=980MB
+[2026-10-14 10:13:15]     epoch  2  loss=0.000568  val_loss=0.005147  17.9s  rss_max=980MB
+[2026-10-14 10:13:33]     epoch  3  loss=0.000166  val_loss=0.001604  18.5s  rss_max=980MB
+[2026-10-14 10:13:51]     epoch  4  loss=0.000124  val_loss=0.001558  17.7s  rss_max=980MB
+[2026-10-14 10:14:13]     epoch  5  loss=0.000111  val_loss=0.001319  22.3s  rss_max=980MB
+[2026-10-14 10:14:38]     epoch  6  loss=0.000101  val_loss=0.001827  24.7s  rss_max=980MB
+[2026-10-14 10:15:01]     epoch  7  loss=0.000093  val_loss=0.001551  22.5s  rss_max=980MB
+[2026-10-14 10:15:23]     epoch  8  loss=0.000099  val_loss=0.001679  22.6s  rss_max=980MB
+[2026-10-14 10:15:26] done S1_chrono notebook seed=1: epochs=8 best_epoch=5 best_val_loss=0.001319 train=167s predict=2.8s | test all: MAE=40.133 g RMSE=50.651 g MAPE=10.747 % nonfinite_pred=0
+[2026-10-14 10:15:27] run S1_chrono manuscript seed=1: L=36 F=8 train=120475 val=17180 test=34396 load1=7.23
+[2026-10-14 10:15:51]     epoch  1  loss=0.026772  val_loss=0.061513  23.1s  rss_max=990MB
+[2026-10-14 10:16:11]     epoch  2  loss=0.001365  val_loss=0.072893  19.8s  rss_max=999MB
+[2026-10-14 10:16:30]     epoch  3  loss=0.000718  val_loss=0.018728  19.8s  rss_max=1011MB
+[2026-10-14 10:16:50]     epoch  4  loss=0.000330  val_loss=0.001917  19.3s  rss_max=1012MB
+[2026-10-14 10:17:11]     epoch  5  loss=0.000181  val_loss=0.003383  21.7s  rss_max=1013MB
+[2026-10-14 10:17:37]     epoch  6  loss=0.000213  val_loss=0.009827  25.4s  rss_max=1014MB
+[2026-10-14 10:17:59]     epoch  7  loss=0.000136  val_loss=0.010226  22.4s  rss_max=1030MB
+[2026-10-14 10:18:03] done S1_chrono manuscript seed=1: epochs=7 best_epoch=4 best_val_loss=0.001917 train=152s predict=3.0s | test all: MAE=34.918 g RMSE=43.075 g MAPE=9.6845 % nonfinite_pred=0
+[2026-10-14 10:18:03] run S1_chrono wq_only seed=1: L=36 F=6 train=120475 val=17180 test=34396 load1=7.03
+[2026-10-14 10:18:32]     epoch  1  loss=0.031111  val_loss=0.053385  27.8s  rss_max=1038MB
+[2026-10-14 10:19:00]     epoch  2  loss=0.003073  val_loss=0.068628  27.5s  rss_max=1044MB
+[2026-10-14 10:19:37]     epoch  3  loss=0.002176  val_loss=0.055471  36.9s  rss_max=1044MB
+[2026-10-14 10:19:57]     epoch  4  loss=0.001361  val_loss=0.042688  20.3s  rss_max=1044MB
+[2026-10-14 10:20:16]     epoch  5  loss=0.001012  val_loss=0.027711  19.6s  rss_max=1044MB
+[2026-10-14 10:20:35]     epoch  6  loss=0.000797  val_loss=0.070575  18.8s  rss_max=1044MB
+[2026-10-14 10:20:54]     epoch  7  loss=0.000653  val_loss=0.066748  18.9s  rss_max=1044MB
+[2026-10-14 10:21:16]     epoch  8  loss=0.000576  val_loss=0.086980  21.9s  rss_max=1044MB
+[2026-10-14 10:21:19] done S1_chrono wq_only seed=1: epochs=8 best_epoch=5 best_val_loss=0.027711 train=192s predict=2.8s | test all: MAE=79.087 g RMSE=86.381 g MAPE=21.679 % nonfinite_pred=0
+[2026-10-14 10:21:20] run S1_chrono notebook seed=2: L=36 F=7 train=120475 val=17180 test=34396 load1=5.96
+[2026-10-14 10:21:44]     epoch  1  loss=0.015134  val_loss=0.046406  22.5s  rss_max=1044MB
+[2026-10-14 10:22:03]     epoch  2  loss=0.000467  val_loss=0.003807  19.3s  rss_max=1044MB
+[2026-10-14 10:22:22]     epoch  3  loss=0.000130  val_loss=0.001616  19.2s  rss_max=1044MB
+[2026-10-14 10:22:42]     epoch  4  loss=0.000106  val_loss=0.001722  20.3s  rss_max=1044MB
+[2026-10-14 10:23:01]     epoch  5  loss=0.000092  val_loss=0.002301  19.1s  rss_max=1044MB
+[2026-10-14 10:23:21]     epoch  6  loss=0.000095  val_loss=0.002211  20.0s  rss_max=1044MB
+[2026-10-14 10:23:25] done S1_chrono notebook seed=2: epochs=6 best_epoch=3 best_val_loss=0.001616 train=120s predict=2.7s | test all: MAE=39.477 g RMSE=46.363 g MAPE=10.69 % nonfinite_pred=0
+[2026-10-14 10:23:25] run S1_chrono manuscript seed=2: L=36 F=8 train=120475 val=17180 test=34396 load1=6.33
+[2026-10-14 10:23:52]     epoch  1  loss=0.023843  val_loss=0.074661  26.2s  rss_max=1044MB
+[2026-10-14 10:24:12]     epoch  2  loss=0.001091  val_loss=0.043750  19.7s  rss_max=1044MB
+[2026-10-14 10:24:31]     epoch  3  loss=0.000388  val_loss=0.004773  19.4s  rss_max=1044MB
+[2026-10-14 10:24:53]     epoch  4  loss=0.000247  val_loss=0.010270  21.2s  rss_max=1044MB
+[2026-10-14 10:25:14]     epoch  5  loss=0.000171  val_loss=0.004524  21.4s  rss_max=1044MB
+[2026-10-14 10:25:56]     epoch  6  loss=0.000149  val_loss=0.004118  42.1s  rss_max=1044MB
+[2026-10-14 10:26:20]     epoch  7  loss=0.000188  val_loss=0.014737  24.2s  rss_max=1044MB
+[2026-10-14 10:26:57]     epoch  8  loss=0.000130  val_loss=0.005098  36.3s  rss_max=1044MB
+[2026-10-14 10:27:15]     epoch  9  loss=0.000150  val_loss=0.006990  18.5s  rss_max=1044MB
+[2026-10-14 10:27:18] done S1_chrono manuscript seed=2: epochs=9 best_epoch=6 best_val_loss=0.004118 train=229s predict=2.6s | test all: MAE=47.833 g RMSE=56.002 g MAPE=12.946 % nonfinite_pred=0
+[2026-10-14 10:27:19] run S1_chrono wq_only seed=2: L=36 F=6 train=120475 val=17180 test=34396 load1=6.82
+[2026-10-14 10:27:42]     epoch  1  loss=0.027782  val_loss=0.091623  22.3s  rss_max=1068MB
+[2026-10-14 10:28:01]     epoch  2  loss=0.002910  val_loss=0.103527  18.5s  rss_max=1068MB
+[2026-10-14 10:28:20]     epoch  3  loss=0.001916  val_loss=0.066822  19.3s  rss_max=1068MB
+[2026-10-14 10:28:39]     epoch  4  loss=0.001193  val_loss=0.074078  18.6s  rss_max=1068MB
+[2026-10-14 10:28:58]     epoch  5  loss=0.000902  val_loss=0.076209  18.9s  rss_max=1071MB
+[2026-10-14 10:29:25]     epoch  6  loss=0.000719  val_loss=0.096775  27.3s  rss_max=1072MB
+[2026-10-14 10:29:32] done S1_chrono wq_only seed=2: epochs=6 best_epoch=3 best_val_loss=0.066822 train=125s predict=6.8s | test all: MAE=98.813 g RMSE=108.91 g MAPE=27.155 % nonfinite_pred=0
+[2026-10-14 10:29:33] run S2_random notebook seed=0: L=36 F=7 train=120486 val=17212 test=34425 load1=6.53
+[2026-10-14 10:29:59]     epoch  1  loss=0.021156  val_loss=0.000704  24.5s  rss_max=1086MB
+[2026-10-14 10:30:19]     epoch  2  loss=0.000430  val_loss=0.000245  20.9s  rss_max=1088MB
+[2026-10-14 10:30:39]     epoch  3  loss=0.000157  val_loss=0.000131  19.8s  rss_max=1100MB
+[2026-10-14 10:31:02]     epoch  4  loss=0.000099  val_loss=0.000120  22.5s  rss_max=1100MB
+[2026-10-14 10:31:31]     epoch  5  loss=0.000086  val_loss=0.000089  29.0s  rss_max=1113MB
+[2026-10-14 10:31:54]     epoch  6  loss=0.000082  val_loss=0.000103  23.3s  rss_max=1114MB
+[2026-10-14 10:32:16]     epoch  7  loss=0.000071  val_loss=0.000124  22.2s  rss_max=1114MB
+[2026-10-14 10:32:57]     epoch  8  loss=0.000067  val_loss=0.000069  40.8s  rss_max=1114MB
+[2026-10-14 10:33:16]     epoch  9  loss=0.000066  val_loss=0.000079  19.2s  rss_max=1114MB
+[2026-10-14 10:33:35]     epoch 10  loss=0.000065  val_loss=0.000066  19.3s  rss_max=1114MB
+[2026-10-14 10:33:54]     epoch 11  loss=0.000067  val_loss=0.000095  19.0s  rss_max=1114MB
+[2026-10-14 10:34:14]     epoch 12  loss=0.000064  val_loss=0.000068  19.2s  rss_max=1114MB
+[2026-10-14 10:34:33]     epoch 13  loss=0.000065  val_loss=0.000098  19.0s  rss_max=1114MB
+[2026-10-14 10:34:36] done S2_random notebook seed=0: epochs=13 best_epoch=10 best_val_loss=0.000066 train=299s predict=2.7s | test all: MAE=0.65781 g RMSE=1.0567 g MAPE=2.4891 % nonfinite_pred=0
+[2026-10-14 10:34:37] run S2_random manuscript seed=0: L=36 F=8 train=120486 val=17212 test=34425 load1=5.92
+[2026-10-14 10:34:59]     epoch  1  loss=0.019684  val_loss=0.000439  21.8s  rss_max=1120MB
+[2026-10-14 10:35:19]     epoch  2  loss=0.000304  val_loss=0.000271  19.3s  rss_max=1127MB
+[2026-10-14 10:35:38]     epoch  3  loss=0.000197  val_loss=0.000534  19.2s  rss_max=1129MB
+[2026-10-14 10:35:57]     epoch  4  loss=0.000162  val_loss=0.000182  19.3s  rss_max=1129MB
+[2026-10-14 10:36:17]     epoch  5  loss=0.000136  val_loss=0.000112  19.6s  rss_max=1131MB
+[2026-10-14 10:36:36]     epoch  6  loss=0.000118  val_loss=0.000107  19.7s  rss_max=1132MB
+[2026-10-14 10:36:56]     epoch  7  loss=0.000108  val_loss=0.000103  19.8s  rss_max=1145MB
+[2026-10-14 10:37:16]     epoch  8  loss=0.000095  val_loss=0.000091  19.3s  rss_max=1153MB
+[2026-10-14 10:37:38]     epoch  9  loss=0.000100  val_loss=0.000105  22.1s  rss_max=1155MB
+[2026-10-14 10:37:57]     epoch 10  loss=0.000094  val_loss=0.000079  19.1s  rss_max=1155MB
+[2026-10-14 10:38:17]     epoch 11  loss=0.000100  val_loss=0.000077  20.3s  rss_max=1165MB
+[2026-10-14 10:38:37]     epoch 12  loss=0.000089  val_loss=0.000126  19.6s  rss_max=1165MB
+[2026-10-14 10:38:58]     epoch 13  loss=0.000088  val_loss=0.000069  21.6s  rss_max=1174MB
+[2026-10-14 10:39:18]     epoch 14  loss=0.000110  val_loss=0.000075  19.5s  rss_max=1174MB
+[2026-10-14 10:39:42]     epoch 15  loss=0.000075  val_loss=0.000071  24.4s  rss_max=1174MB
+[2026-10-14 10:39:48] done S2_random manuscript seed=0: epochs=15 best_epoch=13 best_val_loss=0.000069 train=305s predict=4.7s | test all: MAE=0.64483 g RMSE=1.0657 g MAPE=1.8737 % nonfinite_pred=0
+[2026-10-14 10:39:49] run S2_random wq_only seed=0: L=36 F=6 train=120486 val=17212 test=34425 load1=5.98
+[2026-10-14 10:40:16]     epoch  1  loss=0.036126  val_loss=0.013436  24.6s  rss_max=1183MB
+[2026-10-14 10:40:39]     epoch  2  loss=0.012687  val_loss=0.013045  23.3s  rss_max=1183MB
+[2026-10-14 10:41:22]     epoch  3  loss=0.011685  val_loss=0.011664  43.6s  rss_max=1183MB
+[2026-10-14 10:41:46]     epoch  4  loss=0.010897  val_loss=0.009829  23.7s  rss_max=1183MB
+[2026-10-14 10:42:28]     epoch  5  loss=0.010091  val_loss=0.010085  42.1s  rss_max=1183MB
+[2026-10-14 10:42:50]     epoch  6  loss=0.008850  val_loss=0.006772  21.8s  rss_max=1183MB
+[2026-10-14 10:43:12]     epoch  7  loss=0.007240  val_loss=0.007737  22.2s  rss_max=1183MB
+[2026-10-14 10:43:50]     epoch  8  loss=0.006782  val_loss=0.006471  37.5s  rss_max=1183MB
+[2026-10-14 10:44:09]     epoch  9  loss=0.006186  val_loss=0.011116  19.1s  rss_max=1183MB
+[2026-10-14 10:44:28]     epoch 10  loss=0.006022  val_loss=0.006787  19.3s  rss_max=1183MB
+[2026-10-14 10:44:49]     epoch 11  loss=0.006018  val_loss=0.006880  20.4s  rss_max=1183MB
+[2026-10-14 10:44:52] done S2_random wq_only seed=0: epochs=11 best_epoch=8 best_val_loss=0.006471 train=298s predict=2.8s | test all: MAE=6.0458 g RMSE=11.696 g MAPE=14.882 % nonfinite_pred=0
+[2026-10-14 10:44:53] run S2_random notebook seed=1: L=36 F=7 train=120486 val=17212 test=34425 load1=5.17
+[2026-10-14 10:45:16]     epoch  1  loss=0.031050  val_loss=0.000721  21.8s  rss_max=1207MB
+[2026-10-14 10:45:35]     epoch  2  loss=0.000425  val_loss=0.000258  19.0s  rss_max=1211MB
+[2026-10-14 10:45:55]     epoch  3  loss=0.000182  val_loss=0.000147  19.4s  rss_max=1212MB
+[2026-10-14 10:46:14]     epoch  4  loss=0.000125  val_loss=0.000124  19.6s  rss_max=1212MB
+[2026-10-14 10:46:35]     epoch  5  loss=0.000104  val_loss=0.000098  20.6s  rss_max=1215MB
+[2026-10-14 10:46:58]     epoch  6  loss=0.000091  val_loss=0.000086  22.9s  rss_max=1217MB
+[2026-10-14 10:47:19]     epoch  7  loss=0.000084  val_loss=0.000083  21.5s  rss_max=1217MB
+[2026-10-14 10:47:44]     epoch  8  loss=0.000076  val_loss=0.000077  24.8s  rss_max=1219MB
+[2026-10-14 10:48:22]     epoch  9  loss=0.000073  val_loss=0.000062  38.1s  rss_max=1219MB
+[2026-10-14 10:48:42]     epoch 10  loss=0.000075  val_loss=0.000079  19.7s  rss_max=1219MB
+[2026-10-14 10:49:00]     epoch 11  loss=0.000068  val_loss=0.000068  17.6s  rss_max=1221MB
+[2026-10-14 10:49:19]     epoch 12  loss=0.000068  val_loss=0.000059  19.3s  rss_max=1221MB
+[2026-10-14 10:49:43]     epoch 13  loss=0.000063  val_loss=0.000066  24.1s  rss_max=1221MB
+[2026-10-14 10:50:23]     epoch 14  loss=0.000075  val_loss=0.000107  40.2s  rss_max=1221MB
+[2026-10-14 10:50:46]     epoch 15  loss=0.000061  val_loss=0.000162  22.4s  rss_max=1221MB
+[2026-10-14 10:50:49] done S2_random notebook seed=1: epochs=15 best_epoch=12 best_val_loss=0.000059 train=351s predict=3.0s | test all: MAE=0.70119 g RMSE=1.2004 g MAPE=2.266 % nonfinite_pred=0
+[2026-10-14 10:50:50] run S2_random manuscript seed=1: L=36 F=8 train=120486 val=17212 test=34425 load1=5.50
+[2026-10-14 10:51:14]     epoch  1  loss=0.031527  val_loss=0.000512  22.6s  rss_max=1236MB
+[2026-10-14 10:51:36]     epoch  2  loss=0.000367  val_loss=0.000270  21.5s  rss_max=1243MB
+[2026-10-14 10:51:57]     epoch  3  loss=0.000226  val_loss=0.000346  21.1s  rss_max=1243MB
+[2026-10-14 10:52:27]     epoch  4  loss=0.000183  val_loss=0.000179  30.3s  rss_max=1243MB
+[2026-10-14 10:53:01]     epoch  5  loss=0.000139  val_loss=0.000133  33.8s  rss_max=1243MB
+[2026-10-14 10:53:21]     epoch  6  loss=0.000156  val_loss=0.000120  20.5s  rss_max=1243MB
+[2026-10-14 10:53:41]     epoch  7  loss=0.000120  val_loss=0.000101  19.2s  rss_max=1243MB
+[2026-10-14 10:54:01]     epoch  8  loss=0.000105  val_loss=0.000099  20.8s  rss_max=1243MB
+[2026-10-14 10:54:20]     epoch  9  loss=0.000124  val_loss=0.000087  18.8s  rss_max=1244MB
+[2026-10-14 10:54:39]     epoch 10  loss=0.000111  val_loss=0.000100  19.0s  rss_max=1244MB
+[2026-10-14 10:54:59]     epoch 11  loss=0.000114  val_loss=0.000096  19.2s  rss_max=1244MB
+[2026-10-14 10:55:17]     epoch 12  loss=0.000112  val_loss=0.000079  18.4s  rss_max=1244MB
+[2026-10-14 10:55:37]     epoch 13  loss=0.000090  val_loss=0.000073  20.0s  rss_max=1244MB
+[2026-10-14 10:55:55]     epoch 14  loss=0.000095  val_loss=0.000079  17.9s  rss_max=1244MB
+[2026-10-14 10:56:14]     epoch 15  loss=0.000093  val_loss=0.000070  19.0s  rss_max=1244MB
+[2026-10-14 10:56:17] done S2_random manuscript seed=1: epochs=15 best_epoch=15 best_val_loss=0.000070 train=322s predict=2.6s | test all: MAE=0.71206 g RMSE=1.296 g MAPE=1.7229 % nonfinite_pred=0
+[2026-10-14 10:56:18] run S2_random wq_only seed=1: L=36 F=6 train=120486 val=17212 test=34425 load1=6.33
+[2026-10-14 10:56:43]     epoch  1  loss=0.042392  val_loss=0.013875  23.4s  rss_max=1254MB
+[2026-10-14 10:57:01]     epoch  2  loss=0.013092  val_loss=0.012475  18.8s  rss_max=1254MB
+[2026-10-14 10:57:21]     epoch  3  loss=0.011860  val_loss=0.011242  19.6s  rss_max=1254MB
+[2026-10-14 10:57:40]     epoch  4  loss=0.011097  val_loss=0.010705  18.7s  rss_max=1254MB
+[2026-10-14 10:58:01]     epoch  5  loss=0.010389  val_loss=0.010541  20.9s  rss_max=1256MB
+[2026-10-14 10:58:39]     epoch  6  loss=0.009939  val_loss=0.009859  38.5s  rss_max=1256MB
+[2026-10-14 10:59:01]     epoch  7  loss=0.008940  val_loss=0.009392  21.5s  rss_max=1256MB
+[2026-10-14 10:59:51]     epoch  8  loss=0.008306  val_loss=0.007476  49.8s  rss_max=1256MB
+[2026-10-14 11:00:13]     epoch  9  loss=0.007175  val_loss=0.006417  22.2s  rss_max=1256MB
+[2026-10-14 11:00:35]     epoch 10  loss=0.006521  val_loss=0.005810  22.1s  rss_max=1256MB
+[2026-10-14 11:00:54]     epoch 11  loss=0.006057  val_loss=0.006573  19.4s  rss_max=1256MB
+[2026-10-14 11:01:13]     epoch 12  loss=0.006246  val_loss=0.004937  19.2s  rss_max=1256MB
+[2026-10-14 11:01:32]     epoch 13  loss=0.005608  val_loss=0.005232  18.8s  rss_max=1256MB
+[2026-10-14 11:01:57]     epoch 14  loss=0.005384  val_loss=0.006077  24.5s  rss_max=1256MB
+[2026-10-14 11:02:39]     epoch 15  loss=0.005250  val_loss=0.004425  42.5s  rss_max=1256MB
+[2026-10-14 11:02:43] done S2_random wq_only seed=1: epochs=15 best_epoch=15 best_val_loss=0.004425 train=380s predict=3.1s | test all: MAE=4.179 g RMSE=9.3279 g MAPE=5.6195 % nonfinite_pred=0
+[2026-10-14 11:02:44] run S2_random notebook seed=2: L=36 F=7 train=120486 val=17212 test=34425 load1=5.45
+[2026-10-14 11:03:11]     epoch  1  loss=0.017383  val_loss=0.000576  25.6s  rss_max=1264MB
+[2026-10-14 11:03:33]     epoch  2  loss=0.000358  val_loss=0.000227  22.2s  rss_max=1264MB
+[2026-10-14 11:03:54]     epoch  3  loss=0.000159  val_loss=0.000143  20.9s  rss_max=1264MB
+[2026-10-14 11:04:13]     epoch  4  loss=0.000112  val_loss=0.000107  19.5s  rss_max=1264MB
+[2026-10-14 11:04:34]     epoch  5  loss=0.000093  val_loss=0.000095  20.3s  rss_max=1264MB
+[2026-10-14 11:04:56]     epoch  6  loss=0.000081  val_loss=0.000109  22.7s  rss_max=1264MB
+[2026-10-14 11:05:15]     epoch  7  loss=0.000074  val_loss=0.000070  19.2s  rss_max=1264MB
+[2026-10-14 11:05:35]     epoch  8  loss=0.000071  val_loss=0.000100  19.4s  rss_max=1264MB
+[2026-10-14 11:05:55]     epoch  9  loss=0.000069  val_loss=0.000109  19.8s  rss_max=1264MB
+[2026-10-14 11:06:14]     epoch 10  loss=0.000068  val_loss=0.000135  19.8s  rss_max=1264MB
+[2026-10-14 11:06:18] done S2_random notebook seed=2: epochs=10 best_epoch=7 best_val_loss=0.000070 train=209s predict=3.2s | test all: MAE=0.68076 g RMSE=1.2054 g MAPE=2.5054 % nonfinite_pred=0
+[2026-10-14 11:06:19] run S2_random manuscript seed=2: L=36 F=8 train=120486 val=17212 test=34425 load1=7.57
+[2026-10-14 11:06:45]     epoch  1  loss=0.024950  val_loss=0.000580  24.1s  rss_max=1286MB
+[2026-10-14 11:07:05]     epoch  2  loss=0.000390  val_loss=0.000291  20.3s  rss_max=1291MB
+[2026-10-14 11:07:25]     epoch  3  loss=0.000238  val_loss=0.000294  20.2s  rss_max=1292MB
+[2026-10-14 11:07:45]     epoch  4  loss=0.000197  val_loss=0.000202  20.0s  rss_max=1293MB
+[2026-10-14 11:08:07]     epoch  5  loss=0.000153  val_loss=0.000127  21.5s  rss_max=1293MB
+[2026-10-14 11:08:27]     epoch  6  loss=0.000146  val_loss=0.000136  20.4s  rss_max=1293MB
+[2026-10-14 11:08:47]     epoch  7  loss=0.000138  val_loss=0.000101  20.5s  rss_max=1293MB
+[2026-10-14 11:09:07]     epoch  8  loss=0.000112  val_loss=0.000129  19.8s  rss_max=1293MB
+[2026-10-14 11:09:26]     epoch  9  loss=0.000123  val_loss=0.000106  19.2s  rss_max=1293MB
+[2026-10-14 11:09:47]     epoch 10  loss=0.000100  val_loss=0.000093  20.2s  rss_max=1293MB
+[2026-10-14 11:10:09]     epoch 11  loss=0.000106  val_loss=0.000427  22.5s  rss_max=1293MB
+[2026-10-14 11:10:28]     epoch 12  loss=0.000101  val_loss=0.000098  19.3s  rss_max=1293MB
+[2026-10-14 11:10:47]     epoch 13  loss=0.000089  val_loss=0.000073  19.2s  rss_max=1293MB
+[2026-10-14 11:11:11]     epoch 14  loss=0.000098  val_loss=0.000082  23.2s  rss_max=1293MB
+[2026-10-14 11:11:48]     epoch 15  loss=0.000082  val_loss=0.000076  37.8s  rss_max=1293MB
+[2026-10-14 11:11:52] done S2_random manuscript seed=2: epochs=15 best_epoch=13 best_val_loss=0.000073 train=328s predict=2.8s | test all: MAE=0.76808 g RMSE=1.2688 g MAPE=2.0153 % nonfinite_pred=0
+[2026-10-14 11:11:53] run S2_random wq_only seed=2: L=36 F=6 train=120486 val=17212 test=34425 load1=5.75
+[2026-10-14 11:12:18]     epoch  1  loss=0.038487  val_loss=0.014242  23.5s  rss_max=1303MB
+[2026-10-14 11:12:41]     epoch  2  loss=0.012780  val_loss=0.012720  23.3s  rss_max=1308MB
+[2026-10-14 11:13:00]     epoch  3  loss=0.011671  val_loss=0.011722  19.5s  rss_max=1308MB
+[2026-10-14 11:13:20]     epoch  4  loss=0.010897  val_loss=0.011539  19.4s  rss_max=1310MB
+[2026-10-14 11:13:39]     epoch  5  loss=0.010642  val_loss=0.011618  18.9s  rss_max=1310MB
+[2026-10-14 11:13:58]     epoch  6  loss=0.009977  val_loss=0.010578  19.4s  rss_max=1311MB
+[2026-10-14 11:14:17]     epoch  7  loss=0.009137  val_loss=0.009158  19.3s  rss_max=1311MB
+[2026-10-14 11:14:39]     epoch  8  loss=0.008523  val_loss=0.009293  21.6s  rss_max=1311MB
+[2026-10-14 11:15:01]     epoch  9  loss=0.007710  val_loss=0.008891  22.0s  rss_max=1311MB
+[2026-10-14 11:15:21]     epoch 10  loss=0.007053  val_loss=0.006254  19.8s  rss_max=1313MB
+[2026-10-14 11:15:42]     epoch 11  loss=0.006039  val_loss=0.006188  20.7s  rss_max=1313MB
+[2026-10-14 11:16:00]     epoch 12  loss=0.006140  val_loss=0.006226  18.6s  rss_max=1313MB
+[2026-10-14 11:16:19]     epoch 13  loss=0.005944  val_loss=0.006289  18.9s  rss_max=1313MB
+[2026-10-14 11:16:39]     epoch 14  loss=0.005923  val_loss=0.005152  19.5s  rss_max=1313MB
+[2026-10-14 11:16:58]     epoch 15  loss=0.005213  val_loss=0.005333  19.2s  rss_max=1313MB
+[2026-10-14 11:17:01] done S2_random wq_only seed=2: epochs=15 best_epoch=14 best_val_loss=0.005152 train=304s predict=2.6s | test all: MAE=5.1265 g RMSE=10.001 g MAPE=6.2176 % nonfinite_pred=0
+[2026-10-14 11:17:02] run S0_notebook notebook seed=0: L=134 F=7 train=137593 val=8607 test=34298 load1=6.25
+[2026-10-14 11:18:21]     epoch  1  loss=0.012528  val_loss=0.014805  78.2s  rss_max=1537MB
+[2026-10-14 11:19:34]     epoch  2  loss=0.000265  val_loss=0.011511  72.6s  rss_max=1550MB
+[2026-10-14 11:20:48]     epoch  3  loss=0.000164  val_loss=0.009618  73.6s  rss_max=1558MB
+[2026-10-14 11:22:02]     epoch  4  loss=0.000129  val_loss=0.008811  74.0s  rss_max=1593MB
+[2026-10-14 11:23:15]     epoch  5  loss=0.000136  val_loss=0.008413  73.4s  rss_max=1593MB
+[2026-10-14 11:24:28]     epoch  6  loss=0.000106  val_loss=0.007868  73.0s  rss_max=1593MB
+[2026-10-14 11:25:40]     epoch  7  loss=0.000102  val_loss=0.008535  72.3s  rss_max=1593MB
+[2026-10-14 11:27:12]     epoch  8  loss=0.000104  val_loss=0.007353  91.2s  rss_max=1593MB
+[2026-10-14 11:28:32]     epoch  9  loss=0.000092  val_loss=0.006597  80.7s  rss_max=1593MB
+[2026-10-14 11:29:57]     epoch 10  loss=0.000105  val_loss=0.006907  85.1s  rss_max=1593MB
+[2026-10-14 11:31:19]     epoch 11  loss=0.000087  val_loss=0.006653  81.6s  rss_max=1593MB
+[2026-10-14 11:32:35]     epoch 12  loss=0.000091  val_loss=0.008543  76.5s  rss_max=1593MB
+[2026-10-14 11:32:44] done S0_notebook notebook seed=0: epochs=12 best_epoch=9 best_val_loss=0.006597 train=932s predict=8.0s | test all: MAE=60.93 g RMSE=88.796 g MAPE=16.058 % nonfinite_pred=0
+[2026-10-14 11:32:45] run S0_notebook notebook seed=1: L=134 F=7 train=137593 val=8607 test=34298 load1=5.18
+[2026-10-14 11:34:03]     epoch  1  loss=0.009798  val_loss=0.000984  76.5s  rss_max=1593MB
+[2026-10-14 11:35:18]     epoch  2  loss=0.000231  val_loss=0.000892  75.2s  rss_max=1593MB
+[2026-10-14 11:36:47]     epoch  3  loss=0.000211  val_loss=0.000686  88.8s  rss_max=1622MB
+[2026-10-14 11:39:07]     epoch  4  loss=0.000210  val_loss=0.000931  139.9s  rss_max=1622MB
+[2026-10-14 11:40:35]     epoch  5  loss=0.000157  val_loss=0.000981  88.3s  rss_max=1622MB
+[2026-10-14 11:42:04]     epoch  6  loss=0.000143  val_loss=0.001084  88.6s  rss_max=1622MB
+[2026-10-14 11:42:13] done S0_notebook notebook seed=1: epochs=6 best_epoch=3 best_val_loss=0.000686 train=557s predict=9.0s | test all: MAE=57.775 g RMSE=90.458 g MAPE=15.078 % nonfinite_pred=0
+[2026-10-14 11:42:14] run S0_notebook notebook seed=2: L=134 F=7 train=137593 val=8607 test=34298 load1=6.44
+[2026-10-14 11:43:44]     epoch  1  loss=0.006902  val_loss=0.012403  88.3s  rss_max=1651MB
+[2026-10-14 11:44:58]     epoch  2  loss=0.000232  val_loss=0.004564  74.0s  rss_max=1651MB
+[2026-10-14 11:46:12]     epoch  3  loss=0.000168  val_loss=0.004303  74.1s  rss_max=1651MB
+[2026-10-14 11:47:29]     epoch  4  loss=0.000138  val_loss=0.003347  77.1s  rss_max=1651MB
+[2026-10-14 11:48:43]     epoch  5  loss=0.000154  val_loss=0.004349  73.9s  rss_max=1651MB
+[2026-10-14 11:49:58]     epoch  6  loss=0.000116  val_loss=0.004729  74.7s  rss_max=1665MB
+[2026-10-14 11:51:13]     epoch  7  loss=0.000116  val_loss=0.005383  74.7s  rss_max=1665MB
+[2026-10-14 11:51:21] done S0_notebook notebook seed=2: epochs=7 best_epoch=4 best_val_loss=0.003347 train=537s predict=7.9s | test all: MAE=36.094 g RMSE=49.806 g MAPE=9.5357 % nonfinite_pred=0
+[2026-10-14 11:51:22] grid complete: every cell has metrics rows

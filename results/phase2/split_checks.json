@@ -1,0 +1,570 @@
+{
+  "N": 172159,
+  "data": {
+    "raw_rows": 172249,
+    "rows_after_dropna": 172159,
+    "rows_dropped": 90,
+    "missing_per_column": {
+      "created_at": 0,
+      "Temperature (C)": 0,
+      "Turbidity (NTU)": 0,
+      "Dissolved Oxygen(g/ml)": 0,
+      "PH": 0,
+      "Ammonia(g/ml)": 90,
+      "Nitrate(g/ml)": 0,
+      "Population": 0,
+      "Fish_Length (cm)": 0,
+      "Fish_Weight (g)": 0
+    },
+    "rows_after_dropna_without_population_and_length": 172159,
+    "dropna_same_rows_with_and_without_population_and_length": true,
+    "population_unique_values": [
+      50
+    ],
+    "timestamps_strictly_increasing": true,
+    "first_created_at": "2021-06-19 00:00:05 CET",
+    "last_created_at": "2021-10-31 04:33:00 CET",
+    "n_grid_dates_with_rows": 9,
+    "dropped_file_rows": [
+      12388,
+      13842,
+      13861,
+      17088,
+      17108,
+      17253,
+      18202,
+      18277,
+      18386,
+      19802,
+      20005,
+      20037,
+      20090,
+      20127,
+      20196,
+      20201,
+      20241,
+      20276,
+      20718,
+      20721,
+      22877,
+      23321,
+      23341,
+      23560,
+      23649,
+      24030,
+      24056,
+      24115,
+      24116,
+      24165,
+      24364,
+      24660,
+      27883,
+      27966,
+      28121,
+      28186,
+      28598,
+      28747,
+      28750,
+      30285,
+      30286,
+      30393,
+      30737,
+      31031,
+      31062,
+      31079,
+      31993,
+      32527,
+      32809,
+      32813,
+      32822,
+      32910,
+      34865,
+      35267,
+      35775,
+      36919,
+      37092,
+      37143,
+      37208,
+      40240,
+      40513,
+      40670,
+      40674,
+      45373,
+      45414,
+      45642,
+      46037,
+      46292,
+      46342,
+      46447,
+      47266,
+      150702,
+      157385,
+      157397,
+      157516,
+      157680,
+      157833,
+      157871,
+      157955,
+      157963,
+      158020,
+      160425,
+      160635,
+      160636,
+      160729,
+      160772,
+      164077,
+      164398,
+      171754,
+      171756
+    ]
+  },
+  "splits": {
+    "S0_notebook": {
+      "split": "S0_notebook",
+      "seed": null,
+      "lookback": 134,
+      "scaler_fit_rows_half_open": [
+        0,
+        172159
+      ],
+      "train": {
+        "n": 137593,
+        "target_min": 134,
+        "target_max": 137726,
+        "target_range_half_open": [
+          134,
+          137727
+        ],
+        "contiguous": true,
+        "first_input_row": 0,
+        "last_input_row": 137725,
+        "sha256_sorted_targets": "9fcae4978557ae1211f403a33ccdb6e258d934fe00dbcdbd91e6bf73287432ae"
+      },
+      "val": {
+        "n": 8607,
+        "target_min": 137727,
+        "target_max": 146333,
+        "target_range_half_open": [
+          137727,
+          146334
+        ],
+        "contiguous": true,
+        "first_input_row": 137593,
+        "last_input_row": 146332,
+        "sha256_sorted_targets": "dddcf222108bd9d93f7d727ce3f1deb60c42d5c58c38c3be2c7d2efa0528bb17"
+      },
+      "test": {
+        "n": 34298,
+        "target_min": 137727,
+        "target_max": 172024,
+        "target_range_half_open": [
+          137727,
+          172025
+        ],
+        "contiguous": true,
+        "first_input_row": 137593,
+        "last_input_row": 172023,
+        "sha256_sorted_targets": "9218656004c774194b9883b47b18f83e629810ffe9609b7fc8440704f1b26681"
+      },
+      "checks": {
+        "val_is_subset_of_test": true,
+        "train_and_test_disjoint": true,
+        "counts_match_notebook_cell4": true,
+        "test_first_actual_matches_notebook_cell9": true,
+        "test_last_actual_matches_notebook_cell9": true,
+        "T": 137727,
+        "val_end_exclusive": 146334
+      },
+      "eval_sets": {
+        "all": 34298,
+        "change_rows": 17,
+        "grid_first_rows": 2,
+        "grid_first_rows_detail": [
+          {
+            "target_row": 141791,
+            "date": "2021-10-09"
+          },
+          {
+            "target_row": 150266,
+            "date": "2021-10-23"
+          }
+        ]
+      }
+    },
+    "S1_chrono": {
+      "split": "S1_chrono",
+      "seed": null,
+      "lookback": 36,
+      "scaler_fit_rows_half_open": [
+        0,
+        120511
+      ],
+      "train": {
+        "n": 120475,
+        "target_min": 36,
+        "target_max": 120510,
+        "target_range_half_open": [
+          36,
+          120511
+        ],
+        "contiguous": true,
+        "first_input_row": 0,
+        "last_input_row": 120509,
+        "sha256_sorted_targets": "42148b0fb1f9153a16495aedea47ea7bc4fcb98b4563f20f274769d3d36c66c7"
+      },
+      "val": {
+        "n": 17180,
+        "target_min": 120547,
+        "target_max": 137726,
+        "target_range_half_open": [
+          120547,
+          137727
+        ],
+        "contiguous": true,
+        "first_input_row": 120511,
+        "last_input_row": 137725,
+        "sha256_sorted_targets": "ecd1d944abe65e19151e937161484046423ba304ce5d4eb39e1e20bb16d5ea6e"
+      },
+      "test": {
+        "n": 34396,
+        "target_min": 137763,
+        "target_max": 172158,
+        "target_range_half_open": [
+          137763,
+          172159
+        ],
+        "contiguous": true,
+        "first_input_row": 137727,
+        "last_input_row": 172157,
+        "sha256_sorted_targets": "df668e27db84b767566bd87905226273603dfe99deec574450ec40b4f8fca1ff"
+      },
+      "checks": {
+        "train_val_test_pairwise_disjoint": true,
+        "no_window_crosses_a_boundary": true,
+        "row_bounds_half_open": {
+          "train": [
+            0,
+            120511
+          ],
+          "val": [
+            120511,
+            137727
+          ],
+          "test": [
+            137727,
+            172159
+          ]
+        },
+        "a": 120511,
+        "b": 137727
+      },
+      "eval_sets": {
+        "all": 34396,
+        "change_rows": 17,
+        "grid_first_rows": 2,
+        "grid_first_rows_detail": [
+          {
+            "target_row": 141791,
+            "date": "2021-10-09"
+          },
+          {
+            "target_row": 150266,
+            "date": "2021-10-23"
+          }
+        ]
+      }
+    },
+    "S2_random": {
+      "seeds": {
+        "0": {
+          "split": "S2_random",
+          "seed": 0,
+          "lookback": 36,
+          "scaler_fit_rows_half_open": [
+            0,
+            172159
+          ],
+          "train": {
+            "n": 120486,
+            "target_min": 36,
+            "target_max": 172157,
+            "target_range_half_open": [
+              36,
+              172158
+            ],
+            "contiguous": false,
+            "first_input_row": 0,
+            "last_input_row": 172156,
+            "sha256_sorted_targets": "d3bea8d8fb45a7cdf5611879342fb4e75a82f43d8efe479ed7dee314fd44b147"
+          },
+          "val": {
+            "n": 17212,
+            "target_min": 39,
+            "target_max": 172152,
+            "target_range_half_open": [
+              39,
+              172153
+            ],
+            "contiguous": false,
+            "first_input_row": 3,
+            "last_input_row": 172151,
+            "sha256_sorted_targets": "021e8d7df3d9fbba6d226115da9eef73cfbd4f4e41b21cdd33435d6f5697fb5f"
+          },
+          "test": {
+            "n": 34425,
+            "target_min": 40,
+            "target_max": 172158,
+            "target_range_half_open": [
+              40,
+              172159
+            ],
+            "contiguous": false,
+            "first_input_row": 4,
+            "last_input_row": 172157,
+            "sha256_sorted_targets": "8299537f47b885f5674b9fb74d3c29b20b2b651173990c3e1a70307bf5ed4030"
+          },
+          "checks": {
+            "train_val_test_pairwise_disjoint": true,
+            "train_val_test_cover_all_targets": true
+          },
+          "eval_sets": {
+            "all": 34425,
+            "change_rows": 21,
+            "grid_first_rows": 9,
+            "grid_first_rows_detail": [
+              {
+                "target_row": 40,
+                "date": "2021-06-19"
+              },
+              {
+                "target_row": 26461,
+                "date": "2021-07-03"
+              },
+              {
+                "target_row": 44023,
+                "date": "2021-07-17"
+              },
+              {
+                "target_row": 57123,
+                "date": "2021-07-31"
+              },
+              {
+                "target_row": 86505,
+                "date": "2021-08-14"
+              },
+              {
+                "target_row": 91153,
+                "date": "2021-08-28"
+              },
+              {
+                "target_row": 103488,
+                "date": "2021-09-25"
+              },
+              {
+                "target_row": 141797,
+                "date": "2021-10-09"
+              },
+              {
+                "target_row": 150266,
+                "date": "2021-10-23"
+              }
+            ]
+          }
+        },
+        "1": {
+          "split": "S2_random",
+          "seed": 1,
+          "lookback": 36,
+          "scaler_fit_rows_half_open": [
+            0,
+            172159
+          ],
+          "train": {
+            "n": 120486,
+            "target_min": 36,
+            "target_max": 172158,
+            "target_range_half_open": [
+              36,
+              172159
+            ],
+            "contiguous": false,
+            "first_input_row": 0,
+            "last_input_row": 172157,
+            "sha256_sorted_targets": "2c05033fa03ea30f62a0b103896c9e546ba08762dc8ca5bc1907024eb03504c8"
+          },
+          "val": {
+            "n": 17212,
+            "target_min": 41,
+            "target_max": 172151,
+            "target_range_half_open": [
+              41,
+              172152
+            ],
+            "contiguous": false,
+            "first_input_row": 5,
+            "last_input_row": 172150,
+            "sha256_sorted_targets": "108bff023289166e1a36291b1aa3912ea54e9fa03689a554e71e3e9e60f4f521"
+          },
+          "test": {
+            "n": 34425,
+            "target_min": 38,
+            "target_max": 172156,
+            "target_range_half_open": [
+              38,
+              172157
+            ],
+            "contiguous": false,
+            "first_input_row": 2,
+            "last_input_row": 172155,
+            "sha256_sorted_targets": "91b0a406749af8f702b527f3c9fe50032a867bd6792469bb71500a6c43a160d1"
+          },
+          "checks": {
+            "train_val_test_pairwise_disjoint": true,
+            "train_val_test_cover_all_targets": true
+          },
+          "eval_sets": {
+            "all": 34425,
+            "change_rows": 24,
+            "grid_first_rows": 9,
+            "grid_first_rows_detail": [
+              {
+                "target_row": 38,
+                "date": "2021-06-19"
+              },
+              {
+                "target_row": 26459,
+                "date": "2021-07-03"
+              },
+              {
+                "target_row": 44015,
+                "date": "2021-07-17"
+              },
+              {
+                "target_row": 57111,
+                "date": "2021-07-31"
+              },
+              {
+                "target_row": 86503,
+                "date": "2021-08-14"
+              },
+              {
+                "target_row": 91159,
+                "date": "2021-08-28"
+              },
+              {
+                "target_row": 103489,
+                "date": "2021-09-25"
+              },
+              {
+                "target_row": 141795,
+                "date": "2021-10-09"
+              },
+              {
+                "target_row": 150267,
+                "date": "2021-10-23"
+              }
+            ]
+          }
+        },
+        "2": {
+          "split": "S2_random",
+          "seed": 2,
+          "lookback": 36,
+          "scaler_fit_rows_half_open": [
+            0,
+            172159
+          ],
+          "train": {
+            "n": 120486,
+            "target_min": 36,
+            "target_max": 172158,
+            "target_range_half_open": [
+              36,
+              172159
+            ],
+            "contiguous": false,
+            "first_input_row": 0,
+            "last_input_row": 172157,
+            "sha256_sorted_targets": "9295462cd62cabd06a62ba500acfc6a1d0b65fae735b673007fc5a34da74cd06"
+          },
+          "val": {
+            "n": 17212,
+            "target_min": 54,
+            "target_max": 172142,
+            "target_range_half_open": [
+              54,
+              172143
+            ],
+            "contiguous": false,
+            "first_input_row": 18,
+            "last_input_row": 172141,
+            "sha256_sorted_targets": "bbf5685448c0ddc6c40176474bc32b309d615d4dd9e99a2854cfa234793696fe"
+          },
+          "test": {
+            "n": 34425,
+            "target_min": 40,
+            "target_max": 172156,
+            "target_range_half_open": [
+              40,
+              172157
+            ],
+            "contiguous": false,
+            "first_input_row": 4,
+            "last_input_row": 172155,
+            "sha256_sorted_targets": "786402c8af8b93cfc85bd03bb9038cf9b83e46f7f6a73ae0f99d73d025b2cc20"
+          },
+          "checks": {
+            "train_val_test_pairwise_disjoint": true,
+            "train_val_test_cover_all_targets": true
+          },
+          "eval_sets": {
+            "all": 34425,
+            "change_rows": 20,
+            "grid_first_rows": 9,
+            "grid_first_rows_detail": [
+              {
+                "target_row": 40,
+                "date": "2021-06-19"
+              },
+              {
+                "target_row": 26455,
+                "date": "2021-07-03"
+              },
+              {
+                "target_row": 44020,
+                "date": "2021-07-17"
+              },
+              {
+                "target_row": 57109,
+                "date": "2021-07-31"
+              },
+              {
+                "target_row": 86501,
+                "date": "2021-08-14"
+              },
+              {
+                "target_row": 91154,
+                "date": "2021-08-28"
+              },
+              {
+                "target_row": 103490,
+                "date": "2021-09-25"
+              },
+              {
+                "target_row": 141791,
+                "date": "2021-10-09"
+              },
+              {
+                "target_row": 150268,
+                "date": "2021-10-23"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "a": 120511,
+  "b": 137727,
+  "T": 137727
+}

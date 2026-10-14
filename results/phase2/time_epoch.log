@@ -1,0 +1,6 @@
+[2026-10-14 09:58:55] hardware: {'cpu_model': 'AMD EPYC 7B12', 'n_cores': 4, 'tensorflow_version': '2.21.0', 'keras_version': '3.15.1'}
+[2026-10-14 09:58:55] python 3.12.3, numpy 2.5.4, pandas 3.0.6, keras backend tensorflow, load1=2.30
+[2026-10-14 09:58:56] data: N=172159 rows after dropna (90 dropped), dropna identical with and without Population/Fish_Length: True
+[2026-10-14 10:01:42] timing S0_notebook: L=134 first epoch 81.9s, second epoch 73.6s, val-sized pass 2.2s, test-sized predict 7.9s
+[2026-10-14 10:02:26] timing S1_chrono: L=36 first epoch 21.1s, second epoch 17.4s, val-sized pass 1.8s, test-sized predict 3.0s
+[2026-10-14 10:02:27] projection: 2.44 h for 21 runs at 15 epochs each (limit 8 h)
