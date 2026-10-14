@@ -1,0 +1,140 @@
+.EE                                                                      [100%]
+==================================== ERRORS ====================================
+______________ ERROR at setup of test_real_inner_results[report1] ______________
+
+request = <SubRequest 'report' for <Function test_real_inner_results[report1]>>
+world = ({'paths': {'t1_table': 'data/processed/t1_table.csv', 't2_table': 'data/processed/t2_table.csv', 'daily_wq': 'data/pr...N                       0
+127     9    S09  ...                 NaN                       0
+
+[128 rows x 161 columns]))
+tmp_path = PosixPath('/tmp/pytest-of-dev/pytest-139/test_real_inner_results_report1')
+
+    @pytest.fixture(params=[("T1", "ridge_time_wq"), ("T2", "ridge_pw_wq"), ("T1", "ridge_time_wq_w28")])
+    def report(request, world, tmp_path):
+        cfg, _tables = world
+        task, model = request.param
+        path = tmp_path / "inner.json"
+>       result = variant.inner(cfg, task, "lopo", model, out=path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+posthoc/tests/test_ridge_variant.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+posthoc/ridge_variant.py:103: in inner
+    outcome = tune_fold(ctx, plan, cfg["budget"]["n_trials"], losses=losses)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+posthoc/ridge_variant.py:83: in tune_fold
+    return _FROZEN_TUNE(ctx, plan, n_trials, db_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/tuning.py:318: in tune_fold
+    records = [run_trial(ctx, plan, {"alpha": a}, i) for i, a in enumerate(ridge_alphas(ctx.cfg))]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/tuning.py:191: in run_trial
+    results = [evaluate_inner(ctx, hp, inner, seed) for inner in plan.inner]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/tuning.py:179: in evaluate_inner
+    pred, _grams, nonpositive = predict_checked(ctx, learner, val, f"inner split {inner.index}")
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = Context(task='T2', scheme='lopo', model='ridge_pw_wq', sample_set='eligible', cfg={'paths': {'t1_table': 'data/process... 433.0
+82     9    S09  ...               672.0              2269.0
+
+[83 rows x 87 columns], sampleset=None, dev=False)
+learner = <src.baselines.RidgeModel object at 0x761be18a6c30>
+df =     pond stream  ... t2w42_nitrate_min_w t2w42_nitrate_max_w
+24     4    S04  ...               249.0               91...          11.0               433.0
+82     9    S09  ...               672.0              2269.0
+
+[15 rows x 87 columns]
+where = 'inner split 1'
+
+    def predict_checked(ctx: Context, learner: Learner, df: pd.DataFrame, where: str) -> tuple[np.ndarray, np.ndarray, int]:
+        """Log-scale and gram predictions for `df`, and how many are not positive weights.
+    
+        A weight that is not positive (the straight-line baseline, plan 6.1) has no logarithm: its
+        log prediction is NaN, its log error +inf, and it is counted. Any other prediction that is
+        not finite raises NonFinitePredictionError, naming the run and the stage and counting
+        the offending predictions, never their values.
+        """
+        pred = learner.predict_log(df)
+        grams = learner.predict_grams(df)
+        nonpositive = np.isfinite(grams) & (grams <= 0) & np.isnan(pred)
+        bad = (~np.isfinite(pred) & ~nonpositive) | ~np.isfinite(grams)
+        if bad.any():
+>           raise NonFinitePredictionError(
+                f"{ctx.task} {ctx.scheme} {ctx.key}: {int(bad.sum())} of {len(df)} predictions are not "
+                f"finite ({where}); the run of this model stops and nothing is replaced")
+E           src.tuning.NonFinitePredictionError: T2 lopo ridge_pw_wq: 1 of 15 predictions are not finite (inner split 1); the run of this model stops and nothing is replaced
+
+src/tuning.py:126: NonFinitePredictionError
+______________ ERROR at setup of test_real_inner_results[report2] ______________
+
+request = <SubRequest 'report' for <Function test_real_inner_results[report2]>>
+world = ({'paths': {'t1_table': 'data/processed/t1_table.csv', 't2_table': 'data/processed/t2_table.csv', 'daily_wq': 'data/pr...N                       0
+127     9    S09  ...                 NaN                       0
+
+[128 rows x 161 columns]))
+tmp_path = PosixPath('/tmp/pytest-of-dev/pytest-139/test_real_inner_results_report2')
+
+    @pytest.fixture(params=[("T1", "ridge_time_wq"), ("T2", "ridge_pw_wq"), ("T1", "ridge_time_wq_w28")])
+    def report(request, world, tmp_path):
+        cfg, _tables = world
+        task, model = request.param
+        path = tmp_path / "inner.json"
+>       result = variant.inner(cfg, task, "lopo", model, out=path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+posthoc/tests/test_ridge_variant.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+posthoc/ridge_variant.py:103: in inner
+    outcome = tune_fold(ctx, plan, cfg["budget"]["n_trials"], losses=losses)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+posthoc/ridge_variant.py:83: in tune_fold
+    return _FROZEN_TUNE(ctx, plan, n_trials, db_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/tuning.py:318: in tune_fold
+    records = [run_trial(ctx, plan, {"alpha": a}, i) for i, a in enumerate(ridge_alphas(ctx.cfg))]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/tuning.py:191: in run_trial
+    results = [evaluate_inner(ctx, hp, inner, seed) for inner in plan.inner]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/tuning.py:179: in evaluate_inner
+    pred, _grams, nonpositive = predict_checked(ctx, learner, val, f"inner split {inner.index}")
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = Context(task='T1', scheme='lopo', model='ridge_time_wq_w28', sample_set='eligible', cfg={'paths': {'t1_table': 'data/p...269.0
+62     9    S09  ...               603.0               1904.0
+
+[63 rows x 89 columns], sampleset=None, dev=False)
+learner = <src.baselines.RidgeModel object at 0x761be178f5f0>
+df =     pond stream  ... t1w28_nitrate_min_w  t1w28_nitrate_max_w
+18     4    S04  ...               249.0                ...       672.0               2269.0
+62     9    S09  ...               603.0               1904.0
+
+[10 rows x 89 columns]
+where = 'inner split 1'
+
+    def predict_checked(ctx: Context, learner: Learner, df: pd.DataFrame, where: str) -> tuple[np.ndarray, np.ndarray, int]:
+        """Log-scale and gram predictions for `df`, and how many are not positive weights.
+    
+        A weight that is not positive (the straight-line baseline, plan 6.1) has no logarithm: its
+        log prediction is NaN, its log error +inf, and it is counted. Any other prediction that is
+        not finite raises NonFinitePredictionError, naming the run and the stage and counting
+        the offending predictions, never their values.
+        """
+        pred = learner.predict_log(df)
+        grams = learner.predict_grams(df)
+        nonpositive = np.isfinite(grams) & (grams <= 0) & np.isnan(pred)
+        bad = (~np.isfinite(pred) & ~nonpositive) | ~np.isfinite(grams)
+        if bad.any():
+>           raise NonFinitePredictionError(
+                f"{ctx.task} {ctx.scheme} {ctx.key}: {int(bad.sum())} of {len(df)} predictions are not "
+                f"finite ({where}); the run of this model stops and nothing is replaced")
+E           src.tuning.NonFinitePredictionError: T1 lopo ridge_time_wq_w28: 1 of 10 predictions are not finite (inner split 1); the run of this model stops and nothing is replaced
+
+src/tuning.py:126: NonFinitePredictionError
+=========================== short test summary info ============================
+ERROR posthoc/tests/test_ridge_variant.py::test_real_inner_results[report1]
+ERROR posthoc/tests/test_ridge_variant.py::test_real_inner_results[report2]
+1 passed, 16 deselected, 2 errors in 104.53s (0:01:44)
