@@ -1,0 +1,44 @@
+==============================================================================================================
+ridge_pw_wq: 273 inner fits (7 outer folds x inner splits x 13 alphas), 2 with a non-finite prediction
+  non-finite: outer fold 2 inner 1 alpha[0]=0.001  row pond 9 2021-09-25 h1  log pred 1063.62
+  non-finite: outer fold 3 inner 1 alpha[0]=0.001  row pond 9 2021-09-25 h1  log pred 1063.62
+  largest finite |log prediction| on inner validation rows: 1063.62 at (fold, inner, alpha idx, pond, date) (2, 1, 0, 9, '2021-09-25')
+ fold  inner   column   max_abs_z  val_pond   val_date  val_raw  train_sd  train_distinct                train_values train_ponds
+    7      0 do_max_w 8199.147917         2 2021-10-09    4.181  0.001929               4 19.989 19.996 19.997 19.998       3 4 7
+    5      1 do_min_w 3201.602130         9 2021-09-25    1.201  0.000373               2                 0.007 0.008     1 2 4 6
+    3      1 do_min_w 2853.840458         9 2021-09-25    1.201  0.000418               2                 0.007 0.008     1 2 6 7
+    2      1 do_min_w 2853.840458         9 2021-09-25    1.201  0.000418               2                 0.007 0.008     1 2 6 7
+    4      1 do_min_w 2574.499595         9 2021-09-25    1.201  0.000464               2                 0.007 0.008     1 2 4 7
+    0      1 do_min_w 2531.442277         9 2021-09-25    1.201  0.000471               2                 0.007 0.008       3 6 7
+==============================================================================================================
+ridge_pw_wq_noind: 273 inner fits (7 outer folds x inner splits x 13 alphas), 2 with a non-finite prediction
+  non-finite: outer fold 2 inner 1 alpha[0]=0.001  row pond 9 2021-09-25 h1  log pred 973.68
+  non-finite: outer fold 3 inner 1 alpha[0]=0.001  row pond 9 2021-09-25 h1  log pred 973.68
+  largest finite |log prediction| on inner validation rows: 973.68 at (fold, inner, alpha idx, pond, date) (2, 1, 0, 9, '2021-09-25')
+ fold  inner   column   max_abs_z  val_pond   val_date  val_raw  train_sd  train_distinct                train_values train_ponds
+    7      0 do_max_w 8199.147917         2 2021-10-09    4.181  0.001929               4 19.989 19.996 19.997 19.998       3 4 7
+    5      1 do_min_w 3201.602130         9 2021-09-25    1.201  0.000373               2                 0.007 0.008     1 2 4 6
+    3      1 do_min_w 2853.840458         9 2021-09-25    1.201  0.000418               2                 0.007 0.008     1 2 6 7
+    2      1 do_min_w 2853.840458         9 2021-09-25    1.201  0.000418               2                 0.007 0.008     1 2 6 7
+    4      1 do_min_w 2574.499595         9 2021-09-25    1.201  0.000464               2                 0.007 0.008     1 2 4 7
+    0      1 do_min_w 2531.442277         9 2021-09-25    1.201  0.000471               2                 0.007 0.008       3 6 7
+==============================================================================================================
+ridge_pw_wq_w14: 273 inner fits (7 outer folds x inner splits x 13 alphas), 0 with a non-finite prediction
+  largest finite |log prediction| on inner validation rows: 244.182 at (fold, inner, alpha idx, pond, date) (7, 0, 0, 2, '2021-10-09')
+ fold  inner                column   max_abs_z  val_pond   val_date  val_raw  train_sd  train_distinct                train_values train_ponds
+    7      0        t2w14_do_max_w 2236.006675         2 2021-10-09    3.200  0.007511               5 19.972 19.989 19.996 19.997       3 4 7
+    5      1        t2w14_do_min_w  583.380965         9 2021-09-25    1.201  0.002044               3           0.007 0.008 0.016     1 2 4 6
+    7      1        t2w14_do_min_w  462.064075         7 2021-08-14    0.953  0.002044               3           0.007 0.008 0.016     1 2 4 6
+    4      0 t2w14_turbidity_max_w  218.829614         7 2021-07-31   37.000  0.287480               2                      99 100       3 4 9
+    1      0 t2w14_turbidity_max_w  214.294497         7 2021-07-31   37.000  0.293544               2                      99 100       4 6 9
+    3      0 t2w14_turbidity_max_w  214.294497         7 2021-07-31   37.000  0.293544               2                      99 100       3 6 9
+==============================================================================================================
+ridge_pw_wq_w42: 273 inner fits (7 outer folds x inner splits x 13 alphas), 0 with a non-finite prediction
+  largest finite |log prediction| on inner validation rows: 615.23 at (fold, inner, alpha idx, pond, date) (7, 0, 0, 2, '2021-10-09')
+ fold  inner         column    max_abs_z  val_pond   val_date  val_raw  train_sd  train_distinct         train_values train_ponds
+    7      0 t2w42_do_max_w 17507.552758         2 2021-10-09    9.203  0.000617               3 19.996 19.997 19.998       3 4 7
+    5      1 t2w42_do_min_w  2821.198821         9 2021-09-25    1.201  0.000423               2          0.007 0.008     1 2 4 6
+    3      1 t2w42_do_min_w  2727.012700         9 2021-09-25    1.201  0.000438               2          0.007 0.008     1 2 6 7
+    2      1 t2w42_do_min_w  2727.012700         9 2021-09-25    1.201  0.000438               2          0.007 0.008     1 2 6 7
+    0      1 t2w42_do_min_w  2457.433231         9 2021-09-25    1.201  0.000486               2          0.007 0.008       3 6 7
+    1      1 t2w42_do_min_w  2457.433231         9 2021-09-25    1.201  0.000486               2          0.007 0.008       3 6 7

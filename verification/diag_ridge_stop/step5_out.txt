@@ -1,0 +1,5 @@
+(a) failing row: [{'pond': 9, 'date': '2021-09-25', 't': 98, 't1w28_do_min_w': 1.201}]
+    train n=20, values {0.007: 4, 0.008: 16}, pstdev=0.0004, mean=0.0078
+    independent z = 2983.000000
+(b) fold 2 inner 1, all 13 alphas: max|log pred| with the column = 1750.35; without its term = 7.28854
+(b) fold 3 inner 1, all 13 alphas: max|log pred| with the column = 1750.35; without its term = 7.28854

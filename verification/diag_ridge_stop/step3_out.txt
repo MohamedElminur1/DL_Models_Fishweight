@@ -1,0 +1,60 @@
+========================================================================================================================
+ridge_time_wq_w28: 273 inner fits (7 outer folds x 3 inner splits x 13 alphas), 14 with a non-finite prediction
+  largest |z| over all folds/inner splits/validation rows/columns: 3272.13  column t1w28_do_min_w  outer fold 5 inner 1  (val pond 9, 2021-09-25; train sd 0.000364642, mean 0.00784211, distinct 2)
+  largest |log prediction| on inner validation rows (finite): 1750.35 at (fold, inner, alpha idx, pond, date) = (2, 1, 0, 9, '2021-09-25')
+  top 6 (fold, inner, column) by max |z|:
+ fold  inner         column   max_abs_z  val_pond   val_date  train_sd  train_distinct  train_mean
+    5      1 t1w28_do_min_w 3272.132651         9 2021-09-25  0.000365               2    0.007842
+    3      1 t1w28_do_min_w 2983.000000         9 2021-09-25  0.000400               2    0.007800
+    2      1 t1w28_do_min_w 2983.000000         9 2021-09-25  0.000400               2    0.007800
+    4      1 t1w28_do_min_w 2801.569569         9 2021-09-25  0.000426               2    0.007762
+    1      1 t1w28_do_min_w 2698.375778         9 2021-09-25  0.000442               2    0.007733
+    0      1 t1w28_do_min_w 2698.375778         9 2021-09-25  0.000442               2    0.007733
+========================================================================================================================
+ridge_time_wq: 273 inner fits (7 outer folds x 3 inner splits x 13 alphas), 0 with a non-finite prediction
+  largest |z| over all folds/inner splits/validation rows/columns: 475.04  column do_min_w  outer fold 5 inner 1  (val pond 9, 2021-09-25; train sd 0.00250981, mean 0.00873684, distinct 3)
+  largest |log prediction| on inner validation rows (finite): 162.962 at (fold, inner, alpha idx, pond, date) = (5, 1, 0, 9, '2021-09-25')
+  top 6 (fold, inner, column) by max |z|:
+ fold  inner          column  max_abs_z  val_pond   val_date  train_sd  train_distinct  train_mean
+    5      1        do_min_w 475.040344         9 2021-09-25  0.002510               3    0.008737
+    7      1        do_min_w 376.228262         7 2021-08-14  0.002510               3    0.008737
+    4      0 turbidity_max_w 252.294612         7 2021-07-31  0.249444               2   99.933333
+    3      0 turbidity_max_w 244.345436         7 2021-07-31  0.257539               2   99.928571
+    1      0 turbidity_max_w 244.345436         7 2021-07-31  0.257539               2   99.928571
+    0      0 turbidity_max_w 244.345436         7 2021-07-31  0.257539               2   99.928571
+========================================================================================================================
+ridge_time_wq_w07: 273 inner fits (7 outer folds x 3 inner splits x 13 alphas), 0 with a non-finite prediction
+  largest |z| over all folds/inner splits/validation rows/columns: 346.601  column t1w07_do_min_w  outer fold 7 inner 1  (val pond 7, 2021-07-31; train sd 0.00586128, mean 0.0104737, distinct 4)
+  largest |log prediction| on inner validation rows (finite): 83.8761 at (fold, inner, alpha idx, pond, date) = (7, 1, 0, 7, '2021-07-31')
+  top 6 (fold, inner, column) by max |z|:
+ fold  inner                column  max_abs_z  val_pond   val_date  train_sd  train_distinct  train_mean
+    7      1        t1w07_do_min_w 346.601302         7 2021-07-31  0.005861               4    0.010474
+    5      1        t1w07_do_min_w 273.579675         9 2021-09-25  0.005861               4    0.010474
+    7      1 t1w07_turbidity_max_w  63.000000         7 2021-07-31  0.000000               1  100.000000
+    4      0 t1w07_turbidity_max_w  41.699186         7 2021-07-31  1.499630               3   99.533333
+    0      0 t1w07_turbidity_max_w  40.403746         7 2021-07-31  1.546886               3   99.500000
+    2      0 t1w07_turbidity_max_w  40.403746         7 2021-07-31  1.546886               3   99.500000
+========================================================================================================================
+ridge_time_wq_len: 273 inner fits (7 outer folds x 3 inner splits x 13 alphas), 0 with a non-finite prediction
+  largest |z| over all folds/inner splits/validation rows/columns: 475.04  column do_min_w  outer fold 5 inner 1  (val pond 9, 2021-09-25; train sd 0.00250981, mean 0.00873684, distinct 3)
+  largest |log prediction| on inner validation rows (finite): 165.805 at (fold, inner, alpha idx, pond, date) = (5, 1, 0, 9, '2021-09-25')
+  top 6 (fold, inner, column) by max |z|:
+ fold  inner          column  max_abs_z  val_pond   val_date  train_sd  train_distinct  train_mean
+    5      1        do_min_w 475.040344         9 2021-09-25  0.002510               3    0.008737
+    7      1        do_min_w 376.228262         7 2021-08-14  0.002510               3    0.008737
+    4      0 turbidity_max_w 252.294612         7 2021-07-31  0.249444               2   99.933333
+    3      0 turbidity_max_w 244.345436         7 2021-07-31  0.257539               2   99.928571
+    1      0 turbidity_max_w 244.345436         7 2021-07-31  0.257539               2   99.928571
+    2      0 turbidity_max_w 244.345436         7 2021-07-31  0.257539               2   99.928571
+========================================================================================================================
+ridge_time_wq_noind: 273 inner fits (7 outer folds x 3 inner splits x 13 alphas), 0 with a non-finite prediction
+  largest |z| over all folds/inner splits/validation rows/columns: 475.04  column do_min_w  outer fold 5 inner 1  (val pond 9, 2021-09-25; train sd 0.00250981, mean 0.00873684, distinct 3)
+  largest |log prediction| on inner validation rows (finite): 200.161 at (fold, inner, alpha idx, pond, date) = (5, 1, 0, 9, '2021-09-25')
+  top 6 (fold, inner, column) by max |z|:
+ fold  inner          column  max_abs_z  val_pond   val_date  train_sd  train_distinct  train_mean
+    5      1        do_min_w 475.040344         9 2021-09-25  0.002510               3    0.008737
+    7      1        do_min_w 376.228262         7 2021-08-14  0.002510               3    0.008737
+    4      0 turbidity_max_w 252.294612         7 2021-07-31  0.249444               2   99.933333
+    2      0 turbidity_max_w 244.345436         7 2021-07-31  0.257539               2   99.928571
+    3      0 turbidity_max_w 244.345436         7 2021-07-31  0.257539               2   99.928571
+    1      0 turbidity_max_w 244.345436         7 2021-07-31  0.257539               2   99.928571

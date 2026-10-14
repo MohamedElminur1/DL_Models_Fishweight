@@ -1,0 +1,12 @@
+outer fold 2 inner 1 alpha 0.001: train ponds [1, 2, 6, 7], val ponds [4, 9]
+  row pond 9 origin 2021-09-25 h1: log-ratio pred 1063.62, grams inf
+    do_min_w                     z=2853.84  coef=0.371982  coef*z=1061.58
+    log_w_k                      z=2.01028  coef=-1.38402  coef*z=-2.78226
+    t_k                          z=1.94308  coef=0.478731  coef*z=0.930214
+    ph_max_w                     z=-3.86769  coef=-0.211206  coef*z=0.81688
+outer fold 3 inner 1 alpha 0.001: train ponds [1, 2, 6, 7], val ponds [3, 9]
+  row pond 9 origin 2021-09-25 h1: log-ratio pred 1063.62, grams inf
+    do_min_w                     z=2853.84  coef=0.371982  coef*z=1061.58
+    log_w_k                      z=2.01028  coef=-1.38402  coef*z=-2.78226
+    t_k                          z=1.94308  coef=0.478731  coef*z=0.930214
+    ph_max_w                     z=-3.86769  coef=-0.211206  coef*z=0.81688

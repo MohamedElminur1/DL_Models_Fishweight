@@ -1,0 +1,68 @@
+==============================================================================================================
+outer fold 2 (test pond (3,), dropped ()); outer train ponds (1, 2, 4, 6, 7, 8, 9)
+inner split 1: train ponds (1, 2, 6, 7) (n=20), validation ponds (4, 9) (n=10)
+per alpha, inner split 1: max |log pred| over the 10 validation rows, n grams non-finite
+   alpha[ 0]=     0.001  max|pred|=1750.35  n pred non-finite=0  n grams non-finite=1
+   alpha[ 1]=0.00316228  max|pred|=1703.25  n pred non-finite=0  n grams non-finite=1
+   alpha[ 2]=      0.01  max|pred|=1664.36  n pred non-finite=0  n grams non-finite=1
+   alpha[ 3]= 0.0316228  max|pred|=1590.37  n pred non-finite=0  n grams non-finite=1
+   alpha[ 4]=       0.1  max|pred|=1425.18  n pred non-finite=0  n grams non-finite=1
+   alpha[ 5]=  0.316228  max|pred|=1143.14  n pred non-finite=0  n grams non-finite=1
+   alpha[ 6]=         1  max|pred|=814.576  n pred non-finite=0  n grams non-finite=1
+   alpha[ 7]=   3.16228  max|pred|=542.879  n pred non-finite=0  n grams non-finite=0
+   alpha[ 8]=        10  max|pred|=355.551  n pred non-finite=0  n grams non-finite=0
+   alpha[ 9]=   31.6228  max|pred|=212.936  n pred non-finite=0  n grams non-finite=0
+   alpha[10]=       100  max|pred|=99.4484  n pred non-finite=0  n grams non-finite=0
+   alpha[11]=   316.228  max|pred|=36.6156  n pred non-finite=0  n grams non-finite=0
+   alpha[12]=      1000  max|pred|=13.9312  n pred non-finite=0  n grams non-finite=0
+alpha[0]=0.001: bad validation row positions [8]; n_dropped_all_missing=0; design columns 38
+  bad row: table index 61, pond 9, date 2021-09-25, t=98; log-pred=np.float64(1750.353568923219); grams=np.float64(inf); intercept=np.float64(4.296166707497626)
+  top columns by |coef*z| in this row:
+    t1w28_do_min_w                     z=2.983000e+03  coef=5.846148e-01  coef*z=1.743906e+03
+    t1w28_temperature_min_w            z=-2.253721e+00  coef=-3.655581e-01  coef*z=8.238660e-01
+    t                                  z=1.497033e+00  coef=3.767226e-01  coef*z=5.639661e-01
+    t1w28_turbidity_mean_w             z=3.000000e+00  coef=1.466889e-01  coef*z=4.400667e-01
+    ammonia_log10_mean_cum             z=-1.328523e+00  coef=1.665354e-01  coef*z=-2.212460e-01
+    t1w28_temperature_max_w            z=-1.537732e+00  coef=1.437468e-01  coef*z=-2.210441e-01
+  column of interest: t1w28_do_min_w
+    training design column (after median imputation): n=20, distinct=2, std as computed in RidgeModel (design.std(axis=0))=np.float64(0.0004), mean_=np.float64(0.007800000000000004), scale_ used=np.float64(0.0004), median_ imputed=np.float64(0.008)
+    raw training values: non-NaN n=20, NaN n=0, distinct non-NaN=2
+      value np.float64(0.007) x4
+      value np.float64(0.008) x16
+    validation raw value (this row)=np.float64(1.201); all 10 validation raw values=[0.007, 0.007, 0.008, 0.008, 0.008, 0.007, 0.007, 0.008, 1.201, 0.016]
+    standardised validation value z=np.float64(2983.0)
+    log-pred of this row without the t1w28_do_min_w term = 6.44773621115678
+==============================================================================================================
+outer fold 3 (test pond (4,), dropped ()); outer train ponds (1, 2, 3, 6, 7, 8, 9)
+inner split 1: train ponds (1, 2, 6, 7) (n=20), validation ponds (3, 9) (n=10)
+per alpha, inner split 1: max |log pred| over the 10 validation rows, n grams non-finite
+   alpha[ 0]=     0.001  max|pred|=1750.35  n pred non-finite=0  n grams non-finite=1
+   alpha[ 1]=0.00316228  max|pred|=1703.25  n pred non-finite=0  n grams non-finite=1
+   alpha[ 2]=      0.01  max|pred|=1664.36  n pred non-finite=0  n grams non-finite=1
+   alpha[ 3]= 0.0316228  max|pred|=1590.37  n pred non-finite=0  n grams non-finite=1
+   alpha[ 4]=       0.1  max|pred|=1425.18  n pred non-finite=0  n grams non-finite=1
+   alpha[ 5]=  0.316228  max|pred|=1143.14  n pred non-finite=0  n grams non-finite=1
+   alpha[ 6]=         1  max|pred|=814.576  n pred non-finite=0  n grams non-finite=1
+   alpha[ 7]=   3.16228  max|pred|=542.879  n pred non-finite=0  n grams non-finite=0
+   alpha[ 8]=        10  max|pred|=355.551  n pred non-finite=0  n grams non-finite=0
+   alpha[ 9]=   31.6228  max|pred|=212.936  n pred non-finite=0  n grams non-finite=0
+   alpha[10]=       100  max|pred|=99.4484  n pred non-finite=0  n grams non-finite=0
+   alpha[11]=   316.228  max|pred|=36.6156  n pred non-finite=0  n grams non-finite=0
+   alpha[12]=      1000  max|pred|=13.9312  n pred non-finite=0  n grams non-finite=0
+alpha[0]=0.001: bad validation row positions [8]; n_dropped_all_missing=0; design columns 38
+  bad row: table index 61, pond 9, date 2021-09-25, t=98; log-pred=np.float64(1750.353568923219); grams=np.float64(inf); intercept=np.float64(4.296166707497626)
+  top columns by |coef*z| in this row:
+    t1w28_do_min_w                     z=2.983000e+03  coef=5.846148e-01  coef*z=1.743906e+03
+    t1w28_temperature_min_w            z=-2.253721e+00  coef=-3.655581e-01  coef*z=8.238660e-01
+    t                                  z=1.497033e+00  coef=3.767226e-01  coef*z=5.639661e-01
+    t1w28_turbidity_mean_w             z=3.000000e+00  coef=1.466889e-01  coef*z=4.400667e-01
+    ammonia_log10_mean_cum             z=-1.328523e+00  coef=1.665354e-01  coef*z=-2.212460e-01
+    t1w28_temperature_max_w            z=-1.537732e+00  coef=1.437468e-01  coef*z=-2.210441e-01
+  column of interest: t1w28_do_min_w
+    training design column (after median imputation): n=20, distinct=2, std as computed in RidgeModel (design.std(axis=0))=np.float64(0.0004), mean_=np.float64(0.007800000000000004), scale_ used=np.float64(0.0004), median_ imputed=np.float64(0.008)
+    raw training values: non-NaN n=20, NaN n=0, distinct non-NaN=2
+      value np.float64(0.007) x4
+      value np.float64(0.008) x16
+    validation raw value (this row)=np.float64(1.201); all 10 validation raw values=[0.008, 0.008, 0.008, 0.008, 0.008, 0.007, 0.007, 0.008, 1.201, 0.016]
+    standardised validation value z=np.float64(2983.0)
+    log-pred of this row without the t1w28_do_min_w term = 6.44773621115678

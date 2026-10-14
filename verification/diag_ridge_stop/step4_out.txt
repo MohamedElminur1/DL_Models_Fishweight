@@ -1,0 +1,38 @@
+(a) fold 2 inner 1 independent check
+   train n = 20 | distinct = [0.007, 0.008] | counts = {0.007: 4, 0.008: 16}
+   pstdev (statistics module) = 0.0004 | mean = 0.0078
+   validation pond 9 value(s): [0.007, 0.007, 0.008, 1.201, 0.016] dates ['2021-07-03', '2021-07-17', '2021-07-31', '2021-09-25', '2021-10-09']
+   z = -1.9999999999999987
+   exp overflow threshold ln(max float) = 709.782712893384
+(b) t1w28_do_min_w by pond over eligible rows (n, distinct values, min, max):
+   pond 1: n=3, NaN=0, distinct=1, min=0.008, max=0.008, values=[0.008]
+   pond 2: n=7, NaN=0, distinct=1, min=0.008, max=0.008, values=[0.008]
+   pond 3: n=5, NaN=0, distinct=1, min=0.008, max=0.008, values=[0.008]
+   pond 4: n=5, NaN=0, distinct=2, min=0.007, max=0.008, values=[0.007, 0.008]
+   pond 6: n=4, NaN=0, distinct=2, min=0.007, max=0.008, values=[0.007, 0.008]
+   pond 7: n=6, NaN=0, distinct=2, min=0.007, max=0.008, values=[0.007, 0.008]
+   pond 9: n=5, NaN=0, distinct=4, min=0.007, max=1.201, values=[0.007, 0.008, 0.016, 1.201]
+(b) do_min_w by pond over eligible rows (n, distinct values, min, max):
+   pond 1: n=3, NaN=0, distinct=2, min=0.008, max=0.016, values=[0.008, 0.016]
+   pond 2: n=7, NaN=0, distinct=2, min=0.008, max=0.016, values=[0.008, 0.016]
+   pond 3: n=5, NaN=0, distinct=1, min=0.008, max=0.008, values=[0.008]
+   pond 4: n=5, NaN=0, distinct=2, min=0.007, max=0.008, values=[0.007, 0.008]
+   pond 6: n=4, NaN=0, distinct=2, min=0.007, max=0.008, values=[0.007, 0.008]
+   pond 7: n=6, NaN=0, distinct=4, min=0.007, max=0.953, values=[0.007, 0.008, 0.045, 0.953]
+   pond 9: n=5, NaN=0, distinct=4, min=0.007, max=1.201, values=[0.007, 0.008, 0.016, 1.201]
+(b) t1w07_do_min_w by pond over eligible rows (n, distinct values, min, max):
+   pond 1: n=3, NaN=0, distinct=2, min=0.008, max=0.016, values=[0.008, 0.016]
+   pond 2: n=7, NaN=1, distinct=3, min=0.008, max=0.032, values=[0.008, 0.016, 0.032]
+   pond 3: n=5, NaN=0, distinct=1, min=0.008, max=0.008, values=[0.008]
+   pond 4: n=5, NaN=0, distinct=2, min=0.007, max=0.008, values=[0.007, 0.008]
+   pond 6: n=4, NaN=0, distinct=2, min=0.008, max=0.016, values=[0.008, 0.016]
+   pond 7: n=6, NaN=1, distinct=4, min=0.008, max=2.042, values=[0.008, 0.045, 0.953, 2.042]
+   pond 9: n=5, NaN=1, distinct=3, min=0.008, max=1.614, values=[0.008, 0.05, 1.614]
+(c) w28, inner split 1 of every outer fold, alpha[0]=0.001:
+   fold 0: train ponds (3, 6, 7), val ponds (4, 9); train sd of t1w28_do_min_w = 0.000442217, max|z| of it = 2698.38, coef = 0.0948, max|log pred| = 261.756, exceeds 709.78: False
+   fold 1: train ponds (3, 6, 7), val ponds (4, 9); train sd of t1w28_do_min_w = 0.000442217, max|z| of it = 2698.38, coef = 0.0948, max|log pred| = 261.756, exceeds 709.78: False
+   fold 2: train ponds (1, 2, 6, 7), val ponds (4, 9); train sd of t1w28_do_min_w = 0.0004, max|z| of it = 2983, coef = 0.5846, max|log pred| = 1750.35, exceeds 709.78: True
+   fold 3: train ponds (1, 2, 6, 7), val ponds (3, 9); train sd of t1w28_do_min_w = 0.0004, max|z| of it = 2983, coef = 0.5846, max|log pred| = 1750.35, exceeds 709.78: True
+   fold 4: train ponds (1, 2, 4, 7), val ponds (3, 9); train sd of t1w28_do_min_w = 0.000425918, max|z| of it = 2801.57, coef = 0.1415, max|log pred| = 404.734, exceeds 709.78: False
+   fold 5: train ponds (1, 2, 4, 6), val ponds (3, 9); train sd of t1w28_do_min_w = 0.000364642, max|z| of it = 3272.13, coef = -0.0016, max|log pred| = 7.40175, exceeds 709.78: False
+   fold 7: train ponds (1, 2, 4, 6), val ponds (3, 7); train sd of t1w28_do_min_w = 0.000364642, max|z| of it = 2.3094, coef = -0.0016, max|log pred| = 5.93267, exceeds 709.78: False
