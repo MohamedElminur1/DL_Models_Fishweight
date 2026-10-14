@@ -1,0 +1,27 @@
+task,scheme,model,fold,stage,trial_or_seed,epochs,seconds,cpu,python,torch,notes
+T1,lopo,lstm,4,plan,,,0.0,AMD EPYC 7B12,3.12.3,2.14.1+cpu,label=pond06; n_train=31; n_test=4; n_excluded=0; test_ponds=[6]; dropped_ponds=[]
+T1,lopo,lstm,4,trial,0,313,6.945,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,1,198,5.2864,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,2,134,4.5382,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,3,411,18.4657,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,4,643,14.6153,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,5,513,16.1618,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,6,900,6.9511,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,7,333,6.5977,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,8,186,3.0586,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,9,698,7.9848,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,10,217,4.7855,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,11,234,8.0348,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,12,234,7.6848,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,13,201,5.6161,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,14,224,15.7607,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,15,221,6.4586,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,16,216,7.5018,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,17,370,8.6876,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,18,248,12.4485,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,trial,19,582,12.6169,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,lstm,4,final,0,61,1.8789,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,lopo,lstm,4,final,1,61,1.8266,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,lopo,lstm,4,final,2,61,2.1854,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,lopo,lstm,4,final,3,61,2.1885,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,lopo,lstm,4,final,4,61,1.8775,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0

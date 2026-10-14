@@ -1,0 +1,23 @@
+{
+  "best_trial": 15,
+  "epochs": 17,
+  "hp": {
+    "batch_size": 8,
+    "dropout": 0.2778635148495003,
+    "hidden": 16,
+    "layers": 2,
+    "lr": 0.009840765377062523,
+    "weight_decay": 0.00881104178855007
+  },
+  "inner_value": 0.20413789772000548,
+  "label": "pond03",
+  "n_excluded": 0,
+  "n_nonpositive_inner": 0,
+  "n_test": 7,
+  "n_train": 46,
+  "n_trials": 20,
+  "outer_fold": 2,
+  "test_ponds": [
+    3
+  ]
+}

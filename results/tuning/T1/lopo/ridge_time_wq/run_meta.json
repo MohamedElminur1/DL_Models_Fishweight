@@ -1,0 +1,42 @@
+{
+  "complete": true,
+  "cutoff": null,
+  "dev": false,
+  "folds_run": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    7
+  ],
+  "guard": {
+    "commit": "91b38b99494313ed4b1e6eb570bcdf0e41ab0639",
+    "matched_commit": "91b38b99494313ed4b1e6eb570bcdf0e41ab0639",
+    "matched_tag": "analysis-plan-frozen",
+    "plan_sha256": "fc544640011609d39cb9b6e3aa8d9f79584d053eb7a47ecaf5182f6a3f8f7a3e",
+    "tag": "analysis-plan-frozen"
+  },
+  "hardware": {
+    "cpu": "AMD EPYC 7B12",
+    "python": "3.12.3",
+    "torch": "2.14.1+cpu"
+  },
+  "hash": "c57e02c891a09592beb2e6b47e9b86cfa7a667c39bbbf0e5c50192784b51a38d",
+  "model": "ridge_time_wq",
+  "n_excluded": {},
+  "n_predictions": 35,
+  "sample_set": "eligible",
+  "scheme": "lopo",
+  "seconds": 10.398,
+  "skipped_folds": [
+    {
+      "fold": 6,
+      "label": "pond08",
+      "reason": "no test samples"
+    }
+  ],
+  "task": "T1",
+  "values_withheld": false
+}

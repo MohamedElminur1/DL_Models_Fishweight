@@ -1,0 +1,143 @@
+{
+  "folds": [
+    {
+      "est_final_fit_seconds": 0.08587802830152212,
+      "fold": 0,
+      "inner_fit_seconds_mean": 0.05725201886768142,
+      "label": "pond01",
+      "n_inner_fits": 3,
+      "n_train_inner_mean": 33.333333333333336,
+      "n_train_outer": 50,
+      "n_trials": 1,
+      "path_counts": {
+        "curve_failures": 0,
+        "curve_gompertz": 2,
+        "curve_von_bertalanffy": 1,
+        "n_fallback_gc": 22
+      },
+      "trial_seconds_max": 0.1917430772446096,
+      "trial_seconds_mean": 0.1917430772446096
+    },
+    {
+      "est_final_fit_seconds": 0.0946828182786703,
+      "fold": 1,
+      "inner_fit_seconds_mean": 0.06312187885244687,
+      "label": "pond02",
+      "n_inner_fits": 3,
+      "n_train_inner_mean": 33.333333333333336,
+      "n_train_outer": 50,
+      "n_trials": 1,
+      "path_counts": {
+        "curve_failures": 0,
+        "curve_gompertz": 2,
+        "curve_von_bertalanffy": 1,
+        "n_fallback_gc": 22
+      },
+      "trial_seconds_max": 0.22891115583479404,
+      "trial_seconds_mean": 0.22891115583479404
+    },
+    {
+      "est_final_fit_seconds": 0.10978911840356888,
+      "fold": 2,
+      "inner_fit_seconds_mean": 0.07319274560237925,
+      "label": "pond03",
+      "n_inner_fits": 3,
+      "n_train_inner_mean": 38.666666666666664,
+      "n_train_outer": 58,
+      "n_trials": 1,
+      "path_counts": {
+        "curve_failures": 0,
+        "curve_gompertz": 2,
+        "curve_von_bertalanffy": 1,
+        "n_fallback_gc": 24
+      },
+      "trial_seconds_max": 0.24261096632108092,
+      "trial_seconds_mean": 0.24261096632108092
+    },
+    {
+      "est_final_fit_seconds": 0.09042698401026428,
+      "fold": 3,
+      "inner_fit_seconds_mean": 0.06028465600684285,
+      "label": "pond04",
+      "n_inner_fits": 3,
+      "n_train_inner_mean": 33.333333333333336,
+      "n_train_outer": 50,
+      "n_trials": 1,
+      "path_counts": {
+        "curve_failures": 0,
+        "curve_gompertz": 3,
+        "n_fallback_gc": 16
+      },
+      "trial_seconds_max": 0.19319550693035126,
+      "trial_seconds_mean": 0.19319550693035126
+    },
+    {
+      "est_final_fit_seconds": 0.10866430820897223,
+      "fold": 4,
+      "inner_fit_seconds_mean": 0.07244287213931482,
+      "label": "pond06",
+      "n_inner_fits": 3,
+      "n_train_inner_mean": 32.666666666666664,
+      "n_train_outer": 49,
+      "n_trials": 1,
+      "path_counts": {
+        "curve_failures": 0,
+        "curve_gompertz": 3,
+        "n_fallback_gc": 16
+      },
+      "trial_seconds_max": 0.23340471694245934,
+      "trial_seconds_mean": 0.23340471694245934
+    },
+    {
+      "est_final_fit_seconds": 0.1035931429360062,
+      "fold": 5,
+      "inner_fit_seconds_mean": 0.0690620952906708,
+      "label": "pond07",
+      "n_inner_fits": 3,
+      "n_train_inner_mean": 36.666666666666664,
+      "n_train_outer": 55,
+      "n_trials": 1,
+      "path_counts": {
+        "curve_failures": 0,
+        "curve_gompertz": 3,
+        "n_fallback_gc": 22
+      },
+      "trial_seconds_max": 0.23213785700500011,
+      "trial_seconds_mean": 0.23213785700500011
+    },
+    {
+      "est_final_fit_seconds": 0.1480953679420054,
+      "fold": 6,
+      "inner_fit_seconds_mean": 0.09873024529467027,
+      "label": "pond08",
+      "n_inner_fits": 3,
+      "n_train_inner_mean": 40.0,
+      "n_train_outer": 60,
+      "n_trials": 1,
+      "path_counts": {
+        "curve_failures": 0,
+        "curve_gompertz": 3,
+        "n_fallback_gc": 24
+      },
+      "trial_seconds_max": 0.32549477461725473,
+      "trial_seconds_mean": 0.32549477461725473
+    },
+    {
+      "est_final_fit_seconds": 0.10320020350627601,
+      "fold": 7,
+      "inner_fit_seconds_mean": 0.06880013567085068,
+      "label": "pond09",
+      "n_inner_fits": 3,
+      "n_train_inner_mean": 37.333333333333336,
+      "n_train_outer": 56,
+      "n_trials": 1,
+      "path_counts": {
+        "curve_failures": 0,
+        "curve_gompertz": 3,
+        "n_fallback_gc": 23
+      },
+      "trial_seconds_max": 0.22944316687062383,
+      "trial_seconds_mean": 0.22944316687062383
+    }
+  ]
+}

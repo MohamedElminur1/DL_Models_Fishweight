@@ -1,0 +1,42 @@
+{
+  "complete": true,
+  "cutoff": null,
+  "dev": false,
+  "folds_run": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    7
+  ],
+  "guard": {
+    "commit": "91b38b99494313ed4b1e6eb570bcdf0e41ab0639",
+    "matched_commit": "91b38b99494313ed4b1e6eb570bcdf0e41ab0639",
+    "matched_tag": "analysis-plan-frozen",
+    "plan_sha256": "fc544640011609d39cb9b6e3aa8d9f79584d053eb7a47ecaf5182f6a3f8f7a3e",
+    "tag": "analysis-plan-frozen"
+  },
+  "hardware": {
+    "cpu": "AMD EPYC 7B12",
+    "python": "3.12.3",
+    "torch": "2.14.1+cpu"
+  },
+  "hash": "ff24f8522ef6b8b2a315bac79ef1a9e9f75dcbfcfe131d79e4949bbc7afed423",
+  "model": "gbm_pw_wq_w14",
+  "n_excluded": {},
+  "n_predictions": 53,
+  "sample_set": "eligible",
+  "scheme": "lopo",
+  "seconds": 36.894,
+  "skipped_folds": [
+    {
+      "fold": 6,
+      "label": "pond08",
+      "reason": "no test samples"
+    }
+  ],
+  "task": "T2",
+  "values_withheld": false
+}

@@ -1,0 +1,22 @@
+{
+  "best_trial": 14,
+  "epochs": null,
+  "hp": {
+    "l2_regularization": 0.46036057138584713,
+    "learning_rate": 0.017390554322025797,
+    "max_depth": 4,
+    "max_iter": 492,
+    "min_samples_leaf": 3
+  },
+  "inner_value": 0.23632640019313567,
+  "label": "pond09",
+  "n_excluded": 0,
+  "n_nonpositive_inner": 0,
+  "n_test": 8,
+  "n_train": 45,
+  "n_trials": 20,
+  "outer_fold": 7,
+  "test_ponds": [
+    9
+  ]
+}

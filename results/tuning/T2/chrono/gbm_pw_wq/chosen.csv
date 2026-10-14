@@ -1,0 +1,2 @@
+best_trial,epochs,inner_value,label,n_excluded,n_nonpositive_inner,n_test,n_train,n_trials,outer_fold,test_ponds,hp_l2_regularization,hp_learning_rate,hp_max_depth,hp_max_iter,hp_min_samples_leaf
+0,,0.27130282848737614,chrono,7,0,15,31,20,0,1 2 3 4 6 7 9,0.008264328927007725,0.0646642271741456,2,372,20

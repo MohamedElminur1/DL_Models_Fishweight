@@ -1,0 +1,27 @@
+task,scheme,model,fold,stage,trial_or_seed,epochs,seconds,cpu,python,torch,notes
+T2,chrono,tft,0,plan,,,0.0,AMD EPYC 7B12,3.12.3,2.14.1+cpu,"label=chrono; n_train=31; n_test=15; n_excluded=7; test_ponds=[1, 2, 3, 4, 6, 7, 9]; dropped_ponds=[]"
+T2,chrono,tft,0,trial,0,33,1.8605,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,1,32,2.5851,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,2,31,0.9971,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,3,40,3.3814,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,4,34,2.1377,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,5,49,3.3331,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,6,77,2.5393,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,7,31,2.4595,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,8,90,5.899,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,9,37,2.0755,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,10,38,1.2251,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,11,42,1.352,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,12,39,1.3118,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,13,36,1.1745,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,14,35,1.1201,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,15,35,1.14,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,16,35,1.1171,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,17,51,1.6422,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,18,33,1.0548,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,trial,19,32,0.9832,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,chrono,tft,0,final,0,2,0.0682,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T2,chrono,tft,0,final,1,2,0.0632,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T2,chrono,tft,0,final,2,2,0.0683,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T2,chrono,tft,0,final,3,2,0.0861,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T2,chrono,tft,0,final,4,2,0.0678,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0

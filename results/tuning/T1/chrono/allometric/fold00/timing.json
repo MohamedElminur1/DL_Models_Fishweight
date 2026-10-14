@@ -1,0 +1,13 @@
+{
+  "est_final_fit_seconds": 0.016650303021857615,
+  "fold": 0,
+  "inner_fit_seconds_mean": 0.013181489892303944,
+  "label": "chrono",
+  "n_inner_fits": 1,
+  "n_train_inner_mean": 19.0,
+  "n_train_outer": 24,
+  "n_trials": 1,
+  "path_counts": {},
+  "trial_seconds_max": 0.01724416995421052,
+  "trial_seconds_mean": 0.01724416995421052
+}

@@ -1,0 +1,26 @@
+2026-10-14T16:29:36Z	autopilot started (pid 1432604)
+2026-10-14T16:29:36Z	start phase4
+2026-10-14T17:11:42Z	no run_all.sh running; checking every Phase 4 model run
+2026-10-14T17:13:18Z	train.py exited non-zero (attempt 1): --task T1 --scheme lopo --model ridge_time_wq_w28 --workers 4
+2026-10-14T17:13:32Z	train.py exited non-zero (attempt 2): --task T1 --scheme lopo --model ridge_time_wq_w28 --workers 4
+2026-10-14T17:16:45Z	train.py exited non-zero (attempt 1): --task T2 --scheme lopo --model ridge_pw_wq --workers 4
+2026-10-14T17:16:59Z	train.py exited non-zero (attempt 2): --task T2 --scheme lopo --model ridge_pw_wq --workers 4
+2026-10-14T17:58:51Z	train.py exited non-zero (attempt 1): --task T2 --scheme lopo --model ridge_pw_wq_noind --workers 4
+2026-10-14T17:59:04Z	train.py exited non-zero (attempt 2): --task T2 --scheme lopo --model ridge_pw_wq_noind --workers 4
+2026-10-14T18:15:49Z	runs executed by the check pass (crashed or not reached before): T1 lopo gbm_time_wq_w28,T2 lopo persistence,T2 lopo linear,T2 lopo sgr,T2 lopo anchored_gc,T2 lopo cohort_growth,T2 lopo ridge_pw,T2 lopo gbm_pw,T2 lopo gbm_pw_wq,T2 lopo lstm,T2 lopo gru,T2 lopo cnn_lstm,T2 lopo tft,T2 lopo mlp_static,T2 lopo ridge_pw_wq_w14,T2 lopo gbm_pw_wq_w14,T2 lopo ridge_pw_wq_w42,T2 lopo gbm_pw_wq_w42,T1 lopo gc,T1 lopo cohort_mean,T1 lopo ridge_time,T1 lopo gbm_time,T1 chrono gc,T1 chrono cohort_mean,T1 chrono ridge_time,T1 chrono gbm_time,T1 chrono ridge_wq,T1 chrono gbm_wq,T1 chrono ridge_time_wq,T1 chrono gbm_time_wq,T1 chrono ridge_time_wq_len,T1 chrono gbm_time_wq_len,T1 chrono allometric,T1 chrono lstm,T1 chrono gru,T1 chrono cnn_lstm,T1 chrono tft,T1 chrono mlp_static,T2 chrono persistence,T2 chrono linear,T2 chrono sgr,T2 chrono anchored_gc,T2 chrono cohort_growth,T2 chrono ridge_pw,T2 chrono gbm_pw,T2 chrono ridge_pw_wq,T2 chrono gbm_pw_wq,T2 chrono lstm,T2 chrono gru,T2 chrono cnn_lstm,T2 chrono tft,T2 chrono mlp_static
+2026-10-14T18:15:49Z	STOPPED: phase4: 3 model runs failed twice: --task T1 --scheme lopo --model ridge_time_wq_w28 --workers 4 --task T2 --scheme lopo --model ridge_pw_wq --workers 4 --task T2 --scheme lopo --model ridge_pw_wq_noind --workers 4
+2026-10-14T18:15:51Z	autopilot started (pid 1519300)
+2026-10-14T18:15:51Z	start phase4
+2026-10-14T18:15:51Z	no run_all.sh running; checking every Phase 4 model run
+2026-10-14T18:17:22Z	stopped under plan 9.0 (non-finite prediction), reported, not re-run: --task T1 --scheme lopo --model ridge_time_wq_w28 --workers 4
+2026-10-14T18:18:08Z	stopped under plan 9.0 (non-finite prediction), reported, not re-run: --task T2 --scheme lopo --model ridge_pw_wq --workers 4
+2026-10-14T18:18:45Z	stopped under plan 9.0 (non-finite prediction), reported, not re-run: --task T2 --scheme lopo --model ridge_pw_wq_noind --workers 4
+2026-10-14T18:21:17Z	runs executed by the check pass (crashed or not reached before): none
+2026-10-14T18:21:17Z	DONE phase4
+2026-10-14T18:21:17Z	start compare
+agree: verification/codex_p4models/COMPARISON.md
+2026-10-14T18:21:18Z	Codex comparison: all compared values agree
+2026-10-14T18:21:18Z	DONE compare
+2026-10-14T18:21:18Z	start select
+T1: primary baseline cohort_mean, primary deep model lstm -> /home/dev/development/publications/results/selection/primary_T1.json
+T2: primary baseline ridge_pw, primary deep model cnn_lstm -> /home/dev/development/publications/results/selection/primary_T2.json

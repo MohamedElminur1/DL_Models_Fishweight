@@ -1,0 +1,16 @@
+{
+  "best_epoch_median": 63.0,
+  "epochs_run_mean": 119.73333333333333,
+  "est_final_fit_seconds": 10.588746531106159,
+  "fold": 0,
+  "inner_fit_seconds_mean": 13.416147280329218,
+  "label": "pond01",
+  "n_inner_fits": 60,
+  "n_train_inner_mean": 16.666666666666668,
+  "n_train_outer": 25,
+  "n_trials": 20,
+  "path_counts": {},
+  "seconds_per_epoch_mean": 0.11205022784239324,
+  "trial_seconds_max": 131.61092691216618,
+  "trial_seconds_mean": 40.3192159681581
+}

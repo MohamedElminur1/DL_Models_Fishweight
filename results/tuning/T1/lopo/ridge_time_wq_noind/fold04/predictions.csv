@@ -1,0 +1,5 @@
+task,scheme,model,sample_set,fold,seed,row_id,pond,stream,horizon,date,origin_date,t,w_true,w_pred,y_true_log,y_pred_log,w_origin
+T1,lopo,ridge_time_wq_noind,eligible,4,0,31,6,S06,0,2021-07-03,,14,15.8,56.37131191695218,2.760009940032921,4.031960375140957,
+T1,lopo,ridge_time_wq_noind,eligible,4,0,32,6,S06,0,2021-07-17,,28,42.1,56.68407482893095,3.7400477406883357,4.0374933040685015,
+T1,lopo,ridge_time_wq_noind,eligible,4,0,33,6,S06,0,2021-07-31,,42,60.2,70.36980696473647,4.097672352314776,4.253764292827565,
+T1,lopo,ridge_time_wq_noind,eligible,4,0,36,6,S06,0,2021-09-25,,98,251.4,121.64635019111502,5.527045296156147,4.801118066240318,

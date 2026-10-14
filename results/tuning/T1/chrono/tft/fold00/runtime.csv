@@ -1,0 +1,27 @@
+task,scheme,model,fold,stage,trial_or_seed,epochs,seconds,cpu,python,torch,notes
+T1,chrono,tft,0,plan,,,0.0,AMD EPYC 7B12,3.12.3,2.14.1+cpu,"label=chrono; n_train=24; n_test=11; n_excluded=0; test_ponds=[1, 2, 3, 4, 6, 7, 9]; dropped_ponds=[]"
+T1,chrono,tft,0,trial,0,60,3.7995,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,1,66,9.3661,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,2,32,2.7319,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,3,105,15.1731,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,4,68,6.1587,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,5,115,11.2718,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,6,217,8.596,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,7,39,3.0808,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,8,52,4.7791,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,9,33,2.1069,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,10,37,3.3796,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,11,37,3.2469,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,12,37,3.4461,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,13,41,3.3549,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,14,41,3.8726,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,15,39,2.7212,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,16,149,8.7129,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,17,32,2.9905,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,18,56,4.0956,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,trial,19,55,4.1063,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,chrono,tft,0,final,0,25,1.8027,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,chrono,tft,0,final,1,25,1.8042,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,chrono,tft,0,final,2,25,1.9821,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,chrono,tft,0,final,3,25,1.8428,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,chrono,tft,0,final,4,25,1.7592,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0

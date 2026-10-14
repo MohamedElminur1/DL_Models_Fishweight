@@ -1,0 +1,27 @@
+task,scheme,model,fold,stage,trial_or_seed,epochs,seconds,cpu,python,torch,notes
+T1,lopo,mlp_static,7,plan,,,0.0,AMD EPYC 7B12,3.12.3,2.14.1+cpu,label=pond09; n_train=30; n_test=5; n_excluded=0; test_ponds=[9]; dropped_ponds=[]
+T1,lopo,mlp_static,7,trial,0,459,1.2816,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,1,900,1.7679,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,2,357,1.9295,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,3,523,1.5901,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,4,586,1.2088,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,5,900,2.42,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,6,862,2.4416,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,7,900,2.6771,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,8,850,1.6842,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,9,900,2.8481,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,10,272,1.0357,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,11,202,0.9098,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,12,184,0.7843,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,13,184,0.9893,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,14,313,1.7145,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,15,363,1.6934,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,16,364,1.6739,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,17,211,1.0166,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,18,295,1.3899,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,trial,19,556,2.593,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,mlp_static,7,final,0,35,0.2459,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,lopo,mlp_static,7,final,1,35,0.1937,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,lopo,mlp_static,7,final,2,35,0.2189,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,lopo,mlp_static,7,final,3,35,0.2068,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T1,lopo,mlp_static,7,final,4,35,0.2237,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0

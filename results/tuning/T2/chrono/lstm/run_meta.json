@@ -1,0 +1,32 @@
+{
+  "complete": true,
+  "cutoff": "2021-08-28",
+  "dev": false,
+  "folds_run": [
+    0
+  ],
+  "guard": {
+    "commit": "91b38b99494313ed4b1e6eb570bcdf0e41ab0639",
+    "matched_commit": "91b38b99494313ed4b1e6eb570bcdf0e41ab0639",
+    "matched_tag": "analysis-plan-frozen",
+    "plan_sha256": "fc544640011609d39cb9b6e3aa8d9f79584d053eb7a47ecaf5182f6a3f8f7a3e",
+    "tag": "analysis-plan-frozen"
+  },
+  "hardware": {
+    "cpu": "AMD EPYC 7B12",
+    "python": "3.12.3",
+    "torch": "2.14.1+cpu"
+  },
+  "hash": "05ffc6ef995e9d7ad974e32d0ce7075b3540b481074c60bf60a9cdc5e6cd68a2",
+  "model": "lstm",
+  "n_excluded": {
+    "0": 7
+  },
+  "n_predictions": 75,
+  "sample_set": "eligible",
+  "scheme": "chrono",
+  "seconds": 17.183,
+  "skipped_folds": [],
+  "task": "T2",
+  "values_withheld": false
+}

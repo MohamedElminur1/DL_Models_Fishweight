@@ -1,0 +1,16 @@
+{
+  "best_epoch_median": 59.5,
+  "epochs_run_mean": 107.3,
+  "est_final_fit_seconds": 0.9905506045515851,
+  "fold": 0,
+  "inner_fit_seconds_mean": 1.4141705304617063,
+  "label": "chrono",
+  "n_inner_fits": 20,
+  "n_train_inner_mean": 19.0,
+  "n_train_outer": 24,
+  "n_trials": 20,
+  "path_counts": {},
+  "seconds_per_epoch_mean": 0.013179594878487477,
+  "trial_seconds_max": 3.6944501670077443,
+  "trial_seconds_mean": 1.421037754812278
+}

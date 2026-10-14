@@ -1,0 +1,26 @@
+{
+  "best_trial": 13,
+  "epochs": 39,
+  "hp": {
+    "batch_size": 8,
+    "dropout": 0.2273849720055596,
+    "filters": 16,
+    "hidden": 32,
+    "kernel": 7,
+    "layers": 2,
+    "lr": 0.0023868992411816945,
+    "pool": 2,
+    "weight_decay": 0.0010655048495667814
+  },
+  "inner_value": 0.17736830282371785,
+  "label": "pond07",
+  "n_excluded": 0,
+  "n_nonpositive_inner": 0,
+  "n_test": 6,
+  "n_train": 29,
+  "n_trials": 20,
+  "outer_fold": 5,
+  "test_ponds": [
+    7
+  ]
+}

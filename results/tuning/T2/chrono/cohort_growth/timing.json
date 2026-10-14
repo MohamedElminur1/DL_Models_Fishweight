@@ -1,0 +1,21 @@
+{
+  "folds": [
+    {
+      "est_final_fit_seconds": 0.18441899679601192,
+      "fold": 0,
+      "inner_fit_seconds_mean": 0.10113299824297428,
+      "label": "chrono",
+      "n_inner_fits": 1,
+      "n_train_inner_mean": 17.0,
+      "n_train_outer": 31,
+      "n_trials": 1,
+      "path_counts": {
+        "curve_failures": 0,
+        "curve_logistic": 1,
+        "n_fallback_anchored_gc": 14
+      },
+      "trial_seconds_max": 0.11082498775795102,
+      "trial_seconds_mean": 0.11082498775795102
+    }
+  ]
+}

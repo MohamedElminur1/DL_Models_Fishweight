@@ -1,0 +1,22 @@
+{
+  "best_trial": 0,
+  "epochs": null,
+  "hp": {},
+  "inner_value": 0.7584979646671149,
+  "label": "chrono",
+  "n_excluded": 7,
+  "n_nonpositive_inner": 0,
+  "n_test": 15,
+  "n_train": 31,
+  "n_trials": 20,
+  "outer_fold": 0,
+  "test_ponds": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    7,
+    9
+  ]
+}

@@ -1,0 +1,2 @@
+best_trial,epochs,inner_value,label,n_excluded,n_nonpositive_inner,n_test,n_train,n_trials,outer_fold,test_ponds
+0,,0.3595731321624227,chrono,7,0,15,31,20,0,1 2 3 4 6 7 9

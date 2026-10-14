@@ -1,0 +1,2 @@
+best_trial,epochs,inner_value,label,n_excluded,n_nonpositive_inner,n_test,n_train,n_trials,outer_fold,test_ponds,hp_alpha
+9,,0.3732621206733399,chrono,0,0,11,24,20,0,1 2 3 4 6 7 9,31.622776601683793

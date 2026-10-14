@@ -1,0 +1,29 @@
+{
+  "best_trial": 19,
+  "epochs": 25,
+  "hp": {
+    "batch_size": 8,
+    "dropout": 0.01170784961228273,
+    "heads": 1,
+    "hidden": 8,
+    "lr": 0.0011310524152170671,
+    "weight_decay": 6.371705314394581e-06
+  },
+  "inner_value": 0.4308186387324837,
+  "label": "chrono",
+  "n_excluded": 0,
+  "n_nonpositive_inner": 0,
+  "n_test": 11,
+  "n_train": 24,
+  "n_trials": 20,
+  "outer_fold": 0,
+  "test_ponds": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    7,
+    9
+  ]
+}

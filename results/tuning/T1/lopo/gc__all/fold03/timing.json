@@ -1,0 +1,16 @@
+{
+  "est_final_fit_seconds": 0.09157331334426999,
+  "fold": 3,
+  "inner_fit_seconds_mean": 0.06104887556284666,
+  "label": "pond04",
+  "n_inner_fits": 3,
+  "n_train_inner_mean": 33.333333333333336,
+  "n_train_outer": 50,
+  "n_trials": 1,
+  "path_counts": {
+    "curve_failures": 0,
+    "curve_gompertz": 3
+  },
+  "trial_seconds_max": 0.1957577271386981,
+  "trial_seconds_mean": 0.1957577271386981
+}

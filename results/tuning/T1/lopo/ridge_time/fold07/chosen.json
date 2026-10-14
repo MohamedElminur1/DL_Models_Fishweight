@@ -1,0 +1,18 @@
+{
+  "best_trial": 0,
+  "epochs": null,
+  "hp": {
+    "alpha": 0.001
+  },
+  "inner_value": 0.29777712382056903,
+  "label": "pond09",
+  "n_excluded": 0,
+  "n_nonpositive_inner": 0,
+  "n_test": 5,
+  "n_train": 30,
+  "n_trials": 20,
+  "outer_fold": 7,
+  "test_ponds": [
+    9
+  ]
+}

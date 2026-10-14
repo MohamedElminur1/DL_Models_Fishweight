@@ -1,0 +1,27 @@
+task,scheme,model,fold,stage,trial_or_seed,epochs,seconds,cpu,python,torch,notes
+T2,lopo,tft,5,plan,,,0.0,AMD EPYC 7B12,3.12.3,2.14.1+cpu,label=pond07; n_train=45; n_test=8; n_excluded=0; test_ponds=[7]; dropped_ponds=[]
+T2,lopo,tft,5,trial,0,147,20.4974,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,1,125,28.5053,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,2,138,12.0374,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,3,233,55.6911,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,4,165,26.0984,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,5,370,58.7164,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,6,273,22.2209,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,7,204,43.4691,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,8,164,26.0651,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,9,253,34.3007,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,10,123,19.4276,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,11,292,38.4567,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,12,110,17.5566,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,13,178,26.8642,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,14,293,34.4661,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,15,151,17.0551,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,16,210,28.0306,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,17,139,19.6127,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,18,126,15.6609,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,trial,19,219,18.5444,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,lopo,tft,5,final,0,20,3.477,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T2,lopo,tft,5,final,1,20,3.0668,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T2,lopo,tft,5,final,2,20,3.2444,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T2,lopo,tft,5,final,3,20,3.3253,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0
+T2,lopo,tft,5,final,4,20,3.4189,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_nonpositive_pred=0

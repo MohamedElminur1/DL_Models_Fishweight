@@ -1,0 +1,4 @@
+task,scheme,model,fold,stage,trial_or_seed,epochs,seconds,cpu,python,torch,notes
+T1,lopo,gc__all,0,plan,,,0.0,AMD EPYC 7B12,3.12.3,2.14.1+cpu,label=pond01; n_train=50; n_test=5; n_excluded=0; test_ponds=[1]; dropped_ponds=[2]
+T1,lopo,gc__all,0,trial,0,,0.2384,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,lopo,gc__all,0,final,0,,0.0527,AMD EPYC 7B12,3.12.3,2.14.1+cpu,curve=gompertz; curve_failures=0; n_nonpositive_pred=0

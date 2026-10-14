@@ -1,0 +1,2 @@
+best_trial,epochs,inner_value,label,n_excluded,n_nonpositive_inner,n_test,n_train,n_trials,outer_fold,test_ponds,hp_batch_size,hp_dropout,hp_heads,hp_hidden,hp_lr,hp_weight_decay
+19,2,0.23454213824406506,chrono,7,0,15,31,20,0,1 2 3 4 6 7 9,32,0.46597663021817637,1,8,0.0022948471581892243,0.00018838085725947392
