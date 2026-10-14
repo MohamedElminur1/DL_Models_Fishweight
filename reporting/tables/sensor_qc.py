@@ -8,7 +8,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from shared import MISSING, Sources, literal, write_table
 
-HEADER = ['Pond', 'Sensor', 'Unit as labelled', 'Readings after duplicate removal',
+HEADER = ['Pond', 'Sensor', 'Unit as labeled', 'Readings after duplicate removal',
           'Missing raw readings', 'Non-finite readings', 'Out-of-range readings',
           'Flat-line readings', 'Valid readings', 'Duplicate rows dropped',
           'Sensor-days', 'Observed sensor-days', 'Interpolated sensor-days', 'Missing sensor-days']

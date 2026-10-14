@@ -74,7 +74,7 @@ def draw(scheme: str):
     handles = [Line2D([], [], color=p.fs.INK, marker="o", ls="none", ms=4.6,
                       mfc=p.fs.INK, label="Real weighing")]
     handles.append(Line2D([], [], color=p.fs.INK, marker="^", ls="none", ms=4.5,
-                          mfc="white", label="Prediction outside y-range (value labelled)"))
+                          mfc="white", label="Prediction outside y-range (value labeled)"))
     for i, model in enumerate(models):
         handles.append(Line2D([], [], color=p.fs.INK, ls=p.STYLES[i], marker=p.MARKERS[i],
                               ms=3.1, mfc="white", label=p.model_name(model)))

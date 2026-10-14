@@ -122,7 +122,7 @@ def model_rows(cfg: dict,task: str,groups: tuple[str, ...]=ORDER) -> list[tuple[
 
 def check_sensor_qc(directory: Path, rows: list[dict[str,str]], cfg: dict) -> None:
     """Compare every pond, sensor, labelled unit and count with the saved QC inputs."""
-    headers=['Pond','Sensor','Unit as labelled','Readings after duplicate removal','Missing raw readings',
+    headers=['Pond','Sensor','Unit as labeled','Readings after duplicate removal','Missing raw readings',
              'Non-finite readings','Out-of-range readings','Flat-line readings','Valid readings',
              'Duplicate rows dropped','Sensor-days','Observed sensor-days','Interpolated sensor-days','Missing sensor-days']
     if list(rows[0])!=headers:

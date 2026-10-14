@@ -37,7 +37,7 @@ PROBES = {
     'posthoc_ridge': ['Post hoc S', 'Frozen S', 'Post hoc permutation p'],
     'posthoc_ridge_alphas': ['Outer fold', 'Held-out pond', 'Chosen alpha'],
     'posthoc_ridge_agreement': ['Re-implementation alpha', 'Max absolute log-prediction difference', 'Max absolute weight difference (g)'],
-    'sensor_qc': ['Pond', 'Sensor', 'Unit as labelled', 'Readings after duplicate removal',
+    'sensor_qc': ['Pond', 'Sensor', 'Unit as labeled', 'Readings after duplicate removal',
                   'Missing raw readings', 'Non-finite readings', 'Out-of-range readings',
                   'Flat-line readings', 'Valid readings', 'Duplicate rows dropped',
                   'Sensor-days', 'Observed sensor-days', 'Interpolated sensor-days', 'Missing sensor-days'],
