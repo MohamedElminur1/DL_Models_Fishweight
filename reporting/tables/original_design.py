@@ -7,7 +7,11 @@ import sys
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from shared import MISSING, Sources, number, write_table
+from shared import Sources, number, write_table
+
+# These tables write NA for unavailable values, as their footers define it (shared.MISSING is the
+# dash of the Phase 4 tables).
+MISSING = "NA"
 
 
 INPUTS = {
@@ -17,7 +21,7 @@ INPUTS = {
     "wq_only": "water quality only",
 }
 DESIGNS = {
-    "S0_notebook": "Notebook design (scaler fitted on all rows; last 20 % of rows as test)",
+    "S0_notebook": "Notebook design (scaler fitted on all rows; last 20% of rows as test)",
     "S1_chrono": "Chronological split (scaler fitted on training rows)",
     "S2_random": "Random split of windows",
 }
@@ -104,7 +108,7 @@ def main() -> None:
     write_table("original_design", ["Design", "Inputs", "Model", "Seeds", "MAE (g)", "RMSE (g)", "MAPE (%)", "R^{2}"],
                 rows, sources, [
         "The diagnostic grid contributes only evaluation set all; every other grid row is in original_design_detail.",
-        "Constants: submitted manuscript, Table 3, single-step CNN-LSTM MAE 0.55 g, RMSE 1.95 g, MAPE 0.20 %; submitted manuscript, Table 4, 18-step TFT 1.78 g, 2.25 g, 3.70 %, and CNN-LSTM 12.75 g, 18.41 g, 26.60 %. These are reported claims, not recomputed results. Their input label describes the manuscript inputs, not verified training code; seeds and R2 are unavailable.",
+        "Constants: submitted manuscript, Table 3, single-step CNN-LSTM MAE 0.55 g, RMSE 1.95 g, MAPE 0.20%; submitted manuscript, Table 4, 18-step TFT 1.78 g, 2.25 g, 3.70 %, and CNN-LSTM 12.75 g, 18.41 g, 26.60 %. These are reported claims, not recomputed results. Their input label describes the manuscript inputs, not verified training code; seeds and R2 are unavailable.",
         "Submitted metrics retain their reported precision; recomputed diagnostics follow the precision rules below.",
         "The post hoc notebook-input CNN-LSTM row is scored on the original final test period only. Its saved summary does not supply R2.",
         "The single 18-step persistence row uses S0_notebook, horizon 18, pooled over origins and steps, for comparison with the submitted claims. Persistence has no fitted model; Seeds = 1 denotes one deterministic evaluation. S1_chrono is not substituted or pooled with S0.",

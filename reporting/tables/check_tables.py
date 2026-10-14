@@ -22,7 +22,7 @@ MAIN_HEADER = ["Design", "Inputs", "Model", "Seeds", "MAE (g)", "RMSE (g)", "MAP
 DETAIL_HEADER = ["Design", "Inputs", "Model", "Evaluation set", "Seeds", "n min", "n max", *MAIN_HEADER[4:]]
 INPUT_LABELS = {"none": "none", "notebook": "notebook inputs (water quality and the lagged weight)",
                 "manuscript": "manuscript inputs (water quality, population, length)", "wq_only": "water quality only"}
-DESIGN_LABELS = {"S0_notebook": "Notebook design (scaler fitted on all rows; last 20 % of rows as test)",
+DESIGN_LABELS = {"S0_notebook": "Notebook design (scaler fitted on all rows; last 20% of rows as test)",
                  "S1_chrono": "Chronological split (scaler fitted on training rows)", "S2_random": "Random split of windows"}
 EVAL_LABELS = {"all": "All test windows", "change_rows": "Test rows where weight changes",
                "grid_first_rows": "First test row on each 14-day measurement-grid date"}

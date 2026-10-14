@@ -15,7 +15,7 @@ from shared import MISSING, ROOT, Sources, literal, number, write_table
 STOP = "stopped (plan 9.0)"
 GROUPS = ("time_only", "water_quality", "reference", "deep", "static_only", "sensitivity")
 RESULT_HEADER = ["Task / horizon", "Group", "Model", "Primary baseline", "Ponds", "Samples", "Seeds",
-                 "S", "S bootstrap 95 % interval", "MAE (g)", "RMSE (g)", "MAPE (%)", "R^{2}",
+                 "S", "S bootstrap 95% interval", "MAE (g)", "RMSE (g)", "MAPE (%)", "R^{2}",
                  "Ponds with lower S", "SD across ponds of S", "SD across ponds of MAE (g)"]
 
 

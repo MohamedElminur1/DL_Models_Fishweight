@@ -5377,8 +5377,8 @@ z
      <use xlink:href="#LiberationSans-4a" transform="translate(933.734375 0)"/>
      <use xlink:href="#LiberationSans-f" transform="translate(989.34375 0)"/>
     </g>
-    <!-- B = 2000, for 95 % -->
-    <g style="fill: #1f1f1f" transform="translate(371.332303 448.12301) scale(0.08 -0.08)">
+    <!-- B = 2000, for 95% -->
+    <g style="fill: #1f1f1f" transform="translate(372.443553 448.12301) scale(0.08 -0.08)">
      <defs>
       <path id="LiberationSans-25" d="M 3931 1241 
 Q 3931 653 3503 326 
@@ -5487,8 +5487,7 @@ z
      <use xlink:href="#LiberationSans-3" transform="translate(575.359375 0)"/>
      <use xlink:href="#LiberationSans-1c" transform="translate(603.140625 0)"/>
      <use xlink:href="#LiberationSans-18" transform="translate(658.75 0)"/>
-     <use xlink:href="#LiberationSans-62" transform="translate(714.359375 0)"/>
-     <use xlink:href="#LiberationSans-8" transform="translate(742.140625 0)"/>
+     <use xlink:href="#LiberationSans-8" transform="translate(714.359375 0)"/>
     </g>
     <!-- intervals. -->
     <g style="fill: #1f1f1f" transform="translate(388.569803 456.830041) scale(0.08 -0.08)">

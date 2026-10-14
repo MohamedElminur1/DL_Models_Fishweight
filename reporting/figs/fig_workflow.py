@@ -196,7 +196,7 @@ def draw(canvas: Canvas, top: float, f: dict) -> float:
         ("Primary statistic S", "Mean over ponds of the mean absolute error of log weight.", w_m),
         ("Wilcoxon test", "Exact one-sided signed-rank test in a fixed sequence: T1, then T2 at 14 days.", w_m),
         ("Permutation test", "Water-quality inputs shuffled among sensor streams within a sampling date.", w_m),
-        ("Bootstrap", f"Pond-level resampling, B\u00a0=\u00a0{f['boot']}, for 95 % intervals.", w_m),
+        ("Bootstrap", f"Pond-level resampling, B\u00a0=\u00a0{f['boot']}, for 95% intervals.", w_m),
     ]
     h7 = row_height(stats)
     b_stats = [canvas.box(CONTENT_X + i * (w_m + gap), y - h7, w_m, h7, title, body, fc=fill("statistics"), valign="top")

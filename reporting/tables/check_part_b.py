@@ -218,7 +218,7 @@ def check(directory: Path,cfg: dict) -> None:
     for name,scheme,sample_set,groups in [('main_results','lopo','eligible',ORDER[:-1]),('main_results_full','lopo','eligible',ORDER),('calendar_holdout','chrono','eligible',ORDER[:-1]),
                                           ('all_events','lopo','all',('all_sample_set',)),('sensitivity','lopo','eligible',('sensitivity',))]:
         compact=name!='main_results_full'
-        full_header=['Task / horizon','Group','Model','Primary baseline','Ponds','Samples','Seeds','S','S bootstrap 95 % interval',
+        full_header=['Task / horizon','Group','Model','Primary baseline','Ponds','Samples','Seeds','S','S bootstrap 95% interval',
                      'MAE (g)','RMSE (g)','MAPE (%)','R^{2}','Ponds with lower S','SD across ponds of S','SD across ponds of MAE (g)']
         expected_header=[c for c in full_header if c not in ('Primary baseline','Ponds','Samples','Seeds','SD across ponds of S','SD across ponds of MAE (g)')]
         expected=[]
@@ -265,7 +265,7 @@ def check(directory: Path,cfg: dict) -> None:
             if scheme=='lopo' and sample_set=='eligible':
                 b=one(bootstrap,task=task,horizon=h,model=model)
                 interval=f"{fmt(b['ci_low'],'s')} to {fmt(b['ci_high'],'s')}"
-            wanted={'S':seed_metric(seed_s,'s'),'S bootstrap 95 % interval':interval,
+            wanted={'S':seed_metric(seed_s,'s'),'S bootstrap 95% interval':interval,
                     comparison if compact else 'Ponds with lower S':str(count)}
             if not compact:
                 wanted.update({'Ponds':str(len(pond_rows)),'Samples':str(sum(int(r['n']) for r in pond_rows)),'Seeds':str(len(seeds)),

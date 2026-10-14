@@ -80,7 +80,7 @@ def main() -> dict:
     axes[-1].set_xlim(min(all_differences) - 0.03, max(all_differences) + 0.03)
     axes[-1].set_xlabel("Difference in S (deep minus baseline; negative favours deep)")
     fig.legend(handles=[*p.pond_handles(), Line2D([], [], color="black", marker="D", ms=4,
-                               label="Mean difference over ponds, pond-bootstrap 95 % interval")],
+                               label="Mean difference over ponds, pond-bootstrap 95% interval")],
                loc="outside lower center", ncol=3)
     return p.finish(fig, "fig_confirmatory", "main", CAPTION)
 
