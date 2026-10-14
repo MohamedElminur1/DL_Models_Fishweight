@@ -5,7 +5,9 @@ import sys
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from names import model_name
 from shared import Sources, literal, write_table
 
 
@@ -18,18 +20,26 @@ PARAMETERS = (
 )
 
 
+def number_text(value: float) -> str:
+    """A configured number as printed: exact powers of ten below 0.001 as 10^{n}, else the shortest form."""
+    if 0 < abs(value) < 1e-3 and float(f"{value:e}".split("e")[0]) == 1:
+        return f"10^{{{int(f'{value:e}'.split('e')[1])}}}"
+    return f"{value:g}"
+
+
 def range_text(spec: dict) -> str:
     """Show categorical choices and distinguish uniform, logarithmic and integer ranges."""
     if spec["type"] == "categorical":
-        return ", ".join(f"{value:g}" for value in spec["choices"])
+        return ", ".join(number_text(value) for value in spec["choices"])
     if spec["type"] not in {"int", "float"}:
         raise ValueError(f"unknown search type: {spec['type']}")
     scale = "integer" if spec["type"] == "int" else "log-uniform" if spec.get("log") else "uniform"
-    return f"{spec['low']:g} to {spec['high']:g} ({scale})"
+    return f"{number_text(spec['low'])} to {number_text(spec['high'])} ({scale})"
 
 
 def main() -> None:
     sources = Sources()
+    sources.path("reporting/names.py")
     cfg = sources.config("configs/phase4.yaml")
     plan = " ".join(sources.text("ANALYSIS_PLAN.md").split())
     for required in ("AdamW", "mean squared error on the standardized target", "median best epoch", "1 (encoder)"):
@@ -55,11 +65,11 @@ def main() -> None:
         ("Early-stopping patience", f"{cfg['budget']['patience']} epochs"),
         ("Final-fit epochs", "Median best epoch of the chosen trial's inner folds"),
         ("Final-fit seeds", ", ".join(map(str, cfg["seeds"]["final"]))),
-        ("Optimiser", "AdamW"),
+        ("Optimizer", "AdamW"),
         ("Loss", "Mean squared error on the standardized target"),
     ]
     rows.extend([label, *([value] * len(MODELS))] for label, value in settings)
-    write_table("search_spaces_deep", ["Parameter / setting", "LSTM", "GRU", "CNN-LSTM", "TFT", literal("mlp_static")],
+    write_table("search_spaces_deep", ["Parameter / setting", "LSTM", "GRU", "CNN-LSTM", "TFT", model_name("mlp_static")],
                 rows, sources, [
         "All ranges, budgets, inner-fold count and seeds come from the full-run configs/phase4.yaml, not dev settings. Empty cells mean the parameter does not apply. The hidden size of CNN-LSTM is the LSTM part; pooling 1 means no pooling.",
         "Plan constants: Optuna TPE and grouping by sensor stream, ANALYSIS_PLAN.md section 7.2; final-fit epoch rule, section 7.2; AdamW and loss on the standardized target, section 6.3; TFT's fixed single encoder layer, section 13.",
@@ -68,10 +78,10 @@ def main() -> None:
     ])
     tabular_sources = Sources()
     tabular_cfg = tabular_sources.config("configs/phase4.yaml")
-    rows = [["Gradient boosting", literal(key), range_text(spec)] for key, spec in tabular_cfg["gbm"]["space"].items()]
+    rows = [["GBM", literal(key), range_text(spec)] for key, spec in tabular_cfg["gbm"]["space"].items()]
     rows.extend([
-        ["Gradient boosting", "Trials per outer fold", str(tabular_cfg["budget"]["n_trials"])],
-        ["Gradient boosting", literal("random_state"), str(tabular_cfg["seeds"]["gbm"])],
+        ["GBM", "Trials per outer fold", str(tabular_cfg["budget"]["n_trials"])],
+        ["GBM", literal("random_state"), str(tabular_cfg["seeds"]["gbm"])],
     ])
     grid = tabular_cfg["ridge"]["alpha_log10"]
     if grid["num"] < 2:
@@ -82,7 +92,7 @@ def main() -> None:
         ["Ridge", "Tie rule", "Choose the larger alpha"],
     ])
     write_table("search_spaces_tabular", ["Model", "Parameter / setting", "Range / value"], rows, tabular_sources, [
-        "Gradient boosting is HistGradientBoostingRegressor. Its search ranges, full-run trial budget and random_state come from configs/phase4.yaml. Integer and continuous ranges include their configured endpoints; logarithmic ranges use log-uniform sampling.",
+        "GBM is the HistGradientBoostingRegressor of scikit-learn. Its search ranges, full-run trial budget and random_state come from configs/phase4.yaml. Integer and continuous ranges include their configured endpoints; logarithmic ranges use log-uniform sampling.",
         "Ridge alpha candidates are computed from alpha_log10 start, stop and num; the larger-alpha tie rule is stated in the adjacent frozen YAML comment.",
         "The same spaces apply to each task, feature-set ablation and sensitivity variant using that model family; there is no task-specific range override.",
     ])

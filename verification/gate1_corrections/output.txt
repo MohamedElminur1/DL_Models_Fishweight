@@ -1,0 +1,3 @@
+pond 10: rows 620, rows with clock time 310, weight non-missing 620, zeros 0, min 27.6, max 689.1429, values >= 345 196
+pond 11: rows 3165, rows with clock time 627, weight non-missing 3165, zeros 0, min 33.8, max 701.0, values >= 345 2417
+pond 12: rows 3590, rows with clock time 26, weight non-missing 3590, zeros 0, min 28.6, max 620.9285, values >= 345 2979

@@ -7,6 +7,7 @@ intentional corruption can exercise the failure path without changing manuscript
 import argparse
 from collections import Counter
 import csv
+import math
 from datetime import date, datetime
 from decimal import Decimal
 from pathlib import Path
@@ -28,7 +29,7 @@ EVAL_LABELS = {"all": "All test windows", "change_rows": "Test rows where weight
 MODEL_LABELS = {"persistence": "Persistence", "cnn_lstm": "CNN-LSTM"}
 DEEP_ROWS = ["Hidden size", "Recurrent layers", "Convolution filters", "Kernel", "Pooling", "Attention heads",
              "Dropout", "Learning rate", "Weight decay", "Batch size", "Trials per outer fold and sampler",
-             "Inner folds", "Maximum epochs", "Early-stopping patience", "Final-fit epochs", "Final-fit seeds", "Optimiser", "Loss"]
+             "Inner folds", "Maximum epochs", "Early-stopping patience", "Final-fit epochs", "Final-fit seeds", "Optimizer", "Loss"]
 
 
 def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
@@ -204,15 +205,18 @@ def check_original_design(directory: Path) -> None:
 
 def expected_range(spec: dict) -> str:
     """Read choices or endpoints directly from the configured parameter specification."""
+    def text(value):
+        exponent = math.log10(abs(value)) if value else 0.0
+        return f"10^{{{round(exponent)}}}" if value and abs(value) < 1e-3 and abs(exponent - round(exponent)) < 1e-12 else format(value, 'g')
     if 'choices' in spec:
-        return ', '.join(format(value, 'g') for value in spec['choices'])
+        return ', '.join(text(value) for value in spec['choices'])
     distribution = 'integer' if spec['type'] == 'int' else 'log-uniform' if spec.get('log', False) else 'uniform'
-    return '{} to {} ({})'.format(format(spec['low'], 'g'), format(spec['high'], 'g'), distribution)
+    return '{} to {} ({})'.format(text(spec['low']), text(spec['high']), distribution)
 
 
 def check_search_spaces(directory: Path, cfg: dict) -> None:
     header, deep = read_csv(directory / "search_spaces_deep.csv")
-    if header != ['Parameter / setting', 'LSTM', 'GRU', 'CNN-LSTM', 'TFT', escape('mlp_static')] or [row[header[0]] for row in deep] != DEEP_ROWS:
+    if header != ['Parameter / setting', 'LSTM', 'GRU', 'CNN-LSTM', 'TFT', 'Static MLP'] or [row[header[0]] for row in deep] != DEEP_ROWS:
         raise ValueError("search_spaces_deep: incorrect columns, settings or order")
     parameters = ['hidden', 'layers', 'filters', 'kernel', 'pool', 'heads', 'dropout', 'lr', 'weight_decay', 'batch_size']
     for column, model in zip(header[1:], ['lstm', 'gru', 'cnn_lstm', 'tft', 'mlp_static']):
@@ -232,10 +236,10 @@ def check_search_spaces(directory: Path, cfg: dict) -> None:
     for phrase in ['Optuna TPE', 'median best epoch', 'AdamW', 'mean squared error on the standardized target', '1 (encoder)']:
         if phrase not in plan:
             raise ValueError(f"search_spaces_deep: plan constant changed: {phrase}")
-    provenance(directory, 'search_spaces_deep', {'configs/phase4.yaml', 'ANALYSIS_PLAN.md'}, ('section 7.2', 'section 6.3', 'section 13'))
+    provenance(directory, 'search_spaces_deep', {'configs/phase4.yaml', 'ANALYSIS_PLAN.md', 'reporting/names.py'}, ('section 7.2', 'section 6.3', 'section 13'))
     header, tabular = read_csv(directory / 'search_spaces_tabular.csv')
     expected_parameters = [escape(key) for key in cfg['gbm']['space']] + ['Trials per outer fold', escape('random_state'), 'Alpha grid', 'Tie rule']
-    if header != ['Model', 'Parameter / setting', 'Range / value'] or [row[header[1]] for row in tabular] != expected_parameters or [row['Model'] for row in tabular] != ['Gradient boosting'] * 7 + ['Ridge'] * 2:
+    if header != ['Model', 'Parameter / setting', 'Range / value'] or [row[header[1]] for row in tabular] != expected_parameters or [row['Model'] for row in tabular] != ['GBM'] * 7 + ['Ridge'] * 2:
         raise ValueError('search_spaces_tabular: incorrect columns, parameters or order')
     expected_values = [expected_range(spec) for spec in cfg['gbm']['space'].values()]
     expected_values += [str(cfg['budget']['n_trials']), str(cfg['seeds']['gbm'])]
