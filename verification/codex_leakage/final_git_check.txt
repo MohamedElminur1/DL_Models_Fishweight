@@ -1,0 +1,12 @@
+47745973ede493d782a091ae0c357757df004f54
+tag
+91b38b99494313ed4b1e6eb570bcdf0e41ab0639
+post-tag commits touching frozen paths: none
+working differences from frozen paths: none
+untracked files in frozen paths: none
+312af4e70c55e4c13fe644149dcfd4e98472ff9df4f9aa3af3f7de033f7c004c  CLAUDE.md
+00f8fe7bb82b11f7a493d75b6c8bc3a8640f8daf710d9154bc166c46bf38cf84  DECISIONS.md
+7b6d5bb148f3574ddf35a2cfdb0832d56da8ddd0300a92196d391eca256575c9  LOG.md
+c2a57f5073a374d705a848b738e5164c067c9b5ab5b5af109c38d47fd66f72d3  decisions.tsv
+4adafee25eb1080168eca555fd95ebcb55f994d10ffb8bf86b85704bc25756d3  tasks/phase4_leakage_check.md
+0f6bef58be302c96056338998f17fac1a63eb28a606b4672d2dcbf25db13ba8a  verification/codex_leakage/verify_leakage.py

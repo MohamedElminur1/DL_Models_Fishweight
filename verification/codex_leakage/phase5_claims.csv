@@ -1,0 +1,40 @@
+status,decision_line,claim,recomputed
+PASS,219,"neither task rejects, T2 gated","['not rejected', 'not tested (an earlier step did not reject)']"
+PASS,221,"T1 lower-S ponds are 1, 2, 4","[1, 2, 4]"
+PASS,221,T1 primary difference bootstrap interval,"[np.float64(-0.07275283391150024), np.float64(0.1313731948618156)]"
+PASS,223,T2 primary difference bootstrap interval,"[np.float64(-0.0023705529948598327), np.float64(0.0911104575565493)]"
+PASS,220,"T1 primary model, comparator, difference, pond count and p","[0.2900550903121714, 0.2654773720218985, 0.024577718290272995, 3, 0.65625]"
+PASS,222,"T2 primary model, comparator, difference, pond count and p","[0.3321209205187912, 0.29472061664782423, 0.03740030387096693, 2, 0.921875]"
+PASS,225,T1 all lower-S baselines named,"{'gc': 0.2610011461098115, 'cohort_mean': 0.2654773720218985, 'ridge_time': 0.26892806900993016, 'gbm_time': 0.2662183930190202}"
+PASS,226,T1 gc stated S,0.2610011461098115
+PASS,226,T1 gbm_time stated S,0.2662183930190202
+PASS,227,T1 ridge_time stated S,0.26892806900993016
+PASS,227,T2 gbm_pw stated S,0.21093059735543387
+PASS,228,T2 anchored_gc stated S,0.2742649402034775
+PASS,228,T2 cohort_growth stated S,0.28112129979238787
+PASS,229,T2 persistence stated S,0.5290003742502398
+PASS,230,T2 sgr stated S,0.5447033984371438
+PASS,227,T2 all lower-S baselines named,"{'anchored_gc': 0.2742649402034775, 'cohort_growth': 0.28112129979238787, 'ridge_pw': 0.29472061664782423, 'gbm_pw': 0.21093059735543387}"
+PASS,227,CNN-LSTM worse than GBM-PW in 6 ponds,6
+PASS,229,all main models except SGR beat persistence,"{'persistence': 0.5290003742502398, 'linear': 0.3441878668349133, 'sgr': 0.5447033984371438, 'anchored_gc': 0.2742649402034775, 'cohort_growth': 0.28112129979238787, 'ridge_pw': 0.29472061664782423, 'gbm_pw': 0.21093059735543387, 'gbm_pw_wq': 0.2863321424189255, 'lstm': 0.31970395689955866, 'gru': 0.2952621681614603, 'cnn_lstm': 0.3321209205187912, 'tft': 0.3405173631418175, 'mlp_static': 0.2568563016160565}"
+PASS,230,CNN-LSTM below persistence in 7 ponds,7
+PASS,232,T1 omitting 7/9 reverses sign,"{1: 0.04752980811472581, 2: 0.04208114148658781, 3: 0.019749080799302158, 4: 0.05417825008318985, 6: 0.02151978120907633, 7: -0.007730665039585763, 9: -0.005283368621385222}"
+PASS,234,T2 remains worse whichever pond is removed,"[0.0438861054257506, 0.04131100922691567, 0.042211567991031894, 0.04234330033924957, 0.047986766344109276, 0.013006516374446156, 0.031056861395265367]"
+PASS,233,merging shared stream keeps T1 direction,0.04480547480065681
+PASS,235,T1 lstm permutation p,0.005
+PASS,238,T1 gbm_time_wq permutation p,0.87
+PASS,238,T1 ridge_time_wq permutation p,0.948
+PASS,238,T2 gbm_pw_wq permutation p,0.26
+PASS,238,T2 cnn_lstm permutation p,0.955
+PASS,236,T1 observed seed-0 S below all 199 permutations,"[np.int64(199), np.int64(0)]"
+PASS,237,T1 LSTM below MLP in only 3 ponds; MLP S .306,"[3, 0.3064071584986382]"
+PASS,243,T1 adding WQ gbm_time/gbm_time_wq,"[0.2662183930190202, 0.43578715480763314]"
+PASS,243,T1 adding WQ ridge_time/ridge_time_wq,"[0.26892806900993016, 1.5823876932292882]"
+PASS,244,T2 adding WQ gbm_pw/gbm_pw_wq,"[0.21093059735543387, 0.2863321424189255]"
+PASS,244,T2 static MLP lower than every sequence model at h1,0.2568563016160565
+PASS,248,"allometric S .115, below all fish-measurement-free T1 models",0.11512489800007998
+PASS,250,largest eligible scored times T1=112 T2=126,"[112, 126]"
+PASS,240,stopped T2 ridge has no main permutation result,main prediction and permutation absent
+PASS,245,three stops and pinned-DO diagnosis,stopped_runs.csv/rows 2-4; verification/diag_ridge_stop/step5_out.txt:2; step7_out.txt:1
+PASS,224,non-significance is not no effect; prohibited claims explicitly excluded,DECISIONS.md:224; DECISIONS.md:250-252; frozen ANALYSIS_PLAN.md:296-311
+PASS,254,title/abstract changes and withdrawals are stated consequences,DECISIONS.md:254-257 records intent and Gate 2; manuscript implementation is outside this review

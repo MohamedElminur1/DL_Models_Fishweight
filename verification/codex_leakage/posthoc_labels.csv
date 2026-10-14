@@ -1,0 +1,10 @@
+file,status
+results/posthoc/ridge_candidate_loses/permutation/T2/ridge_pw_wq.json,PASS
+results/posthoc/ridge_candidate_loses/tuning/T1/lopo/ridge_time_wq_w28/run_meta.json,PASS
+results/posthoc/ridge_candidate_loses/tuning/T2/lopo/ridge_pw_wq/run_meta.json,PASS
+results/posthoc/ridge_candidate_loses/tuning/T2/lopo/ridge_pw_wq_noind/run_meta.json,PASS
+results/posthoc/ridge_candidate_loses/metrics/codex_agreement.csv,PASS
+results/posthoc/ridge_candidate_loses/metrics/per_pond.csv,PASS
+results/posthoc/ridge_candidate_loses/metrics/per_pond_seed.csv,PASS
+results/posthoc/ridge_candidate_loses/metrics/scores.csv,PASS
+results/posthoc/ridge_candidate_loses/stats/permutation.csv,PASS

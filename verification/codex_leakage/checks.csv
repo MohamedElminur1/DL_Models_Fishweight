@@ -1,0 +1,38 @@
+check,name,status,evidence,detail
+1,annotated freeze and decision,PASS,decisions.tsv:40,91b38b99494313ed4b1e6eb570bcdf0e41ab0639
+1,frozen paths unchanged,PASS,ANALYSIS_PLAN.md:323; verification/codex_leakage/git_evidence.txt,"('', '', '')"
+1,prediction additions after freeze,PASS,verification/codex_leakage/prediction_history.csv/rows 2+,71 files
+1,dev outputs untracked,PASS,verification/codex_leakage/git_evidence.txt,''
+1,dev error values withheld,PASS,verification/codex_leakage/dev_scan.csv/rows 2+; src/tuning.py:220,823 tables/JSON files
+2,outer plans and all prediction membership,PASS,verification/codex_leakage/outer_folds.csv/rows 2+; numeric_comparisons.csv/rows 2+,2040 comparisons; 0 mismatches. 
+3,stream-grouped inner round-robin,PASS,verification/codex_leakage/inner_folds.csv/rows 2+; src/folds.py:146,903 comparisons; 0 mismatches. Pond disjointness applies to LOPO; the calendar inner split is by date as plan 7.4 requires.
+3,inner stream separation,PASS,verification/codex_leakage/inner_folds.csv/LOPO rows,All independently constructed LOPO inner folds separate stream units.
+7,T1 calendar counts,PASS,verification/codex_leakage/calendar_rows.csv/rows 2+,"(24, 11, 0)"
+7,T2 calendar counts,PASS,verification/codex_leakage/calendar_rows.csv/rows 2+,"(31, 15, 7)"
+5,causal tabular features,PASS,verification/codex_leakage/feature_references.csv/rows 2+; adjacent_interpolations.csv/rows 2+,4174 comparisons; 0 mismatches. 
+5,sequence visibility and scaler comparison,PASS,verification/codex_leakage/sequence_references.csv/rows 2+; numeric_comparisons.csv/rows 2+,252 comparisons; 0 mismatches. 
+4,fixed-epoch final fitting,PASS,verification/codex_leakage/final_epochs.csv/rows 2+,480 comparisons; 0 mismatches. 
+6,T1 neural static inputs,PASS,configs/phase4.yaml:131; src/models/common.py:231,['t']
+6,T2 neural static inputs,PASS,configs/phase4.yaml:131; src/models/common.py:231,"['log_w_k', 'log_w_prev', 't_k', 'dt_prev', 'dt_target']"
+6,tabular feature allowlist,PASS,verification/codex_leakage/input_features.csv/rows 2+; src/baselines.py:519,22 model feature lists
+10,all metrics independently recomputed from grams,PASS,verification/codex_leakage/recomputed_scores.csv/rows 2+; numeric_comparisons.csv/metrics rows,19262 comparisons; 0 mismatches. 
+10,"exact signed ranks, fixed sequence and bootstrap",PASS,verification/codex_leakage/recomputed_confirmatory.csv/rows 2-3; bootstrap_spotcheck.csv/rows 2-2001,20 comparisons; 0 mismatches. 
+10,all saved statistics and robustness tables,PASS,verification/codex_leakage/recomputed_primary_comparisons.csv/rows 2-5; numeric_comparisons.csv/stats rows,4168 comparisons; 0 mismatches. 
+9,selection from inner scores before scoring,PASS,verification/codex_leakage/selection_recomputed.csv/rows 2+; selection_history.csv/rows 2-5,296 comparisons; 0 mismatches. 
+8,permutation output p-values and provenance,PASS,verification/codex_leakage/recomputed_permutation.csv/rows 2-6,75 comparisons; 0 mismatches. 
+12,T1 ridge_time_wq_w28 no completed frozen output,PASS,results/logs/run_all_phase4.log:154,aggregate absent; permutation absent; 5 partial fold prediction files remain
+12,T1 ridge_time_wq_w28 literal absence of every prediction file,FAIL,results/tuning/T1/lopo/ridge_time_wq_w28/fold01/predictions.csv/row 2,5 partial fold files survive. These are outside the scorer's input directory and are unscored.
+12,T1 ridge_time_wq_w28 explicitly stopped in metrics,FAIL,results/metrics/completeness.csv/row 44,has_predictions=False; no stop-status/reason column
+12,T1 ridge_time_wq_w28 repeats logged,NOTE,"results/logs/run_all_phase4.log/lines [154, 198, 204, 501]; results/logs/autopilot.log/lines [4, 5, 11, 15]",4 failed invocations; repeats recorded; no completed frozen output replaced
+12,T2 ridge_pw_wq no completed frozen output,PASS,results/logs/run_all_phase4.log:269,aggregate absent; permutation absent; 5 partial fold prediction files remain
+12,T2 ridge_pw_wq literal absence of every prediction file,FAIL,results/tuning/T2/lopo/ridge_pw_wq/fold01/predictions.csv/row 2,5 partial fold files survive. These are outside the scorer's input directory and are unscored.
+12,T2 ridge_pw_wq explicitly stopped in metrics,FAIL,results/metrics/completeness.csv/row 62,has_predictions=False; no stop-status/reason column
+12,T2 ridge_pw_wq repeats logged,NOTE,"results/logs/run_all_phase4.log/lines [269, 274, 523]; results/logs/autopilot.log/lines [6, 7, 11, 16]",3 failed invocations; repeats recorded; no completed frozen output replaced
+12,T2 ridge_pw_wq_noind no completed frozen output,PASS,results/logs/run_all_phase4.log:323,aggregate absent; permutation absent; 5 partial fold prediction files remain
+12,T2 ridge_pw_wq_noind literal absence of every prediction file,FAIL,results/tuning/T2/lopo/ridge_pw_wq_noind/fold01/predictions.csv/row 2,5 partial fold files survive. These are outside the scorer's input directory and are unscored.
+12,T2 ridge_pw_wq_noind explicitly stopped in metrics,FAIL,results/metrics/completeness.csv/row 76,has_predictions=False; no stop-status/reason column
+12,T2 ridge_pw_wq_noind repeats logged,NOTE,"results/logs/run_all_phase4.log/lines [323, 329, 540]; results/logs/autopilot.log/lines [8, 9, 11, 17]",3 failed invocations; repeats recorded; no completed frozen output replaced
+12,all stop records found,PASS,verification/codex_leakage/stopped_runs.csv/rows 2-4,3 distinct model/scheme runs
+12,post hoc separation and labels,PASS,results/posthoc/ridge_candidate_loses/README.md:3; verification/codex_leakage/posthoc_labels.csv/rows 2+,"Post hoc output root, metadata and scored tables identify D-003; frozen aggregates remain absent."
+11,Phase 5 claim ledger,PASS,verification/codex_leakage/phase5_claims.csv/rows 2+,39 claims; 0 discrepancies
+1,analysis stable throughout review,PASS,verification/codex_leakage/input_manifest.csv/rows 2+,[]

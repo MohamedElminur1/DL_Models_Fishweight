@@ -1,0 +1,58 @@
+{
+  "head_start": "8dca5cffb3561778f36a1d6fe8f938bceb0282c1",
+  "frozen": "91b38b99494313ed4b1e6eb570bcdf0e41ab0639",
+  "bootstrap": {
+    "B": 2000,
+    "seed": 20261014,
+    "S_interval": [
+      0.2173885737864402,
+      0.38059318622301774
+    ],
+    "difference_interval": [
+      -0.07275283391150023,
+      0.13137319486181565
+    ]
+  },
+  "stops": [
+    {
+      "task": "T1",
+      "scheme": "lopo",
+      "model": "ridge_time_wq_w28",
+      "stopped_log_lines": "[154, 198, 204, 501]",
+      "autopilot_lines": "[4, 5, 11, 15]",
+      "aggregate_exists": false,
+      "permutation_exists": false,
+      "n_partial_fold_predictions": 5,
+      "partial_files": "results/tuning/T1/lopo/ridge_time_wq_w28/fold01/predictions.csv;results/tuning/T1/lopo/ridge_time_wq_w28/fold07/predictions.csv;results/tuning/T1/lopo/ridge_time_wq_w28/fold05/predictions.csv;results/tuning/T1/lopo/ridge_time_wq_w28/fold04/predictions.csv;results/tuning/T1/lopo/ridge_time_wq_w28/fold00/predictions.csv",
+      "metrics_source": "results/metrics/completeness.csv/row 44",
+      "metrics_status_present": false
+    },
+    {
+      "task": "T2",
+      "scheme": "lopo",
+      "model": "ridge_pw_wq",
+      "stopped_log_lines": "[269, 274, 523]",
+      "autopilot_lines": "[6, 7, 11, 16]",
+      "aggregate_exists": false,
+      "permutation_exists": false,
+      "n_partial_fold_predictions": 5,
+      "partial_files": "results/tuning/T2/lopo/ridge_pw_wq/fold01/predictions.csv;results/tuning/T2/lopo/ridge_pw_wq/fold07/predictions.csv;results/tuning/T2/lopo/ridge_pw_wq/fold05/predictions.csv;results/tuning/T2/lopo/ridge_pw_wq/fold04/predictions.csv;results/tuning/T2/lopo/ridge_pw_wq/fold00/predictions.csv",
+      "metrics_source": "results/metrics/completeness.csv/row 62",
+      "metrics_status_present": false
+    },
+    {
+      "task": "T2",
+      "scheme": "lopo",
+      "model": "ridge_pw_wq_noind",
+      "stopped_log_lines": "[323, 329, 540]",
+      "autopilot_lines": "[8, 9, 11, 17]",
+      "aggregate_exists": false,
+      "permutation_exists": false,
+      "n_partial_fold_predictions": 5,
+      "partial_files": "results/tuning/T2/lopo/ridge_pw_wq_noind/fold01/predictions.csv;results/tuning/T2/lopo/ridge_pw_wq_noind/fold07/predictions.csv;results/tuning/T2/lopo/ridge_pw_wq_noind/fold05/predictions.csv;results/tuning/T2/lopo/ridge_pw_wq_noind/fold04/predictions.csv;results/tuning/T2/lopo/ridge_pw_wq_noind/fold00/predictions.csv",
+      "metrics_source": "results/metrics/completeness.csv/row 76",
+      "metrics_status_present": false
+    }
+  ],
+  "head_end": "47745973ede493d782a091ae0c357757df004f54"
+}

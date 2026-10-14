@@ -1,0 +1,20 @@
+task,group,model,mean_inner_S,source
+T1,time_only,gc,0.26558720662287333,results/tuning/T1/lopo/gc/inner_scores.csv/rows 2+
+T1,time_only,cohort_mean,0.2505582974896554,results/tuning/T1/lopo/cohort_mean/inner_scores.csv/rows 2+
+T1,time_only,ridge_time,0.25941444060153007,results/tuning/T1/lopo/ridge_time/inner_scores.csv/rows 2+
+T1,time_only,gbm_time,0.27167030662042224,results/tuning/T1/lopo/gbm_time/inner_scores.csv/rows 2+
+T1,deep,lstm,0.20390114917858362,results/tuning/T1/lopo/lstm/inner_scores.csv/rows 2+
+T1,deep,gru,0.24145258446805523,results/tuning/T1/lopo/gru/inner_scores.csv/rows 2+
+T1,deep,cnn_lstm,0.217376442037973,results/tuning/T1/lopo/cnn_lstm/inner_scores.csv/rows 2+
+T1,deep,tft,0.28640972886173693,results/tuning/T1/lopo/tft/inner_scores.csv/rows 2+
+T2,time_only,persistence,0.7749082377414933,results/tuning/T2/lopo/persistence/inner_scores.csv/rows 2+
+T2,time_only,linear,0.38114685276721627,results/tuning/T2/lopo/linear/inner_scores.csv/rows 2+
+T2,time_only,sgr,0.7077658897960094,results/tuning/T2/lopo/sgr/inner_scores.csv/rows 2+
+T2,time_only,anchored_gc,0.2762757638228342,results/tuning/T2/lopo/anchored_gc/inner_scores.csv/rows 2+
+T2,time_only,cohort_growth,0.2761416378482781,results/tuning/T2/lopo/cohort_growth/inner_scores.csv/rows 2+
+T2,time_only,ridge_pw,0.25095760424449454,results/tuning/T2/lopo/ridge_pw/inner_scores.csv/rows 2+
+T2,time_only,gbm_pw,0.25214762612647795,results/tuning/T2/lopo/gbm_pw/inner_scores.csv/rows 2+
+T2,deep,lstm,0.24303938324874183,results/tuning/T2/lopo/lstm/inner_scores.csv/rows 2+
+T2,deep,gru,0.24532529126182942,results/tuning/T2/lopo/gru/inner_scores.csv/rows 2+
+T2,deep,cnn_lstm,0.22108227948570752,results/tuning/T2/lopo/cnn_lstm/inner_scores.csv/rows 2+
+T2,deep,tft,0.23856691997363075,results/tuning/T2/lopo/tft/inner_scores.csv/rows 2+

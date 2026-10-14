@@ -1,0 +1,45 @@
+Re-check artifact evidence
+Checked UTC: 2026-10-14T21:20:23+00:00
+HEAD at independent-check start: fe56d051e58c0de7f7afaf9a54c61031f3d9c513
+HEAD at final Git check: 8090392d4b8185e4b429b39ab7da98d90e902df9
+Frozen plan commit: 91b38b99494313ed4b1e6eb570bcdf0e41ab0639
+git diff HEAD -- results/predictions results/metrics results/stats src configs
+exit 0; stdout empty
+git status --short --untracked-files=all -- results/predictions results/metrics results/stats src configs
+exit 0; stdout empty
+git diff analysis-plan-frozen HEAD -- ANALYSIS_PLAN.md src configs data/processed uv.lock
+exit 0; stdout empty
+Tracked files in the five protected directories: 113
+Protected files matched to prior input_manifest.csv SHA-256 values: 113; all match
+Protected files checked before/after this re-check, including ignored bytecode: 137; path sets and SHA-256 values identical
+Ignored files under those paths: 24; all are existing .pyc caches, with identical before/after hashes
+Resolution input files checked before/after: 25; all SHA-256 values identical
+Copied reporting/stopped_runs.py and its complete inputs with shutil.copy2; no symlinks back to results/
+Command: nice -n 19 .venv/bin/python -I -B /tmp/leakcheck/lead-recheck.v4fev61y/reporting/stopped_runs.py
+cwd: /home/dev/development/publications
+Exit code: 0
+stdout: 3 stopped runs -> results/logs/stopped_runs.csv
+Actual output path: /tmp/leakcheck/lead-recheck.v4fev61y/results/logs/stopped_runs.csv
+Copied output is byte-for-byte identical to results/logs/stopped_runs.csv
+stopped_runs.csv SHA-256: 0bd361c012ef8c4364e20ae33226e0f2161ec0b3c480e83d547fa971b0432b99
+CSV columns, status, errors, attempts, timestamps, fold lists and post hoc paths checked independently from logs and filesystem
+T1 lopo ridge_time_wq_w28: autopilot stop line 15, timestamp 2026-10-14T18:17:22Z; ERROR lines 154,198,204,501; 4 attempts; completeness.csv row 44
+  Fold files: 5; unchanged from prior stopped_runs.csv and input_manifest.csv; fold00;fold01;fold04;fold05;fold07
+  Main aggregate absent; main permutation CSV/JSON absent; no metric/statistic score or comparison row for the stopped LOPO run
+  Post hoc path exists: results/posthoc/ridge_candidate_loses/predictions/T1/lopo/ridge_time_wq_w28.csv
+T2 lopo ridge_pw_wq: autopilot stop line 16, timestamp 2026-10-14T18:18:08Z; ERROR lines 269,274,523; 3 attempts; completeness.csv row 62
+  Fold files: 5; unchanged from prior stopped_runs.csv and input_manifest.csv; fold00;fold01;fold04;fold05;fold07
+  Main aggregate absent; main permutation CSV/JSON absent; no metric/statistic score or comparison row for the stopped LOPO run
+  Post hoc path exists: results/posthoc/ridge_candidate_loses/predictions/T2/lopo/ridge_pw_wq.csv
+T2 lopo ridge_pw_wq_noind: autopilot stop line 17, timestamp 2026-10-14T18:18:45Z; ERROR lines 323,329,540; 3 attempts; completeness.csv row 76
+  Fold files: 5; unchanged from prior stopped_runs.csv and input_manifest.csv; fold00;fold01;fold04;fold05;fold07
+  Main aggregate absent; main permutation CSV/JSON absent; no metric/statistic score or comparison row for the stopped LOPO run
+  Post hoc path exists: results/posthoc/ridge_candidate_loses/predictions/T2/lopo/ridge_pw_wq_noind.csv
+Total retained unscored fold prediction files: 15
+run_all.sh:111 executes src/evaluate.py, then reporting/stopped_runs.py; set -euo pipefail at line 14
+src/evaluate.py:195 scans results/predictions/*/*/*.csv only; results/tuning fold files are excluded
+Diagnostic source read: common.py and every step1 through step7 script; no diagnostic training was rerun
+Diagnostic fits/predictions select inner.train_idx and inner.val_idx; step4_verify.py:23-29 surveys eligible-cohort sensor features by pond without weights or model calls
+Finding 1 task-location condition remains unmet: results/metrics/completeness.csv still has has_predictions=False only, rows 44,62,76
+Finding 2 literal no-file condition remains unmet; frozen plan 9.0,11,12(c) does not require removing unscored intermediate fold predictions
+Only /tmp/leakcheck scratch was written during the executable check; this evidence file is under verification/codex_leakage

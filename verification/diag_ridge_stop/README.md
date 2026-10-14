@@ -2,7 +2,10 @@
 
 Read-only reproduction with the repository's own learners (`Context.learner`, `RidgeModel`)
 and `predict_checked`, on the inner splits of the T1 and T2 ridge models with water quality.
-No outer-test row was used. The scripts were written for `/tmp/diag_w28/` and run from the
+Every fit and prediction used inner splits only; no outer-test prediction or error was
+computed. Step 4 (b) also lists the raw dissolved-oxygen window values by pond over all eligible
+cohort rows (features only, no weights), which includes rows that are outer-test rows in some
+fold (wording corrected after the Codex leakage check, finding 3). The scripts were written for `/tmp/diag_w28/` and run from the
 repository root with `.venv/bin/python -I`; their outputs are the `step*_out.txt` files and
 the two `*_zmax_by_column.csv` tables.
 

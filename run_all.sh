@@ -108,7 +108,7 @@ stage_permute() {  # tabular models, then the primary deep model of each task
   done
 }
 
-stage_evaluate() { "${PY[@]}" src/evaluate.py; }
+stage_evaluate() { "${PY[@]}" src/evaluate.py; "${PY[@]}" reporting/stopped_runs.py; }  # plan 9.0 stops indexed in results/metrics/stopped_runs.csv
 
 stage_posthoc() {  # D-003: the ridge runs stopped under plan 9.0, re-tuned post hoc (Supplementary)
   "${PY[@]}" posthoc/ridge_variant.py run --task T1 --scheme lopo --model ridge_time_wq_w28
