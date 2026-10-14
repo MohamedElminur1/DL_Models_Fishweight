@@ -99,6 +99,10 @@ stage_permute() {  # tabular models, then the primary deep model of each task
   local task model
   for task in T1 T2; do
     for model in $(perm_models "$task") "$(primary_deep "$task")"; do
+      if [ ! -f "results/predictions/$task/lopo/$model.csv" ]; then  # stopped under plan 9.0
+        echo "no predictions for $task $model (stopped on a non-finite prediction, plan 9.0): permutation test not run" >&2
+        continue
+      fi
       "${PY[@]}" src/permute.py --task "$task" --model "$model" --workers "$WORKERS"
     done
   done
