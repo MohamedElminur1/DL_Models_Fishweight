@@ -7,7 +7,7 @@ from phase4 import (horizon_name, model_name, number, result_table, setup, write
 
 
 def main() -> None:
-    result_table('sensitivity','lopo','eligible',('sensitivity',))
+    result_table('sensitivity','lopo','eligible',('sensitivity',),compact=True)
     sources,cfg=setup()
     saved=sources.csv('results/stats/merged_units.csv')
     rows=[]

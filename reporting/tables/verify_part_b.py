@@ -27,9 +27,9 @@ PROBES = {
     'permutation': ['Observed S', 'Permuted S ≤ observed', 'Permutation p'],
     'inner_selection': ['Outer folds', 'Mean inner-validation S', 'Selection'],
     'chosen_hyperparameters': ['Chosen trial', 'Held-out pond', 'Chosen value'],
-    'calendar_holdout': ['S', 'MAE (g)', 'Ponds with lower S'],
-    'all_events': ['S', 'MAE (g)', 'Ponds with lower S'],
-    'sensitivity': ['S', 'MAE (g)', 'Ponds with lower S'],
+    'calendar_holdout': ['S', 'MAE (g)', 'Ponds below the primary baseline (of N)'],
+    'all_events': ['S', 'MAE (g)', 'Ponds below the primary baseline (of 8)'],
+    'sensitivity': ['S', 'MAE (g)', 'Ponds below the primary baseline (of 7)'],
     'sensitivity_merged_units': ['S model', 'T+', 'Exact one-sided p'],
     'sensitivity_influence': ['S model', 'S comparator', 'S difference'],
     'per_pond': ['S', 'MAE (g)', 'MAPE (%)'],
@@ -37,9 +37,13 @@ PROBES = {
     'posthoc_ridge': ['Post hoc S', 'Frozen S', 'Post hoc permutation p'],
     'posthoc_ridge_alphas': ['Outer fold', 'Held-out pond', 'Chosen alpha'],
     'posthoc_ridge_agreement': ['Codex alpha', 'Max absolute log-prediction difference', 'Max absolute weight difference (g)'],
+    'sensor_qc': ['Pond', 'Sensor', 'Unit as labelled', 'Readings after duplicate removal',
+                  'Missing raw readings', 'Non-finite readings', 'Out-of-range readings',
+                  'Flat-line readings', 'Valid readings', 'Duplicate rows dropped',
+                  'Sensor-days', 'Observed sensor-days', 'Interpolated sensor-days', 'Missing sensor-days'],
 }
 GENERATORS = ('main_results', 'confirmatory', 'inner_selection', 'chosen_hyperparameters',
-              'calendar_holdout', 'all_events', 'sensitivity', 'per_pond', 'runtimes', 'posthoc_ridge')
+              'calendar_holdout', 'all_events', 'sensitivity', 'per_pond', 'runtimes', 'posthoc_ridge', 'sensor_qc')
 
 
 def run_check(directory: Path) -> tuple[int, str]:
@@ -85,11 +89,27 @@ def main() -> None:
                 if status == 0 or 'FAIL:' not in output:
                     raise ValueError(f'checker accepted {name} {column}')
                 failures += 1
-            print(f'PASS: {name}, all three corruptions rejected', flush=True)
+            print(f'PASS: {name}, all {len(columns)} column corruptions rejected', flush=True)
         status, output = run_check(directory)
         if status:
             raise ValueError(output)
         print(f'PASS: {failures} mismatches rejected; restored copies pass', flush=True)
+        for name, old, new in (
+            ('calendar_holdout', '(of N)', '(of 7)'),
+            ('all_events', '(of 8)', '(of 7)'),
+            ('sensitivity', '(of 7)', '(of 8)'),
+            ('sensor_qc', 'Sensor-days,', 'Days,',),
+        ):
+            path = directory / f'{name}.csv'
+            original = path.read_text(encoding='utf-8')
+            if old not in original:
+                raise ValueError(f'missing header probe: {name} {old}')
+            path.write_text(original.replace(old, new, 1), encoding='utf-8')
+            status, output = run_check(directory)
+            path.write_text(original, encoding='utf-8')
+            if status == 0 or 'FAIL:' not in output:
+                raise ValueError(f'checker accepted {name} incorrect header')
+            failures += 1
         revisions = [
             ('permutation', 'Status', 'Descriptive permutation test'),
             ('main_results', 'R^{2}', 'CORRUPTED large-value markup'),
@@ -122,6 +142,29 @@ def main() -> None:
             ('main_results_full', 'listed without predictions in results/metrics/completeness.csv', 'absent in results/metrics/completeness.csv'),
             ('permutation', 'outside the confirmatory sequence', 'inside the confirmatory sequence'),
         ]
+        for name, ponds in (('calendar_holdout', '4 ponds'), ('all_events', '8 ponds'), ('sensitivity', '7 ponds')):
+            footers.extend((name, old, new) for old, new in (
+                ('primary baseline', 'CORRUPTED baseline'), (ponds, '99 ponds'),
+                ('samples.', 'CORRUPTED samples.'), ('over five seeds.', 'over four seeds.')))
+        footers.extend([
+            ('calendar_holdout', 'N = 7 scored ponds', 'N = 4 scored ponds'),
+            ('calendar_holdout', 'N = 4 scored ponds', 'N = 7 scored ponds'),
+            ('sensor_qc', 'temperature 10 to 40', 'temperature 0 to 45'),
+            ('sensor_qc', 'turbidity 0 to 100', 'turbidity 0 to 1000'),
+            ('sensor_qc', 'pH 0 to 14', 'pH 1 to 14'),
+            ('sensor_qc', 'dissolved oxygen > 0 and ≤ 20', 'dissolved oxygen ≥ 0 and ≤ 20'),
+            ('sensor_qc', 'ammonia > 0 and ≤ 500', 'ammonia > 0 and ≤ 1000'),
+            ('sensor_qc', 'nitrate > 0', 'nitrate ≥ 0'),
+            ('sensor_qc', 'at least 24 h', 'at least 12 h'),
+            ('sensor_qc', 'more than 1 h', 'more than 2 h'),
+            ('sensor_qc', 'at least 12 distinct clock hours', 'at least 6 distinct clock hours'),
+            ('sensor_qc', 'at most 2 missing days', 'at most 3 missing days'),
+            ('sensor_qc', 'with observed days on both sides', 'with an observed day on one side'),
+            ('sensor_qc', 'Every interpolated sensor-day is counted here', 'Only some interpolated sensor-days are counted here'),
+            ('sensor_qc', 'Total interpolated sensor-days:', 'CORRUPTED total:'),
+            ('sensor_qc', 'without conversion', 'after conversion'),
+            ('sensor_qc', '2021-05-22 to 2022-01-29', '2021-06-19 to 2022-01-29'),
+        ])
         for name in ('main_results', 'main_results_full', 'calendar_holdout', 'sensitivity', 'per_pond'):
             footers.append((name, 'example -4.3 × 10^{5}', 'example −4.3 × 10^{5}'))
         for name, old, new in footers:

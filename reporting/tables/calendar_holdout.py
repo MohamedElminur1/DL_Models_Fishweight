@@ -5,4 +5,4 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from phase4 import GROUPS, result_table
 if __name__ == '__main__':
-    result_table('calendar_holdout', 'chrono', 'eligible', GROUPS[:-1])
+    result_table('calendar_holdout', 'chrono', 'eligible', GROUPS[:-1], compact=True)

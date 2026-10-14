@@ -2,12 +2,14 @@
 
 from collections import defaultdict
 from decimal import Decimal
+from datetime import date, timedelta
 import csv
 import json
 import math
 from pathlib import Path
 import statistics
 import sys
+import yaml
 
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[2]
@@ -15,7 +17,7 @@ sys.path.insert(0, str(ROOT / 'reporting'))
 from names import GROUP_NAMES, MODEL_NAMES, horizon_name, SCHEME_NAMES, SAMPLE_SET_NAMES, TASK_NAMES
 
 NAMES = ('main_results','main_results_full','confirmatory','permutation','inner_selection','chosen_hyperparameters','calendar_holdout','all_events',
-         'sensitivity','sensitivity_merged_units','sensitivity_influence','per_pond','runtimes','posthoc_ridge','posthoc_ridge_alphas','posthoc_ridge_agreement')
+         'sensitivity','sensitivity_merged_units','sensitivity_influence','per_pond','runtimes','posthoc_ridge','posthoc_ridge_alphas','posthoc_ridge_agreement','sensor_qc')
 ORDER = ('time_only','water_quality','reference','deep','static_only','sensitivity')
 STOP='stopped (plan 9.0)'
 DASH='–'
@@ -118,9 +120,63 @@ def model_rows(cfg: dict,task: str,groups: tuple[str, ...]=ORDER) -> list[tuple[
     return [(g,m) for g in groups for m in cfg['models'][task][g]]
 
 
+def check_sensor_qc(directory: Path, rows: list[dict[str,str]], cfg: dict) -> None:
+    """Compare every pond, sensor, labelled unit and count with the saved QC inputs."""
+    headers=['Pond','Sensor','Unit as labelled','Readings after duplicate removal','Missing raw readings',
+             'Non-finite readings','Out-of-range readings','Flat-line readings','Valid readings',
+             'Duplicate rows dropped','Sensor-days','Observed sensor-days','Interpolated sensor-days','Missing sensor-days']
+    if list(rows[0])!=headers:
+        raise ValueError('sensor_qc: incorrect columns')
+    qc=read(ROOT/'results/qc/qc_counts.csv')
+    daily=read(ROOT/'results/qc/interpolation_counts.csv')
+    schema=read(ROOT/'results/audit/schema.csv')
+    identities=[(str(p),s) for p in cfg['design']['cohort'] for s in cfg['design']['sensors']]
+    if len(qc)!=len(identities) or len(daily)!=len(identities):
+        raise ValueError('sensor_qc: incorrect source pond/sensor row count')
+    if len(rows)!=len(identities):
+        raise ValueError('sensor_qc: incorrect pond/sensor row count')
+    for out,(pond,sensor) in zip(rows,identities):
+        counts=one(qc,pond=pond,sensor=sensor)
+        days=one(daily,pond=pond,sensor=sensor)
+        label=one(schema,pond=pond,canonical_name='ammonia' if sensor=='ammonia_log10' else sensor)
+        sensor_name=label['original_name'].partition('(')[0].strip()
+        sensor_name='pH' if sensor_name.upper()=='PH' else sensor_name.capitalize()
+        expected=[pond,sensor_name,label['unit_as_labelled'] or DASH]
+        expected += [counts[k] for k in ('n_values','n_missing_raw','n_nonfinite','n_out_of_range','n_flatline','n_valid','n_duplicate_rows_dropped')]
+        expected += [days[k] for k in ('n_days','n_observed','n_interpolated','n_missing')]
+        cells(out,dict(zip(headers,expected)),f'sensor_qc pond {pond} {sensor}')
+        values=[int(v) for v in expected[3:]]
+        if any(v<0 for v in values) or values[0]!=sum(values[1:6]) or values[7]!=sum(values[8:]):
+            raise ValueError('sensor_qc: source counts do not balance')
+    data_cfg=yaml.safe_load((ROOT/'configs/phase4_data.yaml').read_text(encoding='utf-8'))
+    end=date.fromisoformat(data_cfg['cohort']['day0'])+timedelta(days=data_cfg['cohort']['grid']['period_days']*data_cfg['cohort']['grid']['k_last'])
+    sidecar(directory,'sensor_qc',{'configs/phase4_data.yaml','ANALYSIS_PLAN.md','results/audit/schema.csv',
+            'results/qc/qc_counts.csv','results/qc/interpolation_counts.csv'},(
+            'Supplementary sensor quality control',
+            'Values count timestamped raw readings after exact duplicate rows are dropped',
+            'Missing raw readings are empty or NaN', 'Non-finite readings are positive or negative infinity',
+            'non-finite, out of range, then flat-line', 'Valid readings pass all rules',
+            'duplicate count is repeated for each sensor of a pond and must not be summed across sensors',
+            'temperature 10 to 40;', 'turbidity 0 to 100;', 'pH 0 to 14;',
+            'dissolved oxygen > 0 and ≤ 20;', 'ammonia > 0 and ≤ 500;', 'nitrate > 0.',
+            'identical consecutive finite raw values spanning at least 24 h',
+            'missing or non-finite value or a logging gap of more than 1 h ends a run',
+            'valid readings in at least 12 distinct clock hours',
+            f"full padded daily grid, {data_cfg['daily']['first_date']} to {end.isoformat()}, inclusive",
+            'linearly interpolated only inside runs of at most 2 missing days with observed days on both sides',
+            'Missing sensor-days have neither an observed nor an interpolated value',
+            'Every interpolated sensor-day is counted here',
+            f"Total interpolated sensor-days: {sum(int(r['n_interpolated']) for r in daily)}.",
+            'Units are reproduced as labelled in the source, without conversion',
+            'ANALYSIS_PLAN.md sections 2.5 to 2.7',))
+
+
 def check(directory: Path,cfg: dict) -> None:
     """Check all data cells in most panels, with independent seed and pond aggregation."""
     tables={}
+    for name in ('calendar_holdout','all_events','sensitivity'):
+        if any((directory/f'{name}_full{suffix}').exists() for suffix in ('.csv','.source.txt')):
+            raise ValueError(f'{name}: full version is outside revision 3')
     for name in NAMES:
         path=directory/f'{name}.csv'
         with path.open(encoding='utf-8',newline='') as handle:
@@ -161,18 +217,23 @@ def check(directory: Path,cfg: dict) -> None:
     bootstrap=saved('results/stats/bootstrap_S.csv')
     for name,scheme,sample_set,groups in [('main_results','lopo','eligible',ORDER[:-1]),('main_results_full','lopo','eligible',ORDER),('calendar_holdout','chrono','eligible',ORDER[:-1]),
                                           ('all_events','lopo','all',('all_sample_set',)),('sensitivity','lopo','eligible',('sensitivity',))]:
-        compact=name=='main_results'
+        compact=name!='main_results_full'
         full_header=['Task / horizon','Group','Model','Primary baseline','Ponds','Samples','Seeds','S','S bootstrap 95 % interval',
                      'MAE (g)','RMSE (g)','MAPE (%)','R^{2}','Ponds with lower S','SD across ponds of S','SD across ponds of MAE (g)']
         expected_header=[c for c in full_header if c not in ('Primary baseline','Ponds','Samples','Seeds','SD across ponds of S','SD across ponds of MAE (g)')]
-        expected_header[-1]='Ponds below the primary baseline (of 7)'
-        if list(tables[name][0])!=(expected_header if compact else full_header):
-            raise ValueError(f'{name}: incorrect result columns')
         expected=[]
         for task in ('T1','T2'):
             for h in ([0] if task=='T1' else [1,2]):
                 for group,model in model_rows(cfg,task,groups):
                     expected.append((task,h,group,model))
+        panels=list(dict.fromkeys((task,h) for task,h,_,_ in expected))
+        denominators={len(get(perpond,task=t,horizon=h,scheme=scheme,sample_set=sample_set,
+                              model=primary[t]['primary_baseline'])) for t,h in panels}
+        denominator=str(next(iter(denominators))) if len(denominators)==1 else 'N'
+        comparison=f'Ponds below the primary baseline (of {denominator})'
+        expected_header[-1]=comparison
+        if list(tables[name][0])!=(expected_header if compact else full_header):
+            raise ValueError(f'{name}: incorrect result columns')
         if len(tables[name])!=len(expected):
             raise ValueError(f'{name}: incomplete model rows')
         for out,(task,h,group,model) in zip(tables[name],expected):
@@ -197,13 +258,15 @@ def check(directory: Path,cfg: dict) -> None:
                 raise ValueError(f'{name}: incomplete seeds')
             seed_s=[statistics.mean(byseed[str(seed)]) for seed in seeds]
             base={r['pond']:float(r['S']) for r in get(perpond,**(criteria|{'model':baseline}))}
+            if {r['pond'] for r in pond_rows}!=set(base):
+                raise ValueError(f'{name}: model and baseline have different scored ponds')
             count=sum(float(r['S'])<base[r['pond']] for r in pond_rows)
             interval=DASH
             if scheme=='lopo' and sample_set=='eligible':
                 b=one(bootstrap,task=task,horizon=h,model=model)
                 interval=f"{fmt(b['ci_low'],'s')} to {fmt(b['ci_high'],'s')}"
             wanted={'S':seed_metric(seed_s,'s'),'S bootstrap 95 % interval':interval,
-                    'Ponds below the primary baseline (of 7)' if compact else 'Ponds with lower S':str(count)}
+                    comparison if compact else 'Ponds with lower S':str(count)}
             if not compact:
                 wanted.update({'Ponds':str(len(pond_rows)),'Samples':str(sum(int(r['n']) for r in pond_rows)),'Seeds':str(len(seeds)),
                                'SD across ponds of S':fmt(statistics.stdev(float(r['S']) for r in pond_rows),'s'),
@@ -216,14 +279,15 @@ def check(directory: Path,cfg: dict) -> None:
             files.add('results/stats/bootstrap_S.csv')
         required=('Supplementary',) if name=='main_results_full' else ('Descriptive',) if name!='main_results' else ('stopped (plan 9.0)', 'Deep models and the static MLP show mean ± SD over five seeds.')
         if compact:
-            for task in ('T1','T2'):
-                for h in ([0] if task=='T1' else [1,2]):
-                    baseline=primary[task]['primary_baseline']
-                    pp=get(perpond,task=task,horizon=h,scheme=scheme,sample_set=sample_set,model=baseline)
-                    if len(pp)!=7:
-                        raise ValueError('main_results: denominator is not seven ponds')
-                    required+=(f'{horizon_name(task,h)}: primary baseline {MODEL_NAMES[baseline]}; {len(pp)} ponds; {sum(int(r["n"]) for r in pp)} samples.',)
+            required+=('Deep models and the static MLP show mean ± SD over five seeds.',)
+            for task,h in panels:
+                baseline=primary[task]['primary_baseline']
+                pp=get(perpond,task=task,horizon=h,scheme=scheme,sample_set=sample_set,model=baseline)
+                required+=(f'{horizon_name(task,h)}: primary baseline {MODEL_NAMES[baseline]}; {len(pp)} ponds; {sum(int(r["n"]) for r in pp)} samples.',)
+                if denominator=='N':
+                    required+=(f'{horizon_name(task,h)}: N = {len(pp)} scored ponds.',)
         sidecar(directory,name,files,required)
+    check_sensor_qc(directory,tables['sensor_qc'],cfg)
     confirm=saved('results/stats/confirmatory.csv')
     if [(r['task'],int(r['horizon'])) for r in confirm]!=[tuple(pair) for pair in cfg['evaluate']['confirmatory_sequence']] or len(tables['confirmatory'])!=len(confirm):
         raise ValueError('confirmatory: wrong sequence')

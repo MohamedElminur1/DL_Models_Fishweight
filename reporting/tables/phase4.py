@@ -93,10 +93,14 @@ def result_table(name: str, scheme: str, sample_set: str, groups: tuple[str, ...
     stopped = stops(sources)
     boot = sources.csv("results/stats/bootstrap_S.csv") if scheme == "lopo" and sample_set == "eligible" else []
     rows, notes = [], []
+    panels = {}
     shown_stops = set()
     for task in ("T1", "T2"):
         for h in horizons(task):
             entries = models(cfg, task, groups) if sample_set == "eligible" else (("all_sample_set", m) for m in cfg['models'][task]['all_sample_set'])
+            entries = list(entries)
+            if entries:
+                panels[task, h] = unique(scores, task=task, horizon=h, model=primary[task]['primary_baseline'], scheme=scheme, sample_set=sample_set)
             for group, model in entries:
                 baseline = primary[task]["primary_baseline"]
                 identity = [horizon_name(task, h), group_name(group), model_name(model), model_name(baseline)]
@@ -129,17 +133,17 @@ def result_table(name: str, scheme: str, sample_set: str, groups: tuple[str, ...
     if compact:
         kept = [0, 1, 2, 7, 8, 9, 10, 11, 12, 13]
         header = [RESULT_HEADER[i] for i in kept]
-        comparison = "Ponds below the primary baseline (of 7)"
+        denominators = {score['n_ponds'] for score in panels.values()}
+        denominator = next(iter(denominators)) if len(denominators) == 1 else 'N'
+        comparison = f"Ponds below the primary baseline (of {denominator})"
         header[-1] = comparison
         rows = [[row[i] for i in kept] for row in rows]
         seed_note = "Deep models and the static MLP show mean ± SD over five seeds. SD uses the mean's decimal precision."
-        for task in ('T1', 'T2'):
+        for (task, h), score in panels.items():
             baseline = primary[task]['primary_baseline']
-            for h in horizons(task):
-                score = unique(scores, task=task, horizon=h, model=baseline, scheme=scheme, sample_set=sample_set)
-                if int(score['n_ponds']) != 7:
-                    raise ValueError('compact table requires seven ponds')
-                notes.append(f"{horizon_name(task,h)}: primary baseline {model_name(baseline)}; {score['n_ponds']} ponds; {score['n_samples']} samples.")
+            notes.append(f"{horizon_name(task,h)}: primary baseline {model_name(baseline)}; {score['n_ponds']} ponds; {score['n_samples']} samples.")
+            if denominator == 'N':
+                notes.append(f"{horizon_name(task,h)}: N = {score['n_ponds']} scored ponds.")
     write_table(name, header, rows, sources, [
         f"Title: {name.replace('_', ' ')}; {SCHEME_NAMES[scheme]}, {SAMPLE_SET_NAMES[sample_set]}." + (description if main else " Descriptive only.") + (" Supplementary." if name == 'main_results_full' else ""),
         "S is the mean of per-pond absolute log errors. Pooled metrics use every test sample. " + seed_note,
