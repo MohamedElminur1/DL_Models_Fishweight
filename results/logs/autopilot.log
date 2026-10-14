@@ -24,3 +24,8 @@ agree: verification/codex_p4models/COMPARISON.md
 2026-10-14T18:21:18Z	start select
 T1: primary baseline cohort_mean, primary deep model lstm -> /home/dev/development/publications/results/selection/primary_T1.json
 T2: primary baseline ridge_pw, primary deep model cnn_lstm -> /home/dev/development/publications/results/selection/primary_T2.json
+== select
+T1: primary baseline cohort_mean, primary deep model lstm -> /home/dev/development/publications/results/selection/primary_T1.json
+T2: primary baseline ridge_pw, primary deep model cnn_lstm -> /home/dev/development/publications/results/selection/primary_T2.json
+2026-10-14T18:21:19Z	DONE select
+2026-10-14T18:21:19Z	start permute

@@ -5362,3 +5362,13 @@ T2,chrono,mlp_static,0,final,4.0,4.0,0.0143,AMD EPYC 7B12,3.12.3,2.14.1+cpu,n_no
 T1,lopo,ridge_time_wq_w28,,error,,,0.0,AMD EPYC 7B12,3.12.3,2.14.1+cpu,T1 lopo ridge_time_wq_w28: 1 of 10 predictions are not finite (inner split 1); the run of this model stops and nothing is replaced
 T2,lopo,ridge_pw_wq,,error,,,0.0,AMD EPYC 7B12,3.12.3,2.14.1+cpu,T2 lopo ridge_pw_wq: 1 of 15 predictions are not finite (inner split 1); the run of this model stops and nothing is replaced
 T2,lopo,ridge_pw_wq_noind,,error,,,0.0,AMD EPYC 7B12,3.12.3,2.14.1+cpu,T2 lopo ridge_pw_wq_noind: 1 of 15 predictions are not finite (inner split 1); the run of this model stops and nothing is replaced
+T1,permutation,ridge_time_wq,,check,0,,0.07,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,permutation,ridge_time_wq,,permutation,R=999,,108.198,AMD EPYC 7B12,3.12.3,2.14.1+cpu,workers=4; mean_seconds_per_permutation=0.108
+T1,permutation,gbm_time_wq,,check,0,,1.661,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,permutation,gbm_time_wq,,permutation,R=999,,1779.9949,AMD EPYC 7B12,3.12.3,2.14.1+cpu,workers=4; mean_seconds_per_permutation=1.782
+T1,permutation,lstm,,check,0,,3.773,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T1,permutation,lstm,,permutation,R=199,,1324.4855,AMD EPYC 7B12,3.12.3,2.14.1+cpu,workers=4; mean_seconds_per_permutation=6.656
+T2,permutation,gbm_pw_wq,,check,0,,0.701,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,permutation,gbm_pw_wq,,permutation,R=999,,1130.6326,AMD EPYC 7B12,3.12.3,2.14.1+cpu,workers=4; mean_seconds_per_permutation=1.132
+T2,permutation,cnn_lstm,,check,0,,2.449,AMD EPYC 7B12,3.12.3,2.14.1+cpu,
+T2,permutation,cnn_lstm,,permutation,R=199,,853.8564,AMD EPYC 7B12,3.12.3,2.14.1+cpu,workers=4; mean_seconds_per_permutation=4.291

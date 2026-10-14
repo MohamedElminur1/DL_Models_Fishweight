@@ -1,0 +1,33 @@
+{
+  "R": 199,
+  "complete": true,
+  "fit_seed": 0,
+  "guard": {
+    "commit": "91b38b99494313ed4b1e6eb570bcdf0e41ab0639",
+    "matched_commit": "91b38b99494313ed4b1e6eb570bcdf0e41ab0639",
+    "matched_tag": "analysis-plan-frozen",
+    "plan_sha256": "fc544640011609d39cb9b6e3aa8d9f79584d053eb7a47ecaf5182f6a3f8f7a3e",
+    "tag": "analysis-plan-frozen"
+  },
+  "hash": "4b8c8eab7faeb55eeb6cbe62560a18aa1b8a29615ce37f4d273af6da020ab969",
+  "kind": "deep",
+  "model": "lstm",
+  "n_dates": 7,
+  "n_dates_unchanged": 0,
+  "n_rows_changed": 35,
+  "observed_check": {
+    "n_predictions": 35,
+    "observed_S": 0.2923079997702926,
+    "observed_seed": 0,
+    "seconds": 3.773
+  },
+  "processes": [
+    1683339,
+    1683342,
+    1683343,
+    1683344
+  ],
+  "seed": 20261014,
+  "statistic": "S",
+  "task": "T1"
+}
