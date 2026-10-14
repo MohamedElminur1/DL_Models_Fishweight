@@ -38,7 +38,7 @@ def main() -> None:
             notes.append(f"{horizon_name(r['task'],int(r['horizon']))}, {SCHEME_NAMES[r['scheme']]}, {model_name(model)}, pond {r['pond']}: {int(float(r['n_nonpositive']))} non-positive predictions.")
     write_table('per_pond',['Task / horizon','Evaluation','Sample set','Group','Model','Pond','Samples','Seeds','S','MAE (g)','MAPE (%)'],rows,sources,[
         'Title: Per-pond S, MAE and MAPE, plan 9.1. Each individual horizon and every saved model is retained. Eligible LOPO, descriptive calendar hold-out and descriptive all-events sets are separate. Combined T2 horizons are not duplicated.',
-        'Means come from per_pond.csv; sample SDs over five seeds are independently calculated from per_pond_seed.csv. Seed SDs match mean precision. Stopped models have no pond-level metrics and are listed below, not assigned fabricated pond scores.',*stop_notes(stopped),*notes,
+        'Means come from per_pond.csv; sample SDs over five seeds are independently calculated from per_pond_seed.csv. Seed SDs match mean precision. Stopped models have no pond-level metrics.',*notes,
     ])
 
 if __name__ == '__main__':

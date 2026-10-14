@@ -3,7 +3,7 @@ from pathlib import Path
 import sys
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from phase4 import (MISSING, horizon_name, model_name, number, selections, setup, stops, stop_notes, unique, write_table)
+from phase4 import (MISSING, STOP, horizon_name, model_name, number, selections, setup, stops, stop_notes, unique, write_table)
 
 
 def main() -> None:
@@ -23,13 +23,15 @@ def main() -> None:
     saved = sources.csv('results/stats/permutation.csv')
     primary = selections(sources)
     stopped = stops(sources)
+    shown_stops = set()
     rows = []
     for task in ('T1','T2'):
         for model in [*cfg['permutation']['tabular_models'][task], primary[task]['primary_deep']]:
             h = 0 if task=='T1' else 1
             prefix = [horizon_name(task,h), model_name(model)]
             if (task,model) in stopped:
-                rows.append(prefix + [MISSING]*5 + ['No test: stopped (plan 9.0)'])
+                rows.append(prefix + [MISSING, STOP] + [MISSING]*4)
+                shown_stops.add((task,model))
             else:
                 r = unique(saved,task=task,model=model)
                 rows.append(prefix+[r['seed'],number(r['S_obs'],'s'),r['R'],r['n_perm_le_obs'],number(r['p'],'p'),MISSING])
@@ -37,7 +39,7 @@ def main() -> None:
         'Title: Within-date water-quality permutation tests, plan 8.2; companion to Table 5. T2 uses the 14-day horizon; deep models use seed 0 for observed and permuted fits.',
         'Permutation tests of plan 8.2, outside the confirmatory sequence of plan 9.5 (no multiplicity adjustment); p = (1 + number of permuted S at or below the observed S) / (R + 1).',
         'Tuned hyperparameters are fixed. T2 Ridge (past weights + WQ) has no test because its frozen run stopped under plan 9.0. Post hoc results are excluded.',
-        *stop_notes(stopped),
+        *stop_notes(shown_stops),
     ])
 
 if __name__ == '__main__':

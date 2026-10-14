@@ -55,7 +55,7 @@ def fmt(value, kind: str, places: int | None = None) -> str:
     if kind in ('grams','percent','r2') and abs(n)>=10000:
         rounded=Decimal(format(n,'.2g'))
         exponent=rounded.copy_abs().adjusted()
-        coefficient=format(rounded.scaleb(-exponent),'.1f').replace('-','−')
+        coefficient=format(rounded.scaleb(-exponent),'.1f')
         return f'{coefficient} × 10^{{{exponent}}}'
     decimals=places if places is not None else 3 if kind in ('s','r2') else 1 if kind=='percent' or abs(n)<100 else 0
     return format(n,f'.{decimals}f')
@@ -94,8 +94,24 @@ def sidecar(directory: Path,name: str,files: set[str],required: tuple[str,...]=(
         raise ValueError(f'{name}: incorrect completeness wording')
     if 'results/metrics/completeness.csv' in footer and 'listed without predictions in results/metrics/completeness.csv' not in footer:
         raise ValueError(f'{name}: missing completeness wording')
-    if ' × 10^{' in (directory/f'{name}.csv').read_text(encoding='utf-8') and 'two significant digits in builder markup' not in footer:
-        raise ValueError(f'{name}: missing large-value precision note')
+    if ' × 10^{' in (directory/f'{name}.csv').read_text(encoding='utf-8'):
+        if 'two significant digits in builder markup, for example -4.3 × 10^{5}.' not in footer:
+            raise ValueError(f'{name}: missing large-value precision note or ASCII minus example')
+
+
+def check_stop_notes(directory: Path, name: str, rows: list[dict[str,str]], stopped: set[tuple[str,str]]) -> None:
+    """Require a stop note exactly when the corresponding stopped run has a row."""
+    footer=(directory/f'{name}.source.txt').read_text(encoding='utf-8').split('\nFooter / definitions / limitations:\n',1)[1]
+    expected={f'{TASK_NAMES[task]}, {MODEL_NAMES[model]}' for task,model in stopped
+              if any(row.get('Model')==MODEL_NAMES[model]
+                     and row.get('Task',row.get('Task / horizon','')).startswith(task)
+                     and row.get('Evaluation',SCHEME_NAMES['lopo'])==SCHEME_NAMES['lopo']
+                     and row.get('Sample set',SAMPLE_SET_NAMES['eligible'])==SAMPLE_SET_NAMES['eligible']
+                     for row in rows)}
+    notes=[line.split(': stopped (plan 9.0)',1)[0] for line in footer.splitlines()
+           if ': stopped (plan 9.0)' in line]
+    if set(notes)!=expected or len(notes)!=len(expected):
+        raise ValueError(f'{name}: stop notes do not match represented stopped runs')
 
 
 def model_rows(cfg: dict,task: str,groups: tuple[str, ...]=ORDER) -> list[tuple[str, str]]:
@@ -118,7 +134,13 @@ def check(directory: Path,cfg: dict) -> None:
                 raise ValueError(f'{name}: multiline cell')
             if any(c=='NA' for c in row.values()):
                 raise ValueError(f'{name}: forbidden NA cell')
+            count=sum(c.count(STOP) for c in row.values())
+            if count and (count!=1 or STOP not in row.values()):
+                raise ValueError(f'{name}: stopped label must occur once in a statistic cell')
         tables[name]=rows
+    for path in directory.glob('*.csv'):
+        if '−' in path.read_text(encoding='utf-8'):
+            raise ValueError(f'{path.stem}: negative numbers require ASCII hyphen-minus')
     saved=lambda p:read(ROOT/p)
     primary={t:json.loads((ROOT/f'results/selection/primary_{t}.json').read_text()) for t in ('T1','T2')}
     selection_files={f'results/selection/primary_{t}.json' for t in primary}
@@ -129,6 +151,8 @@ def check(directory: Path,cfg: dict) -> None:
         if not any('stopped under plan 9.0 (non-finite prediction)' in line and f'--task {task} --scheme lopo --model {model} ' in line for line in log.splitlines()):
             raise ValueError('missing logged stop')
     stop_files={'results/metrics/completeness.csv','results/logs/autopilot.log'}
+    for name,rows in tables.items():
+        check_stop_notes(directory,name,rows,stopped if name!='calendar_holdout' else set())
     scores=saved('results/metrics/scores.csv')
     pooled=saved('results/metrics/pooled.csv')
     perpond=saved('results/metrics/per_pond.csv')
@@ -159,7 +183,7 @@ def check(directory: Path,cfg: dict) -> None:
             cells(out,identity,name)
             if scheme=='lopo' and (task,model) in stopped:
                 for key in list(out)[3 if compact else 4:]:
-                    expect(out[key],STOP,f'{name} stopped {key}')
+                    expect(out[key],STOP if key=='S' else DASH,f'{name} stopped {key}')
                 continue
             criteria=dict(task=task,scheme=scheme,sample_set=sample_set,horizon=h,model=model)
             pond_rows=get(perpond,**criteria)
@@ -216,9 +240,8 @@ def check(directory: Path,cfg: dict) -> None:
     for out,(task,model) in zip(tables['permutation'],identities):
         cells(out,{'Task / horizon':horizon_name(task,0 if task=='T1' else 1),'Model':MODEL_NAMES[model]},'permutation')
         if (task,model) in stopped:
-            expect(out['Status'],'No test: stopped (plan 9.0)','permutation stop')
-            for k in list(out)[2:-1]:
-                expect(out[k],DASH,'permutation stop')
+            for k in list(out)[2:]:
+                expect(out[k],STOP if k=='Observed S' else DASH,'permutation stop')
         else:
             r=one(permutation,task=task,model=model)
             cells(out,{'Seed':r['seed'],'Observed S':fmt(r['S_obs'],'s'),'Permutations':r['R'],'Permuted S ≤ observed':r['n_perm_le_obs'],
@@ -232,7 +255,7 @@ def check(directory: Path,cfg: dict) -> None:
     for out,(task,group,model) in zip(tables['inner_selection'],identities):
         cells(out,{'Task':TASK_NAMES[task],'Group':GROUP_NAMES[group],'Model':MODEL_NAMES[model]},'inner_selection')
         if (task,model) in stopped:
-            cells(out,{'Outer folds':DASH,'Mean inner-validation S':STOP,'Selection':'Unavailable: stopped (plan 9.0)'},'inner_selection stop')
+            cells(out,{'Outer folds':DASH,'Mean inner-validation S':STOP,'Selection':DASH},'inner_selection stop')
             continue
         path=f'results/tuning/{task}/lopo/{model}/inner_scores.csv'
         innerfiles.add(path)
@@ -263,7 +286,7 @@ def check(directory: Path,cfg: dict) -> None:
         for group,model,sample_set in entries:
             prefix={'Task':TASK_NAMES[task],'Sample set':SAMPLE_SET_NAMES[sample_set],'Group':GROUP_NAMES[group],'Model':MODEL_NAMES[model]}
             if (task,model) in stopped:
-                expected.append(prefix|{'Outer fold':DASH,'Held-out pond':DASH,'Chosen trial':DASH,'Final-fit epochs':DASH,'Parameter':STOP,'Chosen value':STOP})
+                expected.append(prefix|{'Outer fold':STOP,'Held-out pond':DASH,'Chosen trial':DASH,'Final-fit epochs':DASH,'Parameter':DASH,'Chosen value':DASH})
                 continue
             path=f"results/tuning/{task}/lopo/{model}{'__all' if sample_set=='all' else ''}/chosen.csv"
             chosenfiles.add(path)
@@ -308,7 +331,7 @@ def check(directory: Path,cfg: dict) -> None:
                    'Sample set':SAMPLE_SET_NAMES[r['sample_set']],'Group':GROUP_NAMES[group],'Model':MODEL_NAMES[r['model']],
                    'Pond':r['pond'],'Samples':r['n'],'Seeds':r['n_seeds'],
                    **{column:seed_metric([float(v[key]) for v in values],kind) for key,column,kind in [('S','S','s'),('mae_g','MAE (g)','grams'),('mape_pct','MAPE (%)','percent')]}},'per_pond')
-    sidecar(directory,'per_pond',COMMON|stop_files|{'results/metrics/per_pond.csv','results/metrics/per_pond_seed.csv'},('sample SDs','Stopped models'))
+    sidecar(directory,'per_pond',COMMON|stop_files|{'results/metrics/per_pond.csv','results/metrics/per_pond_seed.csv'},('sample SDs','Stopped models have no pond-level metrics'))
     runtime=saved('results/logs/runtime.csv')
     groups=defaultdict(list)
     for r in runtime:
@@ -319,14 +342,15 @@ def check(directory: Path,cfg: dict) -> None:
     for out,(identity,part) in zip(tables['runtimes'],sorted(groups.items())):
         task,scheme,code=identity
         model=code.removesuffix('__all')
+        is_stopped=(task,model) in stopped and scheme=='lopo'
         stages={stage:[float(r['seconds']) for r in part if r['stage']==stage] for stage in ('trial','final')}
         perm=[float(r['seconds']) for r in runtime if r['stage']=='permutation' and r['task']==task and r['model']==code] if scheme=='lopo' and not code.endswith('__all') else []
         cells(out,{'Task':TASK_NAMES[task],'Evaluation':SCHEME_NAMES[scheme],'Sample set':SAMPLE_SET_NAMES['all' if code.endswith('__all') else 'eligible'],'Model':MODEL_NAMES[model],
-                   'Tuning time (s)':format(math.fsum(stages['trial']),'.1f') if stages['trial'] else DASH,
-                   'Final-fit time (s)':format(math.fsum(stages['final']),'.1f') if stages['final'] else DASH,
-                   'Permutation time (s)':format(math.fsum(perm),'.1f') if perm else DASH,
+                   'Tuning time (s)':STOP if is_stopped else format(math.fsum(stages['trial']),'.1f') if stages['trial'] else DASH,
+                   'Final-fit time (s)':DASH if is_stopped else format(math.fsum(stages['final']),'.1f') if stages['final'] else DASH,
+                   'Permutation time (s)':DASH if is_stopped else format(math.fsum(perm),'.1f') if perm else DASH,
                    'CPU':part[0]['cpu'],'Python':part[0]['python'],'PyTorch':part[0]['torch'],
-                   'Status':STOP if (task,model) in stopped and scheme=='lopo' else 'Complete'},'runtimes')
+                   'Status':DASH if is_stopped else 'Complete'},'runtimes')
     sidecar(directory,'runtimes',COMMON|stop_files|{'results/logs/runtime.csv'},('parallel workers can overlap','No GPU, RAM'))
     post=[r for r in saved(f'{POST}/metrics/scores.csv') if r['horizon']!='all']
     postperm=saved(f'{POST}/stats/permutation.csv')

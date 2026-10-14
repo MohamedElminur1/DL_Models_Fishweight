@@ -122,6 +122,8 @@ def main() -> None:
             ('main_results_full', 'listed without predictions in results/metrics/completeness.csv', 'absent in results/metrics/completeness.csv'),
             ('permutation', 'outside the confirmatory sequence', 'inside the confirmatory sequence'),
         ]
+        for name in ('main_results', 'main_results_full', 'calendar_holdout', 'sensitivity', 'per_pond'):
+            footers.append((name, 'example -4.3 × 10^{5}', 'example −4.3 × 10^{5}'))
         for name, old, new in footers:
             path = directory / f'{name}.source.txt'
             original = path.read_text(encoding='utf-8')
@@ -132,6 +134,69 @@ def main() -> None:
             path.write_text(original, encoding='utf-8')
             if status == 0 or 'FAIL:' not in output:
                 raise ValueError(f'checker accepted revision footer corruption: {name} {old}')
+            failures += 1
+        stop_columns = {
+            'main_results': ('S', 'MAE (g)'),
+            'main_results_full': ('S', 'Ponds'),
+            'sensitivity': ('S', 'RMSE (g)'),
+            'permutation': ('Observed S', 'Status'),
+            'inner_selection': ('Mean inner-validation S', 'Selection'),
+            'chosen_hyperparameters': ('Outer fold', 'Chosen value'),
+            'runtimes': ('Tuning time (s)', 'Final-fit time (s)'),
+        }
+        for name, (first, other) in stop_columns.items():
+            path = directory / f'{name}.csv'
+            original = path.read_text(encoding='utf-8')
+            for mode in ('missing', 'repeated', 'misplaced'):
+                reader = csv.DictReader(io.StringIO(original))
+                header, rows = reader.fieldnames, list(reader)
+                row = next(r for r in rows if r[first] == 'stopped (plan 9.0)')
+                if mode in ('missing', 'misplaced'):
+                    row[first] = '–'
+                if mode in ('repeated', 'misplaced'):
+                    row[other] = 'stopped (plan 9.0)'
+                with path.open('w', encoding='utf-8', newline='') as handle:
+                    writer = csv.DictWriter(handle, fieldnames=header, lineterminator='\n')
+                    writer.writeheader()
+                    writer.writerows(rows)
+                status, output = run_check(directory)
+                path.write_text(original, encoding='utf-8')
+                if status == 0 or 'FAIL:' not in output:
+                    raise ValueError(f'checker accepted {name} {mode} stop marker')
+                failures += 1
+            print(f'PASS: {name}, missing, repeated and misplaced stop markers rejected', flush=True)
+        stop_note = next(line for line in (directory / 'main_results_full.source.txt').read_text(encoding='utf-8').splitlines()
+                         if '28-day window: stopped (plan 9.0)' in line)
+        for name in ('permutation', 'all_events', 'per_pond'):
+            path = directory / f'{name}.source.txt'
+            original = path.read_text(encoding='utf-8')
+            path.write_text(original + stop_note + '\n', encoding='utf-8')
+            status, output = run_check(directory)
+            path.write_text(original, encoding='utf-8')
+            if status == 0 or 'FAIL:' not in output:
+                raise ValueError(f'checker accepted {name} unrepresented stop note')
+            failures += 1
+        for name in stop_columns:
+            path = directory / f'{name}.source.txt'
+            original = path.read_text(encoding='utf-8')
+            line = next(line for line in original.splitlines() if ': stopped (plan 9.0)' in line)
+            path.write_text(original.replace(line + '\n', ''), encoding='utf-8')
+            status, output = run_check(directory)
+            path.write_text(original, encoding='utf-8')
+            if status == 0 or 'FAIL:' not in output:
+                raise ValueError(f'checker accepted {name} missing stop note')
+            failures += 1
+        for name, token in (('main_results', '-4.3 × 10^{5}'), ('main_results', '-4.718'),
+                            ('search_spaces_tabular', '10^{-3}')):
+            path = directory / f'{name}.csv'
+            original = path.read_text(encoding='utf-8')
+            if token not in original:
+                raise ValueError(f'missing minus probe: {name} {token}')
+            path.write_text(original.replace(token, token.replace('-', '−'), 1), encoding='utf-8')
+            status, output = run_check(directory)
+            path.write_text(original, encoding='utf-8')
+            if status == 0 or 'FAIL:' not in output:
+                raise ValueError(f'checker accepted {name} Unicode minus')
             failures += 1
         status, output = run_check(directory)
         if status:

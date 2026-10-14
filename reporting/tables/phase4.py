@@ -93,6 +93,7 @@ def result_table(name: str, scheme: str, sample_set: str, groups: tuple[str, ...
     stopped = stops(sources)
     boot = sources.csv("results/stats/bootstrap_S.csv") if scheme == "lopo" and sample_set == "eligible" else []
     rows, notes = [], []
+    shown_stops = set()
     for task in ("T1", "T2"):
         for h in horizons(task):
             entries = models(cfg, task, groups) if sample_set == "eligible" else (("all_sample_set", m) for m in cfg['models'][task]['all_sample_set'])
@@ -100,7 +101,8 @@ def result_table(name: str, scheme: str, sample_set: str, groups: tuple[str, ...
                 baseline = primary[task]["primary_baseline"]
                 identity = [horizon_name(task, h), group_name(group), model_name(model), model_name(baseline)]
                 if scheme == "lopo" and (task, model) in stopped:
-                    rows.append(identity + [STOP] * (len(RESULT_HEADER) - 4))
+                    rows.append(identity + [MISSING] * 3 + [STOP] + [MISSING] * (len(RESULT_HEADER) - 8))
+                    shown_stops.add((task, model))
                     continue
                 criteria = dict(task=task, scheme=scheme, sample_set=sample_set, horizon=h, model=model)
                 score, pool = unique(scores, **criteria), unique(pooled, **criteria)
@@ -138,11 +140,10 @@ def result_table(name: str, scheme: str, sample_set: str, groups: tuple[str, ...
                 if int(score['n_ponds']) != 7:
                     raise ValueError('compact table requires seven ponds')
                 notes.append(f"{horizon_name(task,h)}: primary baseline {model_name(baseline)}; {score['n_ponds']} ponds; {score['n_samples']} samples.")
-        stopped = {(t, m) for t, m in stopped if any(m == model for _, model in models(cfg, t, groups))}
     write_table(name, header, rows, sources, [
         f"Title: {name.replace('_', ' ')}; {SCHEME_NAMES[scheme]}, {SAMPLE_SET_NAMES[sample_set]}." + (description if main else " Descriptive only.") + (" Supplementary." if name == 'main_results_full' else ""),
         "S is the mean of per-pond absolute log errors. Pooled metrics use every test sample. " + seed_note,
         comparison + " counts strict comparisons against the primary baseline selected by inner validation, including zero for the baseline itself. S bootstrap intervals use saved 2,000 pond resamples; calendar and all-events intervals do not apply and are –.",
         "S and R2 use three decimals, percentages one decimal; grams use one decimal below 100 g and integers otherwise. – means not applicable or unavailable, never zero. Combined T2 horizons are not duplicated as an extra row.",
-        *stop_notes(stopped if scheme == 'lopo' else set()), *notes,
+        *stop_notes(shown_stops), *notes,
     ])

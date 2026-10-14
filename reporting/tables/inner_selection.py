@@ -17,7 +17,7 @@ def main() -> None:
         for group,model in models(cfg,task):
             identity=[TASK_NAMES[task],group_name(group),model_name(model)]
             if (task,model) in stopped:
-                rows.append(identity+[MISSING,STOP,'Unavailable: stopped (plan 9.0)'])
+                rows.append(identity+[MISSING,STOP,MISSING])
                 continue
             saved=sources.csv(f'results/tuning/{task}/lopo/{model}/inner_scores.csv')
             folds=defaultdict(list)

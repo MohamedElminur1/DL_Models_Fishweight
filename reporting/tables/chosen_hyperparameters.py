@@ -15,7 +15,7 @@ def main() -> None:
         for group,model,sample_set in entries:
             prefix=[TASK_NAMES[task],SAMPLE_SET_NAMES[sample_set],group_name(group),model_name(model)]
             if (task,model) in stopped:
-                rows.append(prefix+[MISSING]*4+[STOP,STOP])
+                rows.append(prefix+[STOP]+[MISSING]*5)
                 continue
             suffix='__all' if sample_set=='all' else ''
             saved=sources.csv(f'results/tuning/{task}/lopo/{model}{suffix}/chosen.csv')

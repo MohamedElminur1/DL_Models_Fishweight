@@ -85,3 +85,51 @@ PASS: accepted Part A artifacts unchanged; other CSV changes are only large-valu
 ```
 
 `git diff --check -- reporting/tables manuscript/src/tables` also exited 0. All five revisions were completed; no requested item was blocked. The saved-data limitations recorded above still apply. No new packages, no commit, and no writes outside the two allowed table directories and `/tmp`. The prohibited verification scores file was not read.
+
+## Revision 2
+
+Applied exactly the four items in Part B revision 2. No headers, row counts, row order or saved metric values changed.
+
+1. Each stopped row now has exactly one `stopped (plan 9.0)` marker. It appears in S for the result panels, Observed S for permutation, Mean inner-validation S for inner selection, Outer fold for chosen hyperparameters, and Tuning time for runtimes. Other statistic cells are `–`; repeated markers in selection, parameter, value and status cells are also replaced with `–`. Runtime hardware and software cells retain the recorded values.
+2. Stop notes now correspond to stopped runs represented in each table. Removed the two unrelated notes from permutation, the unrelated frozen T2 ridge note from sensitivity, and all stop notes from all_events and per_pond. Adjusted the per_pond sentence that referred to the removed notes and the runtime sentence that described the first time cell.
+3. Negative numbers use ASCII hyphen-minus, including large-value builder markup. Every affected precision footer now gives `-4.3 × 10^{5}` as its example. Accepted Part A artifacts remain byte-identical.
+4. Extended the independent checker and corruption probes for marker placement and repetition, represented stop notes, ordinary and large negative values, negative exponents, and the footer example. Re-ran both requested commands and audited the artifacts against a snapshot made before this revision.
+
+Changed scripts in `reporting/tables/`: `shared.py`, `phase4.py`, `confirmatory.py`, `inner_selection.py`, `chosen_hyperparameters.py`, `runtimes.py`, `per_pond.py`, `check_part_b.py`, `verify_part_b.py`. This section is appended to `DONE_partB.md`.
+
+Changed CSVs in `manuscript/src/tables/`: `main_results.csv`, `main_results_full.csv`, `calendar_holdout.csv`, `sensitivity.csv`, `permutation.csv`, `inner_selection.csv`, `chosen_hyperparameters.csv`, `runtimes.csv`. Changed source sidecars: `main_results.source.txt`, `main_results_full.source.txt`, `calendar_holdout.source.txt`, `sensitivity.source.txt`, `permutation.source.txt`, `all_events.source.txt`, `per_pond.source.txt`, `runtimes.source.txt`. No artifacts were added or removed.
+
+All Python commands below ran from `/home/dev/development/publications`, with no new packages.
+
+The original checker passed before changes. With the Revision 2 checks added but the old artifacts retained, it exited 1:
+
+```text
+FAIL: sensitivity: negative numbers require ASCII hyphen-minus
+```
+
+After regeneration, this command exited 0:
+
+```text
+env PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -I reporting/tables/check_tables.py
+PASS: independent Part B cell recomputation, complete rows, stops, seed precision and provenance for 16 panels
+PASS: all data cells, structure, row order and provenance for all five revised Part A tables
+```
+
+The corruption and regeneration command exited 0:
+
+```text
+env PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -I reporting/tables/verify_part_b.py --regenerate
+PASS: 99 total mismatches rejected, including revision cells and footers; restored copies pass
+PASS: byte-identical regeneration; all 42 CSVs and sidecars unchanged
+```
+
+The snapshot audit exited 0:
+
+```text
+env PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -I /tmp/audit_tables_revision2.py
+PASS: every header, row count and row order retained; CSV changes are only stop-cell presentation and ASCII minus
+PASS: sidecar changes are only represented stop notes, associated wording and the ASCII minus example
+PASS: all accepted Part A CSVs and sidecars are byte-identical to the snapshot
+```
+
+All 16 Part B panel dimensions remain as listed under Revision 1. `git diff --check -- reporting/tables manuscript/src/tables` exited 0. All four items are complete; no requested item was blocked. The saved-data limitations recorded above still apply. No commit, no writes outside the two allowed table directories and `/tmp`, and no read of the prohibited verification scores file.

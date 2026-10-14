@@ -38,7 +38,7 @@ def number(value: float | str | None, kind: str, decimals: int | None = None) ->
         return "< 0.001" if numeric < 0.001 else f"{numeric:.3f}"
     if kind in {"grams", "percent", "r2"} and abs(numeric) >= 10000:
         coefficient, exponent = f"{numeric:.1e}".split("e")
-        return f"{coefficient.replace('-', '−')} × 10^{{{int(exponent)}}}"
+        return f"{coefficient} × 10^{{{int(exponent)}}}"
     places = {"s": 3, "log": 3, "grams": 1 if abs(numeric) < 100 else 0,
               "percent": 1, "r2": 3}[kind] if decimals is None else decimals
     return f"{numeric:.{places}f}"
@@ -116,7 +116,7 @@ def write_table(name: str, header: Sequence[str], rows: Iterable[Sequence[str]],
     writer.writerows(data)
     sidecar = "Files read (repository-relative):\n" + "".join(f"{p}\n" for p in sorted(sources.files))
     if any(" × 10^{" in cell for row in data for cell in row):
-        notes = [*notes, "R2, gram and percentage values with absolute size 10,000 or more use two significant digits in builder markup, for example −4.3 × 10^{5}."]
+        notes = [*notes, "R2, gram and percentage values with absolute size 10,000 or more use two significant digits in builder markup, for example -4.3 × 10^{5}."]
     sidecar += "\nFooter / definitions / limitations:\n" + "".join(f"{note}\n" for note in notes)
     OUTPUT.mkdir(parents=True, exist_ok=True)
     _replace(OUTPUT / f"{name}.csv", buffer.getvalue())
