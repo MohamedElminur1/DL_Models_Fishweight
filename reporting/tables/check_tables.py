@@ -1,4 +1,4 @@
-"""Independently check every revised Part A table against saved sources.
+"""Independently check accepted Part A and generated Part B against saved sources.
 
 No generator or shared formatter is imported. --table-dir checks copied artifacts, so
 intentional corruption can exercise the failure path without changing manuscript outputs.
@@ -262,6 +262,9 @@ def main() -> int:
         check_dataset(args.table_dir, cfg)
         check_original_design(args.table_dir)
         check_search_spaces(args.table_dir, cfg)
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from check_part_b import check
+        check(args.table_dir, cfg)
         if (args.table_dir / 'search_spaces.csv').exists() or (args.table_dir / 'search_spaces.source.txt').exists():
             raise ValueError('obsolete search_spaces artifacts remain')
     except (OSError, ValueError, KeyError, ZeroDivisionError, ArithmeticError) as error:
