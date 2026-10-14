@@ -1,0 +1,20 @@
+{
+  "best_trial": 12,
+  "decision": "DECISIONS.md D-003",
+  "epochs": null,
+  "hp": {
+    "alpha": 1000.0
+  },
+  "inner_value": 0.7978085931576655,
+  "label": "pond07",
+  "n_excluded": 0,
+  "n_nonpositive_inner": 0,
+  "n_test": 6,
+  "n_train": 29,
+  "n_trials": 20,
+  "outer_fold": 5,
+  "posthoc": "ridge_candidate_loses",
+  "test_ponds": [
+    7
+  ]
+}

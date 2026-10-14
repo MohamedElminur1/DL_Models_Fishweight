@@ -5,7 +5,7 @@
 #   ./run_all.sh phase4 figures  only the named stages
 #   WORKERS=2 ./run_all.sh phase4
 #
-# Stages: check, audit, phase2, data, tests, phase4, select, permute, evaluate, figures.
+# Stages: check, audit, phase2, data, tests, phase4, select, permute, evaluate, posthoc, figures.
 # Each stage can be re-run: model runs that finished with the same config and inputs are
 # skipped, unfinished folds and permutations resume, and the data stages rewrite their files
 # with the same bytes. Outer test predictions need the frozen analysis (git tag
@@ -110,6 +110,14 @@ stage_permute() {  # tabular models, then the primary deep model of each task
 
 stage_evaluate() { "${PY[@]}" src/evaluate.py; }
 
+stage_posthoc() {  # D-003: the ridge runs stopped under plan 9.0, re-tuned post hoc (Supplementary)
+  "${PY[@]}" posthoc/ridge_variant.py run --task T1 --scheme lopo --model ridge_time_wq_w28
+  "${PY[@]}" posthoc/ridge_variant.py run --task T2 --scheme lopo --model ridge_pw_wq
+  "${PY[@]}" posthoc/ridge_variant.py run --task T2 --scheme lopo --model ridge_pw_wq_noind
+  "${PY[@]}" posthoc/ridge_variant.py permute --task T2 --model ridge_pw_wq
+  "${PY[@]}" posthoc/ridge_variant.py score
+}
+
 stage_figures() {
   local script
   for script in reporting/figs/fig_*.py; do
@@ -117,7 +125,7 @@ stage_figures() {
   done
 }
 
-ALL=(check audit phase2 data tests phase4 select permute evaluate figures)
+ALL=(check audit phase2 data tests phase4 select permute evaluate posthoc figures)
 if [ $# -eq 0 ]; then set -- "${ALL[@]}"; fi
 for stage in "$@"; do
   declare -F "stage_$stage" >/dev/null || { echo "unknown stage: $stage (stages: ${ALL[*]})" >&2; exit 2; }

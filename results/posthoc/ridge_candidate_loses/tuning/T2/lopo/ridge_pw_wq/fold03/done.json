@@ -1,0 +1,8 @@
+{
+  "decision": "DECISIONS.md D-003",
+  "fold": 3,
+  "hash": "3770736dc24bd5100df1bbf5f309f38b9d0a9b976ee2e3170ecc6610fd89e208",
+  "pid": 1939198,
+  "posthoc": "ridge_candidate_loses",
+  "seconds": 0.399
+}

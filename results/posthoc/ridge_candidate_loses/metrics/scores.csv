@@ -1,0 +1,8 @@
+task,scheme,sample_set,horizon,model,group,n_ponds,n_samples,n_seeds,S,S_seed_sd,sd_pond_S,sd_pond_mae_g,n_nonpositive,posthoc,decision
+T1,lopo,eligible,0,ridge_time_wq_w28,sensitivity,7,35,1,1.3402275181366459,,1.3858892460983379,468859922.71199495,0.0,ridge_candidate_loses,DECISIONS.md D-003
+T2,lopo,eligible,1,ridge_pw_wq,water_quality,7,29,1,0.8872732001179447,,1.0551842316400584,147.70251263958093,0.0,ridge_candidate_loses,DECISIONS.md D-003
+T2,lopo,eligible,1,ridge_pw_wq_noind,sensitivity,7,29,1,0.886127587361006,,1.0480852843349235,147.67006763863304,0.0,ridge_candidate_loses,DECISIONS.md D-003
+T2,lopo,eligible,2,ridge_pw_wq,water_quality,7,24,1,0.42743981116983293,,0.3819004891442726,193.42972528004287,0.0,ridge_candidate_loses,DECISIONS.md D-003
+T2,lopo,eligible,2,ridge_pw_wq_noind,sensitivity,7,24,1,0.42753827131964056,,0.3815267889072596,193.37975477811187,0.0,ridge_candidate_loses,DECISIONS.md D-003
+T2,lopo,eligible,all,ridge_pw_wq,water_quality,7,53,1,0.7004390414237188,,0.7257765158007221,169.71863524964263,0.0,ridge_candidate_loses,DECISIONS.md D-003
+T2,lopo,eligible,all,ridge_pw_wq_noind,sensitivity,7,53,1,0.699660529032286,,0.7215398035527786,169.67694753070782,0.0,ridge_candidate_loses,DECISIONS.md D-003

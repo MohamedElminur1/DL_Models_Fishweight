@@ -1,0 +1,2 @@
+task,model,kind,statistic,seed,S_obs,R,n_perm_le_obs,p,S_perm_mean,S_perm_sd,S_perm_min,S_perm_max,posthoc,decision
+T2,ridge_pw_wq,tabular,S_h1,0,0.8872732001179447,999,999,1.0,0.3864628114874824,0.05295873034678275,0.322055964715053,0.6008463790216833,ridge_candidate_loses,DECISIONS.md D-003

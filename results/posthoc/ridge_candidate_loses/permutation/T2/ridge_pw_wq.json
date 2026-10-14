@@ -1,0 +1,32 @@
+{
+  "R": 999,
+  "complete": true,
+  "decision": "DECISIONS.md D-003",
+  "fit_seed": 0,
+  "guard": {
+    "commit": "91b38b99494313ed4b1e6eb570bcdf0e41ab0639",
+    "matched_commit": "91b38b99494313ed4b1e6eb570bcdf0e41ab0639",
+    "matched_tag": "analysis-plan-frozen",
+    "plan_sha256": "fc544640011609d39cb9b6e3aa8d9f79584d053eb7a47ecaf5182f6a3f8f7a3e",
+    "tag": "analysis-plan-frozen"
+  },
+  "hash": "3732cad20f1955d3b3d5a70c7bc1b78065df80630d52059f0b271f292582aeb7",
+  "kind": "tabular",
+  "model": "ridge_pw_wq",
+  "n_dates": 7,
+  "n_dates_unchanged": 1,
+  "n_rows_changed": 52,
+  "observed_check": {
+    "n_predictions": 53,
+    "observed_S": 0.8872732001179447,
+    "observed_seed": 0,
+    "seconds": 0.074
+  },
+  "posthoc": "ridge_candidate_loses",
+  "processes": [
+    1940062
+  ],
+  "seed": 20261014,
+  "statistic": "S_h1",
+  "task": "T2"
+}

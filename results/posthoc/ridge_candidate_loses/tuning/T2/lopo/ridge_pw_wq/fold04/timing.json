@@ -1,0 +1,17 @@
+{
+  "decision": "DECISIONS.md D-003",
+  "est_final_fit_seconds": 0.004949304579685515,
+  "fold": 4,
+  "inner_fit_seconds_mean": 0.0032995363864570092,
+  "label": "pond06",
+  "n_inner_fits": 39,
+  "n_train_inner_mean": 31.333333333333332,
+  "n_train_outer": 47,
+  "n_trials": 13,
+  "path_counts": {
+    "n_dropped_all_missing": 0
+  },
+  "posthoc": "ridge_candidate_loses",
+  "trial_seconds_max": 0.03659716993570328,
+  "trial_seconds_mean": 0.027672479538103707
+}

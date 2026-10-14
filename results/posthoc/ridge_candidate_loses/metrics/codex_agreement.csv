@@ -1,0 +1,8 @@
+outer_fold,held_out_pond,alpha,codex_alpha,alpha_equal,n_predictions,max_abs_y_pred_log,max_abs_w_pred,posthoc,decision
+0,1,1000.0,1000.0,True,6,0.0,0.0,ridge_candidate_loses,DECISIONS.md D-003
+1,2,1000.0,1000.0,True,11,6.661338147750939e-16,1.7053025658242404e-13,ridge_candidate_loses,DECISIONS.md D-003
+2,3,1000.0,1000.0,True,7,1.1102230246251565e-16,1.4210854715202004e-14,ridge_candidate_loses,DECISIONS.md D-003
+3,4,1000.0,1000.0,True,7,1.1102230246251565e-16,0.0,ridge_candidate_loses,DECISIONS.md D-003
+4,6,1000.0,1000.0,True,6,1.1102230246251565e-16,2.842170943040401e-14,ridge_candidate_loses,DECISIONS.md D-003
+5,7,1000.0,1000.0,True,8,8.881784197001252e-16,1.3642420526593924e-12,ridge_candidate_loses,DECISIONS.md D-003
+7,9,1000.0,1000.0,True,8,1.7763568394002505e-15,1.4210854715202004e-14,ridge_candidate_loses,DECISIONS.md D-003
