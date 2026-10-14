@@ -1,0 +1,23 @@
+# Environment and setup artefacts
+.venv/
+.vm-setup/bin/
+.vm-setup/source-files.tar
+.vm-setup/uv-installer.sh
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Public dataset: not redistributed here. data/raw/ holds symlinks and SHA256SUMS only.
+data/IoTPond_Dataset/
+original data/*.zip
+
+# Regenerable intermediates
+data/interim/
+
+# Model weights and scratch files (predictions and metrics in results/ are committed)
+*.h5
+*.keras
+*.ckpt
+lightning_logs/
+results/**/checkpoints/
+tmp/

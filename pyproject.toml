@@ -1,0 +1,25 @@
+[project]
+name = "publications-research"
+version = "0.1.0"
+requires-python = "==3.12.*"
+dependencies = [
+  "tensorflow-cpu>=2,<3",
+  "torch>=2,<3",
+  "pytorch-forecasting>=1,<2",
+  "lightning>=2,<3",
+  "optuna>=4,<5",
+  "numpy", "pandas", "scipy", "scikit-learn", "statsmodels",
+  "matplotlib", "seaborn", "jupyterlab", "ipykernel",
+  "python-docx", "pypdf", "pdfplumber", "reportlab", "openpyxl",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
