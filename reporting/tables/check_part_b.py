@@ -447,7 +447,7 @@ def check(directory: Path,cfg: dict) -> None:
         raise ValueError('posthoc_ridge_agreement: missing folds')
     for out,r in zip(tables['posthoc_ridge_agreement'],agreement):
         cells(out,{'Task':TASK_NAMES['T2'],'Post hoc model':MODEL_NAMES['ridge_pw_wq'],'Outer fold':r['outer_fold'],
-                   'Held-out pond':r['held_out_pond'],'Chosen alpha':r['alpha'],'Codex alpha':r['codex_alpha'],
+                   'Held-out pond':r['held_out_pond'],'Chosen alpha':r['alpha'],'Re-implementation alpha':r['codex_alpha'],
                    'Alphas equal':'Yes' if float(r['alpha'])==float(r['codex_alpha']) else 'No','Predictions':r['n_predictions'],
                    'Max absolute log-prediction difference':r['max_abs_y_pred_log'],'Max absolute weight difference (g)':r['max_abs_w_pred']},'posthoc_ridge_agreement')
     sidecar(directory,'posthoc_ridge_agreement',COMMON|{'DECISIONS.md',f'{POST}/metrics/codex_agreement.csv'},('Post hoc','exact saved precision'))
