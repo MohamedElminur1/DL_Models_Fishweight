@@ -48,21 +48,37 @@ stage_data() {
 
 stage_tests() { "${PY[@]}" -m pytest -q tests/; }
 
+STOPPED_90=()
+train_model() {  # src/train.py; a stop on a non-finite prediction (plan 9.0) is reported, not fatal
+  local out status=0
+  out=$(mktemp)
+  "${PY[@]}" src/train.py "$@" 2>&1 | tee "$out" || status=$?
+  if [ "$status" -ne 0 ] && ! grep -q 'predictions are not finite' "$out"; then
+    rm -f "$out"
+    return "$status"
+  fi
+  [ "$status" -ne 0 ] && STOPPED_90+=("$*")
+  rm -f "$out"
+}
+
 stage_phase4() {
   local task model
   for task in T1 T2; do
     for model in $(models "$task" time_only water_quality reference deep static_only sensitivity); do
-      "${PY[@]}" src/train.py --task "$task" --scheme lopo --model "$model" --workers "$WORKERS"
+      train_model --task "$task" --scheme lopo --model "$model" --workers "$WORKERS"
     done
   done
   for model in $(models T1 all_sample_set); do
-    "${PY[@]}" src/train.py --task T1 --scheme lopo --model "$model" --sample-set all --workers "$WORKERS"
+    train_model --task T1 --scheme lopo --model "$model" --sample-set all --workers "$WORKERS"
   done
   for task in T1 T2; do  # calendar hold-out, descriptive (one fold per model)
     for model in $(models "$task" time_only water_quality reference deep static_only); do
-      "${PY[@]}" src/train.py --task "$task" --scheme chrono --model "$model"
+      train_model --task "$task" --scheme chrono --model "$model"
     done
   done
+  if [ "${#STOPPED_90[@]}" -gt 0 ]; then
+    printf 'stopped on a non-finite prediction (plan 9.0), reported as such: %s\n' "${STOPPED_90[@]}" >&2
+  fi
 }
 
 stage_select() {
