@@ -1,0 +1,6 @@
+== evaluate
+wrote 12 tables under /home/dev/development/publications/results/metrics and /home/dev/development/publications/results/stats
+ step task horizon    model  comparator  n_ponds  p_one_sided_lower                                      status
+    1   T1       0     lstm cohort_mean        7           0.656250                                not rejected
+    2   T2       1 cnn_lstm    ridge_pw        7           0.921875 not tested (an earlier step did not reject)
+13 models of the config have no predictions (results/metrics/completeness.csv)

@@ -1,0 +1,3 @@
+step,task,horizon,model,comparator,n_ponds,n_nonzero,n_zero_dropped,t_plus,t_minus,p_one_sided_lower,p_two_sided,n_lower,alpha,status,reject
+1,T1,0,lstm,cohort_mean,7,7,0,16.0,12.0,0.65625,0.8125,3,0.05,not rejected,False
+2,T2,1,cnn_lstm,ridge_pw,7,7,0,22.0,6.0,0.921875,0.21875,2,0.05,not tested (an earlier step did not reject),False

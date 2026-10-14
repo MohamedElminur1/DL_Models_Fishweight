@@ -1,0 +1,5 @@
+task,horizon,model,comparator,n_units,S_model,S_comparator,n_nonzero,n_zero_dropped,t_plus,t_minus,p_one_sided_lower,p_two_sided,descriptive_only
+T1,0,lstm,cohort_mean,6,0.3044031406369705,0.2595976658363137,6,0,14.0,7.0,0.78125,0.5625,True
+T2,1,cnn_lstm,ridge_pw,6,0.33083248187736697,0.28823392455103397,6,0,17.0,4.0,0.921875,0.21875,True
+T2,2,cnn_lstm,ridge_pw,6,0.3075662171062404,0.24641871591816578,6,0,20.0,1.0,0.984375,0.0625,True
+T2,all,cnn_lstm,ridge_pw,6,0.31917403729234134,0.2689208988533142,6,0,21.0,0.0,1.0,0.03125,True
