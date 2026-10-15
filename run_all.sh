@@ -6,7 +6,7 @@
 #   WORKERS=2 ./run_all.sh phase4
 #
 # Stages: check, audit, phase2, data, tests, phase4, select, permute, evaluate, posthoc,
-# diagnostics, figures, tables, manuscript (the last writes the submission files to manuscript/).
+# diagnostics, figures, tables (the last writes the table CSVs of the paper to manuscript/src/tables/).
 # Each stage can be re-run: model runs that finished with the same config and inputs are
 # skipped, unfinished folds and permutations resume, and the data stages rewrite their files
 # with the same bytes. Outer test predictions need the frozen analysis (git tag
@@ -139,12 +139,7 @@ stage_tables() {  # every CSV in manuscript/src/tables from results/, then the i
   "${PY[@]}" reporting/tables/check_tables.py
 }
 
-stage_manuscript() {  # clean and changes-marked docx, Supplementary docx and data files, response letter
-  "${PY[@]}" reporting/manuscript/build.py
-  "${PY[@]}" reporting/manuscript/build_response.py
-}
-
-ALL=(check audit phase2 data tests phase4 select permute evaluate posthoc diagnostics figures tables manuscript)
+ALL=(check audit phase2 data tests phase4 select permute evaluate posthoc diagnostics figures tables)
 if [ $# -eq 0 ]; then set -- "${ALL[@]}"; fi
 for stage in "$@"; do
   declare -F "stage_$stage" >/dev/null || { echo "unknown stage: $stage (stages: ${ALL[*]})" >&2; exit 2; }
