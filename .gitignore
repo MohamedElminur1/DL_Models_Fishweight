@@ -32,3 +32,4 @@ posthoc/codex_run*.log
 
 # Matplotlib cache written by figure scripts
 figures/.mplconfig/
+verification/**/codex_run.*.log
