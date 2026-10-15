@@ -19,11 +19,13 @@ Udanor et al. (2022) from scratch: the original analysis is reproduced and diagn
 | `data/raw/` | Symbolic links to the public pond files and their SHA-256 sums. The files themselves are not redistributed. |
 | `data/processed/` | Weighing events, daily water quality and the T1 and T2 tables. |
 | `results/` | Written only by scripts: audit, QC counts, Phase 2 diagnostics, predictions, tuning records, metrics, statistics, logs. |
-| `reporting/`, `figures/` | Figure scripts and the figures (600 dpi PNG, PDF, SVG for diagrams); captions with their source files in `figures/CAPTIONS.md`. |
+| `posthoc/` | The post hoc ridge variant (D-003) for the three ridge runs stopped under plan 9.0; outside the frozen analysis and reported in the Supplementary only. |
+| `reporting/`, `figures/` | Scripts that turn `results/` into figures, table CSVs, the stopped-run diagnosis and the submission files, plus the QA scans (`reporting/qa/`); the figures (600 dpi PNG, PDF, SVG for diagrams) with captions and source files in `figures/CAPTIONS.md`. |
 | `verification/` | Blind re-implementations by a second agent (Codex) from written specifications, and their comparison with the pipeline. |
 | `tests/` | Unit tests of the pipeline, models, folds, guard and statistics. |
-| `manuscript/` | Revised manuscript (clean and changes marked) and the response to the reviewers. |
+| `manuscript/` | Revised manuscript (clean and changes marked), Supplementary Materials and data files, and the response to the reviewers; their sources, with a source file for every number, in `manuscript/src/`. |
 | `tasks/` | The task specifications given to each role during the revision. |
+| `tools/` | Shell helpers that ran and monitored the agent jobs of the revision; not needed to reproduce the results. |
 
 ## Environment
 
@@ -63,7 +65,11 @@ code and is logged.
 | `select` | Chooses the primary baseline and deep model from inner-validation scores only. Stops if the choice differs from the committed one. |
 | `permute` | Within-date permutation tests. |
 | `evaluate` | Metrics and statistics from the saved predictions (`results/metrics/`, `results/stats/`). |
+| `posthoc` | The post hoc ridge variant (D-003) and its scores (`results/posthoc/`). |
+| `diagnostics` | Where the three stopped ridge runs overflowed, from inner splits only (`results/diagnostics/`). |
 | `figures` | All figures. |
+| `tables` | Every table CSV in `manuscript/src/tables/` from `results/`, then the independent checks. |
+| `manuscript` | The submission files in `manuscript/`: clean and changes-marked docx, Supplementary docx and data files, response letter. |
 
 Stages can be re-run: finished model runs are skipped, unfinished ones resume. Outer test
 predictions are refused unless the working tree matches the frozen tag

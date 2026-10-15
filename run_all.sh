@@ -5,7 +5,8 @@
 #   ./run_all.sh phase4 figures  only the named stages
 #   WORKERS=2 ./run_all.sh phase4
 #
-# Stages: check, audit, phase2, data, tests, phase4, select, permute, evaluate, posthoc, figures.
+# Stages: check, audit, phase2, data, tests, phase4, select, permute, evaluate, posthoc,
+# diagnostics, figures, tables, manuscript (the last writes the submission files to manuscript/).
 # Each stage can be re-run: model runs that finished with the same config and inputs are
 # skipped, unfinished folds and permutations resume, and the data stages rewrite their files
 # with the same bytes. Outer test predictions need the frozen analysis (git tag
@@ -118,6 +119,10 @@ stage_posthoc() {  # D-003: the ridge runs stopped under plan 9.0, re-tuned post
   "${PY[@]}" posthoc/ridge_variant.py score
 }
 
+stage_diagnostics() {  # where the three stopped ridge runs overflowed, from inner splits only; about 15 s
+  "${PY[@]}" reporting/diagnostics/ridge_stop.py
+}
+
 stage_figures() {
   local script
   for script in reporting/figs/fig_*.py; do
@@ -125,7 +130,21 @@ stage_figures() {
   done
 }
 
-ALL=(check audit phase2 data tests phase4 select permute evaluate posthoc figures)
+stage_tables() {  # every CSV in manuscript/src/tables from results/, then the independent checks
+  local script
+  for script in reporting/tables/*.py; do
+    case "${script##*/}" in shared.py|phase4.py|check_*|verify_*) continue ;; esac
+    "${PY[@]}" "$script"
+  done
+  "${PY[@]}" reporting/tables/check_tables.py
+}
+
+stage_manuscript() {  # clean and changes-marked docx, Supplementary docx and data files, response letter
+  "${PY[@]}" reporting/manuscript/build.py
+  "${PY[@]}" reporting/manuscript/build_response.py
+}
+
+ALL=(check audit phase2 data tests phase4 select permute evaluate posthoc diagnostics figures tables manuscript)
 if [ $# -eq 0 ]; then set -- "${ALL[@]}"; fi
 for stage in "$@"; do
   declare -F "stage_$stage" >/dev/null || { echo "unknown stage: $stage (stages: ${ALL[*]})" >&2; exit 2; }
