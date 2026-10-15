@@ -110,27 +110,49 @@ Replaces Figure 8 of the original submission. Script `reporting/figs/fig_tft.py`
 
 ## fig_pond_scores
 
-Per-pond mean absolute log error S for every prespecified model on the eligible
-leave-one-pond-out samples. Panels show T1 and T2 at 14 and 28 days ahead. Models follow
-the configured order within the labelled groups; sensitivity variants and post hoc results
-are excluded. Coloured circles are ponds; black diamonds are the saved model S, the mean
-over scored ponds. Neural S values are the saved means over five seeds. The primary pair
-is labelled from inner-validation selection. T1 uses a symmetric-logarithmic horizontal
-axis, linear from 0 to 0.5 and logarithmic above, to retain the large ridge errors. A light
-vertical line at 0.5 and a note below the axis mark this change; T2 axes are linear. T2 Ridge
-(past weights + WQ) stopped because a learned-model run produced a non-finite prediction
-under plan 9.0; its row has no score or pond dots. An infinite S would be shown by an arrow
-at the right edge, annotated with the saved count of predictions at or below 0 g; no such
+Per-pond mean absolute log error S for every prespecified T1 model on the eligible
+leave-one-pond-out samples. Models follow the configured order within the labeled groups;
+sensitivity variants and post hoc results are excluded. Colored circles are ponds;
+black diamonds are the saved model S, the mean over scored ponds. Neural S values are the
+saved means over five seeds. The primary pair
+is labeled from inner-validation selection. The symmetric-logarithmic horizontal
+axis is linear from 0 to 0.5 and logarithmic above to retain the large ridge errors. A light
+vertical line at 0.5 and a note below the axis mark this change. An infinite S would be
+shown by an arrow at the right edge, annotated with the saved count of predictions at or below 0 g; no such
 prediction occurs among the models plotted here. Lower S means smaller error.
 
 Script `reporting/figs/fig_pond_scores.py`. Saved data sources:
 `results/metrics/completeness.csv`,
 `results/metrics/per_pond.csv`,
 `results/metrics/scores.csv`,
-`results/selection/primary_T1.json`,
-`results/selection/primary_T2.json`.
+`results/selection/primary_T1.json`.
 Configuration `configs/phase4.yaml`; style `reporting/figstyle.py`; display labels `reporting/names.py`.
 Writes `figures/main/fig_pond_scores.png` and `figures/main/fig_pond_scores.pdf`.
+Rebuild from the repository root with `env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs .venv/bin/python -I reporting/figs/fig_pond_scores.py`.
+
+
+## fig_pond_scores_t2
+
+Per-pond mean absolute log error S for every prespecified T2 model on the eligible
+leave-one-pond-out samples at 14 days ahead (a) and 28 days ahead (b). Both panels use the
+same model rows in configured order, with model labels and group headings shown only in
+panel (a). Sensitivity variants and post hoc results are excluded. Colored circles are
+ponds; black diamonds are the saved model S, the mean over scored ponds. Neural S values
+are the saved means over five seeds. The primary pair is labeled from inner-validation
+selection. Each panel has its own linear horizontal axis and range. Ridge
+(past weights + WQ) stopped because a learned-model run produced a non-finite prediction under plan 9.0;
+its row is labeled "stopped (plan 9.0)" in both panels, with no score or pond dots. An
+infinite S would be shown by an arrow at the right edge, annotated with the saved count of
+predictions at or below 0 g; no such prediction occurs among the models plotted here.
+Lower S means smaller error.
+
+Script `reporting/figs/fig_pond_scores.py`. Saved data sources:
+`results/metrics/completeness.csv`,
+`results/metrics/per_pond.csv`,
+`results/metrics/scores.csv`,
+`results/selection/primary_T2.json`.
+Configuration `configs/phase4.yaml`; style `reporting/figstyle.py`; display labels `reporting/names.py`.
+Writes `figures/main/fig_pond_scores_t2.png` and `figures/main/fig_pond_scores_t2.pdf`.
 Rebuild from the repository root with `env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs .venv/bin/python -I reporting/figs/fig_pond_scores.py`.
 
 

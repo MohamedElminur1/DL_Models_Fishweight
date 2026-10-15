@@ -33,3 +33,11 @@ candidates on the log scale (`verify.py`, `choose_alpha` and `score`), where the
 finite, very large errors, so the alpha loses its trial; the exp overflow showed only as a
 warning (`DONE.md`). The repository code converts every candidate's prediction to grams and
 applies plan 9.0 to it (`src/tuning.py`, `predict_checked`).
+
+Correction (2026-10-15, lead): the T2 paragraph above ties `do_max_w` 4.181 against 19.989 to
+19.998 (z = 8199) to `ridge_pw_wq_w14` and `_w42`. `step6_out.txt` and the results table
+`results/diagnostics/ridge_stop.csv` (written by `reporting/diagnostics/ridge_stop.py`) place
+them in `ridge_pw_wq` and `ridge_pw_wq_noind`, outer fold 7, inner split 0 (inner-training ponds
+3, 4, 7; log prediction 220.5 and 211.0, finite). The window variants have their largest finite
+log predictions (244 and 615) on the same row through `t2w14_do_max_w` (3.2, z = -2236) and
+`t2w42_do_max_w` (9.203, z = -17508). The manuscript cites the results table, not this folder.

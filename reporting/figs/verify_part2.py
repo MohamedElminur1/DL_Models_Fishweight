@@ -21,7 +21,7 @@ from scipy.stats import rankdata
 from reporting.figs import _part2 as p
 from reporting.figs.fig_confirmatory import pond_differences
 from reporting.figs.fig_learning_curves import selected_curves
-from reporting.figs.run_part2 import FIGURES
+from reporting.figs.run_part2 import FIGURES, FIGURE_SCRIPTS
 
 
 def main() -> None:
@@ -72,18 +72,34 @@ def main() -> None:
         print(f"PASS {task}: shown models share sample IDs and expected seeds; all five neural models have complete selected curves")
     captions = (p.ROOT / "figures/CAPTIONS.md").read_text()
     for stem, group in FIGURES:
-        script = p.ROOT / f"reporting/figs/{stem}.py"
+        script = p.ROOT / f"reporting/figs/{FIGURE_SCRIPTS.get(stem, stem)}.py"
         ast.parse(script.read_text())
         png = p.ROOT / f"figures/{group}/{stem}.png"
         pdf = png.with_suffix(".pdf")
         with Image.open(png) as image:
             assert all(abs(dpi - p.fs.DPI) < 0.1 for dpi in image.info["dpi"])
             assert abs(image.width / p.fs.DPI * 2.54 - p.fs.FULL_CM) < 0.01
+            if stem in ("fig_pond_scores", "fig_pond_scores_t2"):
+                height_cm = 13 if stem == "fig_pond_scores" else 11
+                assert abs(image.height / p.fs.DPI * 2.54 - height_cm) < 0.01
             image.verify()
         info = subprocess.run(["pdfinfo", str(pdf)], check=True, text=True, capture_output=True).stdout
         assert "Pages:           1" in info
         text = subprocess.run(["pdftotext", str(pdf), "-"], check=True, text=True, capture_output=True).stdout
         assert text.strip() and "\ufffd" not in text
+        if stem == "fig_pond_scores":
+            assert "T2" not in text
+            assert "Linear below 0.5; logarithmic above (line at 0.5)" in text
+            assert "Model S" in text
+        elif stem == "fig_pond_scores_t2":
+            assert "(a) T2, 14 days ahead" in text and "(b) T2, 28 days ahead" in text
+            assert text.count("stopped (plan 9.0)") == 2
+            for group_name in (p.group_name(group) for group in p.GROUPS
+                               if p.CFG["models"]["T2"][group]):
+                assert text.count(group_name) == 1
+            for model in (model for group in p.GROUPS for model in p.CFG["models"]["T2"][group]):
+                assert sum(line.startswith(p.model_name(model)) for line in text.splitlines()) == 1
+            assert text.count("Pond 1") == 1 and text.count("Model S") == 1
         assert captions.count(f"## {stem}\n") == 1, f"Missing or duplicated caption: {stem}"
         print(f"PASS {stem}: parseable script, 16 cm / 600 dpi PNG, one-page PDF with text, caption")
     print("LIMITATION T2 Ridge (past weights + WQ): LOPO and permutation outputs absent after plan 9.0 stop")

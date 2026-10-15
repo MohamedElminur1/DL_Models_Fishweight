@@ -1,4 +1,4 @@
-"""Rebuild the eight part 2 figures; append their source-complete captions with --captions.
+"""Rebuild the nine part 2 figures; append their source-complete captions with --captions.
 
 Run from the repository root:
   env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs .venv/bin/python -I reporting/figs/run_part2.py --captions
@@ -18,6 +18,7 @@ from reporting.figs import _part2 as p
 
 FIGURES = (
     ("fig_pond_scores", "main"),
+    ("fig_pond_scores_t2", "main"),
     ("fig_confirmatory", "main"),
     ("fig_permutation", "main"),
     ("fig_trajectories", "main"),
@@ -27,6 +28,8 @@ FIGURES = (
     ("fig_ablation", "supp"),
 )
 
+FIGURE_SCRIPTS = {"fig_pond_scores_t2": "fig_pond_scores"}
+
 
 def append_captions(records: list[dict]) -> None:
     """Append only absent sections; refuse to silently retain a stale part 2 caption."""
@@ -35,15 +38,16 @@ def append_captions(records: list[dict]) -> None:
     additions = []
     for record in records:
         stem, group = record["stem"], record["group"]
+        script = FIGURE_SCRIPTS.get(stem, stem)
         sources = ",\n".join(f"`{source}`" for source in record["sources"])
         section = (f"## {stem}\n\n{record['caption'].strip()}\n\n"
-                   f"Script `reporting/figs/{stem}.py`. Saved data sources:\n{sources}.\n"
+                   f"Script `reporting/figs/{script}.py`. Saved data sources:\n{sources}.\n"
                    "Configuration `configs/phase4.yaml`; style `reporting/figstyle.py`; "
                    "display labels `reporting/names.py`.\n"
                    f"Writes `figures/{group}/{stem}.png` and `figures/{group}/{stem}.pdf`.\n"
                    f"Rebuild from the repository root with "
                    f"`env PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/mplconfig_figs "
-                   f".venv/bin/python -I reporting/figs/{stem}.py`.\n")
+                   f".venv/bin/python -I reporting/figs/{script}.py`.\n")
         if f"## {stem}\n" in current:
             if section.strip() not in current:
                 raise RuntimeError(f"Caption differs for {stem}; inspect before appending")
@@ -60,10 +64,12 @@ def main() -> None:
     parser.add_argument("--captions", action="store_true")
     args = parser.parse_args()
     records = []
-    for stem, _ in FIGURES:
+    scripts = dict.fromkeys(FIGURE_SCRIPTS.get(stem, stem) for stem, _ in FIGURES)
+    for script in scripts:
         p.SOURCES.clear()
-        record = importlib.import_module(f"reporting.figs.{stem}").main()
-        records.append(record)
+        result = importlib.import_module(f"reporting.figs.{script}").main()
+        records.extend(result if isinstance(result, list) else [result])
+    assert [(record["stem"], record["group"]) for record in records] == list(FIGURES)
     if args.captions:
         append_captions(records)
 
